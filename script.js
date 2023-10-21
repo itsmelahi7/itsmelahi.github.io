@@ -283,14 +283,22 @@ function setAutoCompelete(cat_array, loc) {
 function filterQuestion(que_array, search_level, search_cat){
     console.log(`Filter question with search_level: "${search_level}" and search_cat: "${search_cat}"`)
     var fil_que_array = [];
+    
     if(search_cat != '') {
-        que_array.forEach( item => {
-            if(item.categories.length != 0){
+        var i = 0;
+        que_array.forEach( item => { 
+            console.log( ' i = ' + i );
+            if(item.categories.length > 1){
                 item.categories.forEach(category => {
                     if( category == search_cat && ( search_level == '' || search_level == item.level )){
                         fil_que_array.push(item);
                     }
                 })
+            } else if(item.categories.length == 1){
+                var category = item.categories[0];
+                if( category == search_cat && ( search_level == '' || search_level == item.level )){
+                    fil_que_array.push(item);
+                }
             }
         });
         return fil_que_array; 

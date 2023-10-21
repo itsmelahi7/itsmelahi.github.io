@@ -314,12 +314,12 @@ button {
 
 
 
-
-
-
-
-
-
+.google-it {
+    margin-left: 10px;
+    color: #2A80FF;
+    font-size: var(--mb-font-size) !important;
+    text-decoration: none;
+}
 
 
 

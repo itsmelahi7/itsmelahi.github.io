@@ -202,11 +202,10 @@ function filter(category){
 function googleIt(){
     var search_string = qq.fil_array[ qq.que_no].question;
     if( qq.search_cat == 'vocab'){
-        search_string = search_string + define;
+        search_string = search_string + ' define';
     }
-    var a = document.createElement('a');
-    a.href = 'https://www.bing.com/search?q=' + search_string;;
-    a.target = "google_it";
+    var a = document.querySelector('a.google-it');
+    a.href = 'https://www.bing.com/search?q=' + search_string;
     a.click();
 }
 
