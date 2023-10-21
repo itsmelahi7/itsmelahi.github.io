@@ -9,7 +9,7 @@
                 <div class="level" value="easy">easy</div>
             </div> 
             <div class="autocomplete">
-                <select id="difficultySelect" onchange="handleSelectChange()">
+                <select id="difficultySelect" class="que-level">
                     <option value="all">all</option>
                     <option value="easy">easy</option>
                     <option value="medium">medium</option>
@@ -24,17 +24,15 @@
                 </div>
             </div>
         </div>
-           
+        
+        
         <div class="add-sec">
             <div class="que-num"></div>  
-            <button class="today-que">
-                <span>today</span>
-                <span class="today-que-num">5</span>
-            </button> 
             <button class="add"> add </button> 
         </div>   
          
-        <div class="center">
+        <button class="today-que"></button> 
+        <div class="center hide">
             <div class="no-que hide"> No Question found</div> 
             <div class="question">
                 <span class="question" rows="1"></span>
@@ -53,6 +51,7 @@
                 <label>Categories:</label>
                 <textarea class="categories" rows="1"> biology, chemistry, polity </textarea>
                 <br>
+                <a class="google-it">Google it.</a>               
                 <div class='que-level'>
                    <label>Level:</label>
                    <div class="level" value="hard">hard</div> <div class="level" value="medium">medium</div><div class="level" value="easy">easy</div>
@@ -65,16 +64,15 @@
                         <button id="no">No</button>
                     </div>
                 </div>
-                <div class="define vocab">
-                    <div>Hello</div>
-                    <iframe src="https://www.bing.com/search?q=hello+define" width="100%" height="100px"></iframe>
-                </div>
+                
+                
             </div>
         </div>
 
         <div class='bottom'>
             <button id="prev" class=''> << </button>
             <button id="next"> >> </button>
+            <i class="fas fa-sync-alt refresh-icon"></i>
         </div>
         <br>
         <br>

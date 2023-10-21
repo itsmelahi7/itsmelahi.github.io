@@ -140,29 +140,23 @@ function getDataFromLocale(key) {
 
 
 function loadCategories(fromArray){
-    var toArray =[];
+    var cat_array =[];
     fromArray.forEach( array => {
-        let cat =  array.categories;
-        let cat_array = convertStringToArray(cat, ',');
-        cat_array.forEach(category => {
-            if (!toArray.includes( category )) {
-                toArray.push( category);
-            }
-        });
+        
+        cat_array = cat_array.concat(array.categories)
     });
-    toArray = removeDuplicatesAndEmptyItems( toArray );
+    cat_array = removeDuplicatesAndEmptyItems( cat_array );
     console.log('all categories loaded');
-    return toArray;
+    return cat_array;
 }
 
 
 function loadQuestionCategories(categories){
-    if(!categories){
-        return;
-    }
+    if(categories.length == 0) return;
+    
     var div = document.querySelector('.center .question .categories');
     div.innerHTML = '';
-    categories = categories.split(',');
+    
     categories.forEach( cat => {
         cat = cat.toLowerCase().trim();
         var span = document.createElement('div');
@@ -196,6 +190,7 @@ function setAllCategories(cat_array){
         div.addEventListener('click', function(){
             addSearchCat(cat);
             filter(cat);
+            scrollToTop();
         });
         all_cat_div.append(div);
         
@@ -286,25 +281,29 @@ function setAutoCompelete(cat_array, loc) {
 
 
 function filterQuestion(que_array, search_level, search_cat){
-    console.log(`Filter question with search_level: "${search_level}" and search_cat: ${search_cat}`)
-    var fil_que_array = []; 
-    if( search_level != ''){
-        que_array.forEach(item =>{
-            if(item.level == search_level && (item.categories.indexOf(search_cat) >= 0)){
+    console.log(`Filter question with search_level: "${search_level}" and search_cat: "${search_cat}"`)
+    var fil_que_array = [];
+    if(search_cat != '') {
+        que_array.forEach( item => {
+            if(item.categories.length != 0){
+                item.categories.forEach(category => {
+                    if( category == search_cat && ( search_level == '' || search_level == item.level )){
+                        fil_que_array.push(item);
+                    }
+                })
+            }
+        });
+        return fil_que_array; 
+    } else if ( search_level != ''){
+        que_array.forEach( item => {
+            if( item.level == search_level){
                 fil_que_array.push(item);
             }
         });
-    }
-    else if(search_cat != '') {
-        que_array.forEach(item =>{
-            if(item.categories.indexOf(search_cat) >= 0){
-                fil_que_array.push(item);
-            }
-        });
+        return fil_que_array;
     } else {
-        fil_que_array = que_array; 
+        return que_array;
     }
-    return fil_que_array;
 }
 
 
@@ -312,7 +311,7 @@ function filterQuestion(que_array, search_level, search_cat){
 function addSearchCat(name){ 
     document.querySelector('.search-categories .category').classList.remove('hide');
     document.querySelector('.search-categories span').textContent = name;
-    console.log(`search_cat is: "${search_cat}"`);
+    console.log(`search_cat is: "${name}"`);
     document.querySelector('#search-input').classList.add('hide');
     document.querySelectorAll('.search-level .level').forEach( div => {
         div.classList.add('cat');
@@ -363,6 +362,18 @@ function generateID() {
   
     return id;
   }
+
+
+  function slide(direction) {
+    const center = document.querySelector('.center');
+    center.classList.remove('slide-right', 'slide-left');
+    
+    if (direction === 'right') {
+        center.classList.add('slide-right');
+    } else if (direction === 'left') {
+        center.classList.add('slide-left');
+    }
+}
 
   function getTodayDate() {
     const today = new Date();
@@ -423,6 +434,19 @@ function convertStringToArray(string, splitby){
 }
 
 
+function scrollToTop() {
+    const scrollDuration = 300; // Duration of the scroll animation in milliseconds
+    const scrollStep = -window.scrollY / (scrollDuration / 15);
+
+    function scroll() {
+        if (window.scrollY > 0) {
+            window.scrollBy(0, scrollStep);
+            requestAnimationFrame(scroll);
+        }
+    }
+
+    requestAnimationFrame(scroll);
+}
 
 
 

@@ -35,9 +35,9 @@ function loadAddPracticeQuestionsUI(){
                 is_today = true;
                 showQuestion();
             })
-
+            document.querySelector('.center').classList.remove('hide');
             textareaAutoHeightSetting();
-              
+            document.querySelector('.refresh-icon').addEventListener('click', refresh);  
             document.querySelector('div#add button#close').addEventListener('click', function(){
               openPracticeSection();
               
@@ -73,6 +73,19 @@ function loadAddPracticeQuestionsUI(){
                 console.log(`qq.search_level: ${qq.search_level}`)
               });
             });
+
+            document.querySelector('.search-container .que-level').addEventListener('change', function(){
+                var select = document.querySelector(".que-level");
+                var selectedValue = select.options[select.selectedIndex].value;
+                qq.search_level = selectedValue;
+                // You can use the selectedValue in your code for further actions
+                console.log(`search level = "${qq.search_level}"`);
+                if(qq.search_level == 'all') {
+                    qq.search_level = '';
+                }
+                filter();
+            });
+
 
             document.querySelectorAll('.answer .level').forEach( level => {
               level.addEventListener('click', function(event){
@@ -120,7 +133,6 @@ function loadAddPracticeQuestionsUI(){
             document.querySelector('button#add').addEventListener('click', addQuestion);
             document.querySelector('button#clear').addEventListener('click', clearInputFields);
             
-
             
 
             var que_ta = document.querySelector('.answer textarea.question');
@@ -141,35 +153,36 @@ function loadAddPracticeQuestionsUI(){
                 saveAddPracQueData();
             });
             
+        document.querySelector('.google-it').addEventListener('click', googleIt);
             
+          
+
+
+
+
+
+
+            debugger;
             if( qq.que_array.length == 0 ){
               var message = 'No questions data found. Add question but clicking on the "add" button';
               noQuestion(message);
               return;
-            }
-
-            if( qq.que_array.length ){ ;
-              
-              loadCats();
-              filter();
+            } else {
+                refresh();
             }
         }
     }, 1000);
 }
 
-function loadCats(){
-  qq.today_que = getTodayQuestions(qq.que_array);
-  qq.cat_array = loadCategories(qq.que_array);
-  
-  setAutoCompelete(qq.cat_array, 'prac');
-  setAllCategories(qq.cat_array);
-  filter();
+function askChatGPT(){
+
 }
 
-function filter(name){
-  if(name != undefined){
-    qq.search_cat = name;
+function filter(category){
+  if(category != undefined){
+    qq.search_cat = category;
   }
+
   qq.que_array = sortArrayInRandomOrder( qq.que_array);
   qq.fil_array = filterQuestion(qq.que_array, qq.search_level, qq.search_cat);
   if( qq.fil_array.length ){
@@ -177,24 +190,59 @@ function filter(name){
     qq.que_no = 0;
     showQuestion();
   } else {
-    noQuestion();
+    if( qq.search_level != '' && qq.search_cat == ''){
+        noQuestion(`No question found for level '${qq.search_level}'`);
+    } else if ( qq.search_level != '' && qq.search_cat != ''){
+        noQuestion(`No question found for level '${qq.search_level}' AND category '${qq.search_cat}'`);
+    }
+    
   }
 }
 
+function googleIt(){
+    var search_string = qq.fil_array[ qq.que_no].question;
+    if( qq.search_cat == 'vocab'){
+        search_string = search_string + define;
+    }
+    var a = document.createElement('a');
+    a.href = 'https://www.bing.com/search?q=' + search_string;;
+    a.target = "google_it";
+    a.click();
+}
 
 function loadTodayQuestion(){ 
     qq.today_que =[];
     qq.today_que = getTodayQuestions( qq.que_array);
+    var today_que_ele = document.querySelector('.today-que')
     if(qq.today_que.length != 0){
-        document.querySelector('.today-que').classList.remove('hide');
+        today_que_ele.classList.remove('hide');
+        today_que_ele.textContent = `Today revision questions: ${qq.today_que.length}`;
+        today_que_ele.addEventListener('click',function(){
+            qq.fil_array = qq.today_que;
+            qq.que_no = 0;
+            showQuestion();
+            today_que_ele.classList.add('hide');
+        })
         
     } else {
-        document.querySelector('.today-que').classList.add('hide');
+        today_que_ele.classList.add('hide');
         noQuestion('Congratulations, you have finished all the today practice questions.');
     }
 
+
 }
 
+
+function refresh(){
+    qq.search_level = '';
+    qq.search_cat = '';
+    loadTodayQuestion();
+    qq.cat_array = loadCategories(qq.que_array);
+    
+    setAutoCompelete(qq.cat_array, 'prac');
+    setAllCategories(qq.cat_array);
+    filter();
+}
 
 function handleSelectChange() {
   var select = document.getElementById("difficultySelect");
@@ -267,6 +315,17 @@ function checkAnswer(){
   document.querySelector('.center .answer').classList.toggle('hide');
   document.querySelectorAll('.answer .level').forEach( level => {
     level.classList.remove('active');
+    level.addEventListener('click', function(){
+        qq.fil_array[qq.que_no].level = level.textContent;
+        if(level.textContent == 'hard'){
+            qq.fil_array[qq.que_no].revision_date = revisionDate(1);
+        } else if(level.textContent == 'medium'){
+            qq.fil_array[qq.que_no].revision_date = revisionDate(5);
+        } if(level.textContent == 'easy'){
+            qq.fil_array[qq.que_no].revision_date = revisionDate(10);
+        }
+        saveAddPracQueData();
+    }) 
   });
   textareaAutoHeightSetting();
 }
@@ -274,6 +333,7 @@ function checkAnswer(){
 function nextQuestion(){
   ++qq.que_no;
   if( qq.que_no < qq.fil_array.length){
+    
     showQuestion();
   } else {
     --qq.que_no;
@@ -285,6 +345,7 @@ function prevQuestion(){
   if( qq.que_no < 0){
     ++qq.que_no;
   } else {
+    
     showQuestion();
   }
 }
@@ -295,23 +356,25 @@ function deleteQuestion(id) {
   filter();
 }
 function addQuestion(){
+
+     var que_obj = {
+        id: generateID(),
+        type: 'normal',
+        question: document.querySelector("#add textarea#question").value.trim(),
+        explanation: document.querySelector(" #add textarea#explanation").value.trim(),
+        categories: (document.querySelector("#add textarea#categories").value.toLowerCase() + ', ' + getTodayDate()).split(',').map(item => item.trim()).filter(item => item !== ''),
+        level: 'hard',
+        wronged: false,
+        create_date: getTodayDate(),
+        revision_date: revisionDate(1),
+    };
   
-      qq.que_array.push({
-          id: generateID(),
-          type: 'normal',
-          question: document.querySelector("#add textarea#question").value.trim(),
-          explanation: document.querySelector(" #add textarea#explanation").value.trim(),
-          categories: document.querySelector("#add textarea#categories").value.toLowerCase().trim() + ', ' + getTodayDateUid(),
-          level: 'hard',
-          wronged: false,
-          create_date: getTodayDateUid(),
-          revision_date: revisionDate(1),
-      });
+      qq.que_array.push(que_obj);
       document.querySelector('.que-add-message').classList.remove('hide');
       document.querySelector('.que-add-message').textContent = 'Question has been added';
       
     
-      console.log('New question is added successfully');
+      console.log('New question is added successfully' + que_obj);
       saveAddPracQueData();
 }
 
