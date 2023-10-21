@@ -180,7 +180,7 @@ function loadQuestionCategories(categories){
 function setAllCategories(cat_array){
     
     var all_cat_div;
-    debugger;
+    
     if (is_mobile){
         document.querySelector('.all-categories-section.bottom').classList.remove('hide');
         all_cat_div = document.querySelector('.all-categories-section.bottom .all-categories');
@@ -203,7 +203,7 @@ function setAllCategories(cat_array){
 }
 
 
-function setAutoCompelete(cat_array, loc) { debugger;
+function setAutoCompelete(cat_array, loc) { 
     var input = document.querySelector('input#search-input');
     var ci = 0;
     var input_before = ''
@@ -242,7 +242,7 @@ function setAutoCompelete(cat_array, loc) { debugger;
             item.textContent = name;
   
             item.addEventListener('click', function() {
-                if(loc == 'add'){ debugger;
+                if(loc == 'add'){ 
                     if( ci > 0 ){
                         input.value = input_before +', '+ name;
                     } else {
@@ -469,7 +469,7 @@ FilePond.setOptions({
     server: {
         process: (fieldName, file, metadata, load, error, progress, abort) => {
             // Handle file processing here 
-            debugger;
+            
             importData(file, queArray);
         }
     }
@@ -492,7 +492,7 @@ function importData(file, queArray) {
     const reader = new FileReader();
 
     reader.onload = function(e) {
-        try { debugger;
+        try { 
             const importedData = JSON.parse(e.target.result);
 
             if( que_array.length == 0 ){

@@ -25,7 +25,7 @@ function loadAddPracticeQuestionsUI(){
         if ( document.querySelector('.add-sec button')  ) { 
             clearInterval(interval_apq); // This stops the interval
             getAddPracQueData(); 
-            debugger;
+            
 
             loadTodayQuestion();
             document.querySelector('.today-que').addEventListener('click', function(){
@@ -143,7 +143,8 @@ function loadAddPracticeQuestionsUI(){
             
             
             if( qq.que_array.length == 0 ){
-              noQuestion();
+              var message = 'No questions data found. Add question but clicking on the "add" button';
+              noQuestion(message);
               return;
             }
 
@@ -181,7 +182,7 @@ function filter(name){
 }
 
 
-function loadTodayQuestion(){ debugger;
+function loadTodayQuestion(){ 
     qq.today_que =[];
     qq.today_que = getTodayQuestions( qq.que_array);
     if(qq.today_que.length != 0){
