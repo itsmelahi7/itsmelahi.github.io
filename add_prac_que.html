@@ -27,7 +27,11 @@
            
         <div class="add-sec">
             <div class="que-num"></div>  
-            <button> add </button> 
+            <button class="today-que">
+                <span>today</span>
+                <span class="today-que-num">5</span>
+            </button> 
+            <button class="add"> add </button> 
         </div>   
          
         <div class="center">
@@ -53,16 +57,18 @@
                    <label>Level:</label>
                    <div class="level" value="hard">hard</div> <div class="level" value="medium">medium</div><div class="level" value="easy">easy</div>
                 </div>
-                <button id="delete">delete</button>
-                
-
+                <button id="delete">delete</button>    
                 <div class="delete-confirmation overlay hide">
                     <p> Are you sure to delete the question?</p>
                     <div class="btn-sec">
                         <button id="yes">Yes</button>
                         <button id="no">No</button>
                     </div>
-               </div>
+                </div>
+                <div class="define vocab">
+                    <div>Hello</div>
+                    <iframe src="https://www.bing.com/search?q=hello+define" width="100%" height="100px"></iframe>
+                </div>
             </div>
         </div>
 
@@ -70,10 +76,17 @@
             <button id="prev" class=''> << </button>
             <button id="next"> >> </button>
         </div>
+        <br>
+        <br>
+        <div class="all-categories-section bottom hide">
+            <label>Categories:</label>
+            <input type="text" id="search-input" class="hide" placeholder="search">
+            <div class="all-categories"> </div>
+        </div>
     </div>    
         
         
-    <div class="all-categories-section hide">
+    <div class="all-categories-section sidebar hide">
         <label>Categories</label>
         <input type="text" id="search-input" class="hide" placeholder="search">
         <div class="all-categories"> </div>
@@ -99,4 +112,6 @@
             <button id="close">close</button>
         </div>
     </div>
+
+
 </div>

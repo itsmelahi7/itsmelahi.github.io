@@ -3,6 +3,8 @@ var is_mobile = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     loadPages('add_prac_que');
+
+    FilePond.create(document.getElementById("filepondInput"));
 });
 
 
@@ -176,7 +178,17 @@ function loadQuestionCategories(categories){
 }
 
 function setAllCategories(cat_array){
-    var all_cat_div = document.querySelector('.all-categories-section .all-categories')
+    
+    var all_cat_div;
+    debugger;
+    if (is_mobile){
+        document.querySelector('.all-categories-section.bottom').classList.remove('hide');
+        all_cat_div = document.querySelector('.all-categories-section.bottom .all-categories');
+    } else  {
+        all_cat_div = document.querySelector('.all-categories-section.sidebar .all-categories');
+        document.querySelector('.all-categories-section.sidebar').classList.remove('hide');
+    }
+
     cat_array.forEach(cat => {
         var div = document.createElement('div');
         div.className = 'category';
@@ -352,7 +364,7 @@ function generateID() {
     return id;
   }
 
-  function getTodayDateUid() {
+  function getTodayDate() {
     const today = new Date();
     const day = today.getDate().toString().padStart(2, '0');
     const month = (today.getMonth() + 1).toString().padStart(2, '0');
@@ -418,13 +430,14 @@ document.getElementById("backup").addEventListener("click", function() {
     backupData();
 });
 
+/*
 document.getElementById("import").addEventListener("click", function() {
     document.getElementById("jsonFileInput").click();
-});
+}); 
 
 document.getElementById("jsonFileInput").addEventListener("change", function(event) {
     importData(event.target.files[0]);
-});
+}); */
 
 function backupData() {
     // Convert the que_array to JSON
@@ -443,7 +456,65 @@ function backupData() {
     closeTabOverlay();
     
 }
+// Initialize FilePond for file input
 
+
+document.getElementById("import").addEventListener("click", function() {
+    // Trigger the file input element
+    document.getElementById("filepondInput").click();
+});
+
+// Listen for changes in the FilePond input
+FilePond.setOptions({ 
+    server: {
+        process: (fieldName, file, metadata, load, error, progress, abort) => {
+            // Handle file processing here 
+            debugger;
+            importData(file, queArray);
+        }
+    }
+});
+
+
+function getTodayQuestions(que_array){
+    var temp = [];
+    var today_date = getTodayDate();
+    que_array.forEach( item => {
+        if( item.revision_date == today_date  ){
+          temp.push(item);
+        }
+    });
+    return temp;
+}
+
+
+function importData(file, queArray) { 
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        try { debugger;
+            const importedData = JSON.parse(e.target.result);
+
+            if( que_array.length == 0 ){
+                que_array = importedData;
+            } else {
+                que_array = que_array.concat(importedData);
+            }
+            saveAddPracQueData();
+            loadAddPracticeQuestionsUI();
+            closeTabOverlay();
+
+            // You can optionally update your user interface or do any other processing here.
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            document.getElementById("jsonDataDisplay").textContent = "Error parsing JSON.";
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+/*
 function importData(file) {
     const reader = new FileReader();
 
@@ -469,14 +540,4 @@ function importData(file) {
     };
 
     reader.readAsText(file);
-}
-
-function displayData() {
-    const jsonDataDisplay = document.getElementById("jsonDataDisplay");
-    /*jsonDataDisplay.innerHTML = "<h3>Que Array:</h3>";
-    if (queArray.length === 0) {
-        jsonDataDisplay.innerHTML += "<p>No data to display.</p>";
-    } else {
-        jsonDataDisplay.innerHTML += "<pre>" + JSON.stringify(queArray, null, 2) + "</pre>";
-    }*/
-}
+}*/

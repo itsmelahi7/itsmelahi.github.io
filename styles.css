@@ -39,6 +39,9 @@ body .content > header > h1 {
     margin: 10px 5px 0px 33px;
     font-size: 50px;
  }
+ h2 {
+    font-size: 25px !important;
+ }
 #add h1 {
     text-align: center;
     color: var(--font-color);
@@ -150,15 +153,23 @@ input#search-input {
     margin-top: 50px;
     margin-left: 10px;
 }
+.all-categories-section.bottom {
+    margin-top: 10px;
+    display: grid !important;
+}
+
 .all-categories-section label {
-    font-size: 25px;
+    font-size: 25px !important;
     font-weight: 600;
     color: #393E46;
 }
-.all-categories {
+
+.all-categories-section .all-categories {
     display: flex;
     flex-wrap: wrap;
     margin-top: 12px;
+    max-height: 40vh;
+    overflow: scroll;
 }
 
 input::placeholder, textarea::placeholder {
@@ -268,7 +279,7 @@ label {
 .answer .categories {
     margin: 0px;
 }
-textarea:focus {
+textarea:focus, select {
     outline: none;
 }
 
@@ -423,11 +434,10 @@ body .hide {
 
 
 #add textarea {
-    
     border: none;
     padding: 3px;
     border-radius: 0px;
-    margin-bottom: 15px;
+    margin-bottom: 35px;
 }
 #add textarea#question {
     border-left: 2px solid #7bb2ff;
@@ -830,8 +840,11 @@ body > .content > header .menu-button {
     .add-sec button, .que-num, .search-container select,
     button#answer, input#search-input,
     input::placeholder, textarea::placeholder, button*/ 
-    * :not(.menu-button, span.question, h1, h2, #closeMenu){
-        font-size: var(--mb-font-size) !important;
+    * :not(
+        .menu-button, 
+        span.question, 
+        h1, h2, #closeMenu){
+        font-size: var(--mb-font-size);
     }
 
 

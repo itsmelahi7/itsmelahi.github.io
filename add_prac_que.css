@@ -55,9 +55,9 @@ div.add_prac_que {
 
 
 span.question, div.no-que {
-        font-weight: 700;
+    /*font-weight: 700;*/
     color: var(--font-color);
-    font-size: 20px;
+    font-size: 25px;
     margin-top: 30px;
 }
 .add-sec {

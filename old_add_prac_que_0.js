@@ -1,17 +1,23 @@
-var qq = {
+var data = {
     username: '',
     exam: '',
     que_array:[],
-    fil_array:[],
+    fil_que_array:[],
     cat_array:[],
     today_que:[],
     search_level:'',
     search_cat:'',
     que_no:'',
     que_id:'',
-    is_today: false,
 };
 
+
+var que_array =[];
+var cat_array = [];
+var fil_que_array =[];
+var que_no = 0;
+var search_cat = '';
+var search_level = '';
 var first_time = true;
 loadAddPracticeQuestionsUI();
 
@@ -26,15 +32,10 @@ function loadAddPracticeQuestionsUI(){
             clearInterval(interval_apq); // This stops the interval
             getAddPracQueData(); 
             debugger;
+            if(is_mobile){
+                document.querySelector('.all-categories').classList.add('hide');
+            }
 
-            loadTodayQuestion();
-            document.querySelector('.today-que').addEventListener('click', function(){
-                qq.search_level = '';
-                qq.search_cat = '';
-                qq.fil_array = qq.today_que;
-                is_today = true;
-                showQuestion();
-            })
 
             textareaAutoHeightSetting();
               
@@ -42,10 +43,7 @@ function loadAddPracticeQuestionsUI(){
               openPracticeSection();
               
             });
-            document.querySelector('.add-sec button.add').addEventListener('click', function(){
-                qq.fil_array = qq.today_que;    
-            });
-            document.querySelector('.add-sec button.add').addEventListener('click', function(){
+            document.querySelector('.add-sec button').addEventListener('click', function(){
               openAddQuestionSection();
               if(first_time){
                 textareaAutoHeightSetting();
@@ -64,13 +62,13 @@ function loadAddPracticeQuestionsUI(){
                 level.classList.toggle('active'); 
                 ;
                 if(level.className.indexOf('active') > 0){
-                  qq.search_level = level.textContent;
+                  search_level = level.textContent;
                 } else {
-                  qq.search_level = '';
+                  search_level = '';
                 }
                 ;
                 filter();
-                console.log(`qq.search_level: ${qq.search_level}`)
+                console.log(`search_level: ${search_level}`)
               });
             });
 
@@ -85,8 +83,8 @@ function loadAddPracticeQuestionsUI(){
                 level.classList.add('active'); 
                 ;
                 if(level.className.indexOf('active') > 0){
-                  qq.fil_array[ qq.que_no].level = level.textContent;
-                  console.log(`curr_que_level: ${qq.fil_array[ qq.que_no].level}`)
+                  fil_que_array[ que_no].level = level.textContent;
+                  console.log(`curr_que_level: ${fil_que_array[ que_no].level}`)
                   saveAddPracQueData();
                 }
                 
@@ -103,7 +101,7 @@ function loadAddPracticeQuestionsUI(){
           
           // Add event listeners to the Yes and No buttons to handle confirmation
           document.getElementById("yes").addEventListener("click", function() {
-              deleteQuestion(qq.fil_array[qq.que_no].id );
+              deleteQuestion(fil_que_array[que_no].id );
               // For example, you can delete the question or perform any other action
               document.querySelector(".delete-confirmation.overlay").classList.add('hide');
           });
@@ -125,29 +123,31 @@ function loadAddPracticeQuestionsUI(){
 
             var que_ta = document.querySelector('.answer textarea.question');
             que_ta.addEventListener('input', function(){
-                qq.fil_array[qq.que_no].question = que_ta.value;
+                fil_que_array[que_no].question = que_ta.value;
                 saveAddPracQueData();
             });
 
             var exp_ta = document.querySelector('.answer textarea.explanation');
             exp_ta.addEventListener('input', function(){
-                qq.fil_array[qq.que_no].explanation = exp_ta.value;
+                fil_que_array[que_no].explanation = exp_ta.value;
                 saveAddPracQueData();
             });
 
             var cat_ta = document.querySelector('.answer textarea.categories');
             cat_ta.addEventListener('input', function(){
-                qq.fil_array[qq.que_no].categories = cat_ta.value;
+                fil_que_array[que_no].categories = cat_ta.value;
                 saveAddPracQueData();
             });
+            if( window.innerWidth > 700 ){
+              document.querySelector('.all-categories-section').classList.remove('hide');
+            }
             
-            
-            if( qq.que_array.length == 0 ){
+            if( que_array.length == 0 ){
               noQuestion();
               return;
             }
 
-            if( qq.que_array.length ){ ;
+            if( que_array.length ){ ;
               
               loadCats();
               filter();
@@ -157,62 +157,40 @@ function loadAddPracticeQuestionsUI(){
 }
 
 function loadCats(){
-  qq.today_que = getTodayQuestions(qq.que_array);
-  qq.cat_array = loadCategories(qq.que_array);
-  
-  setAutoCompelete(qq.cat_array, 'prac');
-  setAllCategories(qq.cat_array);
+  cat_array = loadCategories(que_array);
+  setAutoCompelete(cat_array, 'prac');
+  setAllCategories(cat_array);
   filter();
 }
 
 function filter(name){
   if(name != undefined){
-    qq.search_cat = name;
+    search_cat = name;
   }
-  qq.que_array = sortArrayInRandomOrder( qq.que_array);
-  qq.fil_array = filterQuestion(qq.que_array, qq.search_level, qq.search_cat);
-  if( qq.fil_array.length ){
-    qq.fil_array = sortArrayInRandomOrder(qq.fil_array);
-    qq.que_no = 0;
+  que_array = sortArrayInRandomOrder( que_array);
+  fil_que_array = filterQuestion(que_array, search_level, search_cat);
+  if( fil_que_array.length ){
+    fil_que_array = sortArrayInRandomOrder(fil_que_array);
+    que_no = 0;
     showQuestion();
   } else {
     noQuestion();
   }
 }
 
-
-function loadTodayQuestion(){ debugger;
-    qq.today_que =[];
-    qq.today_que = getTodayQuestions( qq.que_array);
-    if(qq.today_que.length != 0){
-        document.querySelector('.today-que').classList.remove('hide');
-        
-    } else {
-        document.querySelector('.today-que').classList.add('hide');
-        noQuestion('Congratulations, you have finished all the today practice questions.');
-    }
-
-}
-
-
 function handleSelectChange() {
   var select = document.getElementById("difficultySelect");
   var selectedValue = select.options[select.selectedIndex].value;
-  qq.search_level = selectedValue;
+  search_level = selectedValue;
   // You can use the selectedValue in your code for further actions
-  console.log(`search level = "${qq.search_level}"`);
-  if(qq.search_level == 'all') {
-    qq.search_level = '';
+  console.log(`search level = "${search_level}"`);
+  if(search_level == 'all') {
+    search_level = '';
   }
   filter();
 }
 
-function noQuestion(message){
-  if(message){
-    document.querySelector('.center .no-que').textContent = message;
-  }  else {
-    document.querySelector('.center .no-que').textContent = 'No questions';
-  } 
+function noQuestion(){
   document.querySelector('.center .no-que').classList.remove('hide');
 
   document.querySelector('.que-num ').classList.add('hide');
@@ -223,7 +201,8 @@ function noQuestion(message){
 function openPracticeSection(){
     console.log('practice section opened');
     document.querySelector('.add_prac_que > #practice').classList.remove('hide');
-    
+    if(!is_mobile)
+      document.querySelector('.add_prac_que > .all-categories-section').classList.remove('hide');
 
     document.querySelector('.add_prac_que > #add').classList.add('hide');
     loadCats();
@@ -234,9 +213,9 @@ function openPracticeSection(){
 function openAddQuestionSection(){ 
     console.log('add question section opened');
     document.querySelector('.add_prac_que > #practice').classList.add('hide');
-    
+    document.querySelector('.add_prac_que > .all-categories-section').classList.add('hide');
     document.querySelector('.add_prac_que > #add').classList.remove('hide');
-    setAutoCompelete(qq.cat_array, 'add');
+    setAutoCompelete(cat_array, 'add');
 }
 
 function showQuestion(){ 
@@ -248,15 +227,15 @@ function showQuestion(){
   document.querySelector('.center .no-que').classList.add('hide');
 
   
-  loadQuestionCategories(qq.fil_array[qq.que_no].categories);
+  loadQuestionCategories(fil_que_array[que_no].categories);
   
-  document.querySelector('.que-num').textContent = (qq.que_no + 1) +'/'+ qq.fil_array.length;
+  document.querySelector('.que-num').textContent = (que_no + 1) +'/'+ fil_que_array.length;
   
-  document.querySelector('.question span').textContent = qq.fil_array[qq.que_no].question;
+  document.querySelector('.question span').textContent = fil_que_array[que_no].question;
   
-  document.querySelector('.answer textarea.question').value = qq.fil_array[qq.que_no].question;
-  document.querySelector('.answer textarea.explanation').value = qq.fil_array[qq.que_no].explanation;
-  document.querySelector('.answer textarea.categories').value = qq.fil_array[qq.que_no].categories;
+  document.querySelector('.answer textarea.question').value = fil_que_array[que_no].question;
+  document.querySelector('.answer textarea.explanation').value = fil_que_array[que_no].explanation;
+  document.querySelector('.answer textarea.categories').value = fil_que_array[que_no].categories;
 
 
 }
@@ -271,31 +250,31 @@ function checkAnswer(){
 }
 
 function nextQuestion(){
-  ++qq.que_no;
-  if( qq.que_no < qq.fil_array.length){
+  ++que_no;
+  if( que_no < fil_que_array.length){
     showQuestion();
   } else {
-    --qq.que_no;
+    --que_no;
   }
 
 }
 function prevQuestion(){
-  --qq.que_no;
-  if( qq.que_no < 0){
-    ++qq.que_no;
+  --que_no;
+  if( que_no < 0){
+    ++que_no;
   } else {
     showQuestion();
   }
 }
 function deleteQuestion(id) {
 
-  qq.que_array = qq.que_array.filter(item => item.id !== id);
+  que_array = que_array.filter(item => item.id !== id);
   saveAddPracQueData();
   filter();
 }
 function addQuestion(){
   
-      qq.que_array.push({
+      que_array.push({
           id: generateID(),
           type: 'normal',
           question: document.querySelector("#add textarea#question").value.trim(),
@@ -303,7 +282,7 @@ function addQuestion(){
           categories: document.querySelector("#add textarea#categories").value.toLowerCase().trim() + ', ' + getTodayDateUid(),
           level: 'hard',
           wronged: false,
-          create_date: getTodayDateUid(),
+          date: getTodayDateUid(),
           revision_date: revisionDate(1),
       });
       document.querySelector('.que-add-message').classList.remove('hide');
@@ -315,12 +294,12 @@ function addQuestion(){
 }
 
 function saveAddPracQueData(){ 
-  saveDataInLocale('add_prac_que_data', qq);
+  saveDataInLocale('add_prac_que_data', que_array);
 }
 function getAddPracQueData(){ 
   var data = getDataFromLocale('add_prac_que_data');
   if(data){
-      qq = data;
+      que_array = data;
   }
 }
 
