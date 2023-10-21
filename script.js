@@ -73,6 +73,10 @@ if ( window.innerWidth < 700 ) {
         loadPages('add_prac_que');
         closeTabOverlay();
     });
+    document.querySelector(".mobile-tab #personal").addEventListener('click', function(){
+        loadPages('add_prac_que');
+        closeTabOverlay();
+    });
     document.querySelector(".mobile-tab #about-me").addEventListener('click', function(){
         loadPage('about_me');
         closeTabOverlay();
@@ -291,13 +295,7 @@ function filterQuestion(que_array, search_level, search_cat){
     return fil_que_array;
 }
 
-function handleSelectChange() {
-    var select = document.getElementById("difficultySelect");
-    var selectedValue = select.options[select.selectedIndex].value;
-    
-    // You can use the selectedValue in your code for further actions
-    console.log("Selected Difficulty: " + selectedValue);
-}
+
 
 function addSearchCat(name){ 
     document.querySelector('.search-categories .category').classList.remove('hide');
@@ -410,4 +408,75 @@ function sortArrayInRandomOrder(array) {
 function convertStringToArray(string, splitby){
   var array = string.split(splitby).map(item => item.trim());
   return array;
+}
+
+
+
+
+
+document.getElementById("backup").addEventListener("click", function() {
+    backupData();
+});
+
+document.getElementById("import").addEventListener("click", function() {
+    document.getElementById("jsonFileInput").click();
+});
+
+document.getElementById("jsonFileInput").addEventListener("change", function(event) {
+    importData(event.target.files[0]);
+});
+
+function backupData() {
+    // Convert the que_array to JSON
+    const jsonData = JSON.stringify(que_array, null, 2);
+
+    // Create a Blob containing the JSON data
+    const blob = new Blob([jsonData], { type: "application/json" });
+
+    // Create a link to download the JSON file
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "que_array_backup.json"; // Name of the downloaded file
+
+    // Trigger a click event on the link to initiate the download
+    a.click();
+    closeTabOverlay();
+    
+}
+
+function importData(file) {
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        try {
+            const importedData = JSON.parse(e.target.result);
+
+            // Add the imported data to the que_array
+            if( que_array.length == 0 ){
+                que_array = importedData;
+            } else {
+                que_array = que_array.concat(importedData);
+            }
+            saveAddPracQueData();
+            loadAddPracticeQuestionsUI();
+            closeTabOverlay();
+            //displayData();
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            document.getElementById("jsonDataDisplay").textContent = "Error parsing JSON.";
+        }
+
+    };
+
+    reader.readAsText(file);
+}
+
+function displayData() {
+    const jsonDataDisplay = document.getElementById("jsonDataDisplay");
+    /*jsonDataDisplay.innerHTML = "<h3>Que Array:</h3>";
+    if (queArray.length === 0) {
+        jsonDataDisplay.innerHTML += "<p>No data to display.</p>";
+    } else {
+        jsonDataDisplay.innerHTML += "<pre>" + JSON.stringify(queArray, null, 2) + "</pre>";
+    }*/
 }

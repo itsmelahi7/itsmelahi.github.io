@@ -767,7 +767,7 @@ body > .content > header .menu-button {
     position: fixed;
     top: 0;
     right: -300px;
-    width: 60vw;
+    width: 80vw;
     height: 100%;
     background-color: #c1c1c1;
     z-index: 1000;
