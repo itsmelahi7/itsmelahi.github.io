@@ -187,9 +187,13 @@ function setAllCategories(cat_array){
 }
 
 
-function setAutoCompelete(cat_array) { debugger;
-    const input = document.querySelector('input#search-input');
-    
+function setAutoCompelete(cat_array, loc) { debugger;
+    var input = document.querySelector('input#search-input');
+    var ci = 0;
+    var input_before = ''
+    if(loc == 'add'){
+        input = document.querySelector('#add textarea#categories');
+    }
     var autocompleteList = document.createElement('div');
     autocompleteList.className = 'autocomplete-list';
     document.body.append(autocompleteList);
@@ -197,6 +201,17 @@ function setAutoCompelete(cat_array) { debugger;
   
     input.addEventListener('input', function() {
         var inputValue = input.value.toLowerCase();
+        if( loc == 'add'){
+            if(inputValue.indexOf(',') > 0){
+                ci = inputValue.lastIndexOf(',');
+                input_before = inputValue.substring(0, ci);
+                inputValue = inputValue.substring(ci+1).trim();
+                if(inputValue == ' ' || inputValue == ','){
+                    return;
+                } 
+            }
+
+        }
         const matchingNames = cat_array.filter(name => name.toLowerCase().includes(inputValue));
   
         autocompleteList.innerHTML = '';
@@ -211,21 +226,32 @@ function setAutoCompelete(cat_array) { debugger;
             item.textContent = name;
   
             item.addEventListener('click', function() {
-                
-            
+                if(loc == 'add'){ debugger;
+                    if( ci > 0 ){
+                        input.value = input_before +', '+ name;
+                    } else {
+                        input.value = input_before + name;
+                    }
+                    input.selectionStart = input.selectionEnd = input.value.length;
+                    
+                    
+                } else {
+
                 input.value = '';//input.value = name;
                 autocompleteList.classList.remove('active');
                 search_cat = name;
                 search_text = '';
                 addSearchCat(name);
                 filter(name);
+                }
+                
                 
             });
             autocompleteList.appendChild(item);
         });
-        autocompleteList.style.width = document.querySelector('input#search-input').offsetWidth + 'px';
-        autocompleteList.style.top = document.querySelector('input#search-input').offsetTop + 36 + 'px';
-        autocompleteList.style.left = document.querySelector('input#search-input').offsetLeft + 'px';
+        autocompleteList.style.width = input.offsetWidth + 'px';
+        autocompleteList.style.top = input.offsetTop + 36 + 'px';
+        autocompleteList.style.left = input.offsetLeft + 'px';
         autocompleteList.classList.add('active');
         autocompleteList.classList.remove('hide');
   

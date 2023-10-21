@@ -4,11 +4,26 @@ div.add_prac_que {
 #practice {
     flex: 0 0 60%;
  }
+ div#add {
+    border-radius: 3px;
+    min-height: 250px;
+    overflow: scroll;
+    background-color: var(--center-bc);
+    padding: 10px;
+}
 
 
 
 
-
+#add .bottom button {
+    height: 30px;
+    background-color: inherit;
+    text-align: center;
+    padding-top: 5px;
+}
+#add .bottom button#add {
+    border: 1px solid var(--btn-color);
+}
 
 
 
@@ -89,14 +104,7 @@ button#answer {
     margin-top: 20px;
 }
 
-#add {
-    
-    border-radius: 3px;
-    min-height: 250px;
-    overflow: scroll;
-    background-color: var(--center-bc);
-    padding: 10px;
-}
+
 
 #practice .level button {
     background-color: inherit;

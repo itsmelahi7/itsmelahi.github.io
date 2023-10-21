@@ -17,7 +17,7 @@ function loadAddPracticeQuestionsUI(){
         if ( document.querySelector('.add-sec button')  ) { 
             clearInterval(interval_apq); // This stops the interval
             getAddPracQueData(); 
-            
+            debugger;
             if(is_mobile){
                 document.querySelector('.all-categories').classList.add('hide');
             }
@@ -128,6 +128,11 @@ function loadAddPracticeQuestionsUI(){
               document.querySelector('.all-categories-section').classList.remove('hide');
             }
             
+            if( que_array.length == 0 ){
+              noQuestion();
+              return;
+            }
+
             if( que_array.length ){ ;
               
               loadCats();
@@ -139,8 +144,9 @@ function loadAddPracticeQuestionsUI(){
 
 function loadCats(){
   cat_array = loadCategories(que_array);
-  setAutoCompelete(cat_array);
+  setAutoCompelete(cat_array, 'prac');
   setAllCategories(cat_array);
+  filter();
 }
 
 function filter(name){
@@ -158,6 +164,17 @@ function filter(name){
   }
 }
 
+function handleSelectChange() {
+  var select = document.getElementById("difficultySelect");
+  var selectedValue = select.options[select.selectedIndex].value;
+  search_level = selectedValue;
+  // You can use the selectedValue in your code for further actions
+  console.log(`search level = "${search_level}"`);
+  if(search_level == 'all') {
+    search_level = '';
+  }
+  filter();
+}
 
 function noQuestion(){
   document.querySelector('.center .no-que').classList.remove('hide');
@@ -170,15 +187,21 @@ function noQuestion(){
 function openPracticeSection(){
     console.log('practice section opened');
     document.querySelector('.add_prac_que > #practice').classList.remove('hide');
+    if(!is_mobile)
+      document.querySelector('.add_prac_que > .all-categories-section').classList.remove('hide');
+
     document.querySelector('.add_prac_que > #add').classList.add('hide');
+    loadCats();
     
 
     //loadCategories();  
 }
 function openAddQuestionSection(){ 
     console.log('add question section opened');
-    document.querySelector('.add_prac_que > #practice').classList.remove('hide');
-    document.querySelector('.add_prac_que > #add').classList.add('hide');
+    document.querySelector('.add_prac_que > #practice').classList.add('hide');
+    document.querySelector('.add_prac_que > .all-categories-section').classList.add('hide');
+    document.querySelector('.add_prac_que > #add').classList.remove('hide');
+    setAutoCompelete(cat_array, 'add');
 }
 
 function showQuestion(){ 
@@ -248,12 +271,9 @@ function addQuestion(){
           date: getTodayDateUid(),
           revision_date: revisionDate(1),
       });
-
+      document.querySelector('.que-add-message').classList.remove('hide');
       document.querySelector('.que-add-message').textContent = 'Question has been added';
-      document.querySelector('.que-add-message').classList.toggle('hide');
-      setTimeout(() => { 
-          document.querySelector('.que-add-message').classList.toggle('hide');
-      }, 4000);
+      
     
       console.log('New question is added successfully');
       saveAddPracQueData();
@@ -271,6 +291,10 @@ function getAddPracQueData(){
 
 
 function clearInputFields(){
+  document.querySelectorAll('#add textarea').forEach( input => {
+    input.value = '';
+  });
+  document.querySelector('.que-add-message').classList.add('hide');
   
 }
 

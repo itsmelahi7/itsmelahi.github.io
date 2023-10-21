@@ -5,6 +5,7 @@
     --label-color: #b2b2b2;
     --font-size: 17px;
     --mb-font-size: 15px;
+    --btn-color: #2A80FF;
 
 }
 
@@ -38,6 +39,11 @@ body .content > header > h1 {
     margin: 10px 5px 0px 33px;
     font-size: 50px;
  }
+#add h1 {
+    text-align: center;
+    color: var(--font-color);
+    font-size: 20px;
+} 
 body .content > header .tabs button{
     background-color: inherit;
     border: none;
@@ -90,12 +96,12 @@ input#search-input {
 }
 
 .search-level .level, .answer .level {
-    margin: 5px;
+    margin: 2px 8px;
     color: #2A80FF;
     font-size: 17px;
     cursor: pointer;
     padding-bottom: 3px;
-    border-bottom: 2px solid white
+    border-bottom: 2px solid transparent;
 }
 
 .search-level .level.active, .answer .level.active {
@@ -210,10 +216,9 @@ input::placeholder, textarea::placeholder {
 }
 
 
-#add textarea::placeholder{
-    font-size: 12px;
-    color: rgb(196, 196, 196);
-}
+
+
+
 .que-num {
     color: var(--label-color);
     margin-left: 25px;
@@ -253,9 +258,7 @@ label {
     margin: 0px 10px;
 }
 
-.answer .level {
-    margin: 26px 7px 20px 0px;
-}
+
 .answer textarea {
     border: none;
     margin: 5px 0px;
@@ -399,6 +402,15 @@ a{
     color:red;
 }
 
+
+body .hide {
+    display: none !important;
+}
+
+
+
+
+
 #add .container {
     max-width: 600px;
     margin: 0px;
@@ -409,39 +421,13 @@ a{
     text-align: center;
 }
 
-#add form {
-    margin-top: 20px;
-}
 
-#add form label {
-    color: gray;
-}
-
-#add .form-group {
-    margin-bottom: 20px;
-}
-
-body .hide {
-    display: none !important;
-}
-
-
-
-#add .que-type, #add .options {
-    display: flex;
-}
-#add .que-type label, #add .options label {
-    padding: 10px 5px 0px 0px;
-}
-#add > .container > div {
-    margin-bottom: 10px;
-}
 #add textarea {
-    margin: 5px 0px;
-    border: none;
     
+    border: none;
     padding: 3px;
     border-radius: 0px;
+    margin-bottom: 15px;
 }
 #add textarea#question {
     border-left: 2px solid #7bb2ff;
@@ -452,6 +438,18 @@ body .hide {
 #add textarea#categories {
     border-left: 2px solid #f2c643;
 }
+#add textarea::placeholder{
+    font-size: 12px;
+    color: rgb(196, 196, 196);
+}
+
+#add .que-add-message{
+    margin: 5px 0px;
+}
+
+
+
+
 
 
 .success {
@@ -460,20 +458,6 @@ body .hide {
 .faile {
     color: red;
 }
-
-#add select {
-    width: 90px;
-    padding: 2px;
-    height: 25px;
-    margin-top: 7px;
-}
-
-
-
-#add .que-add-message{
-    margin: 5px 0px;
-}
-
 
 
 
