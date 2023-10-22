@@ -4,7 +4,7 @@
         
         
         <div class="search-container ">
-            
+            <div class="que-num"></div>  
             <div class="search-level hide">
                 <div class="level" value="hard">hard</div> 
                 <div class="level" value="medium">medium</div>
@@ -26,15 +26,16 @@
                 </div>
             </div>
             <i class="fas fa-sync-alt refresh-icon"></i>
+            <button class="add"> add </button> 
         </div>
         
         
-        <div class="add-sec">
+        <div class="add-sec hide">
             <div class="que-num"></div>  
             <button class="add"> add </button> 
         </div>   
          
-        <button class="today-que"></button> 
+        <button class="today-que hide"></button> 
         <div class="center hide">
             <div class="no-que hide"> No Question found</div> 
             <div class="question">
@@ -58,7 +59,7 @@
                 <label>Categories:</label>
                 <div class="category-section">
                     <div class="new-cat">
-                        <input type="text" placeholder="add-category"></input>
+                        <textarea type="text" class="add-category" placeholder="add-category"></textarea>
                         <button  id="add-category" class="add-category"> add </button>
                         <button  id="update-category" class="update-category hide"> update </button>
                     </div>
@@ -127,7 +128,7 @@
         <label>Categories:</label>
         <div class="category-section">
             <div class="new-cat">
-                <input type="text" placeholder="add-category"/>
+                <textarea type="text" class="add-category" placeholder="add-category"></textarea>
                 <button id="add-category" class="add-category"> add </button>
             </div>
             <div class="categories">

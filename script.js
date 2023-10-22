@@ -224,7 +224,7 @@ function setAutoCompelete(cat_array, loc) {
     var ci = 0;
     var input_before = ''
     if(loc == 'add'){
-        input = document.querySelector('#add .category-section input');
+        input = document.querySelector('#add .category-section textarea.add-category');
     } else if (loc == 'answer'){
         input = document.querySelector('.answer .category-section input');
     }

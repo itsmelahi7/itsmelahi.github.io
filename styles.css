@@ -80,17 +80,21 @@ body .content > header .tabs button.active {
     margin-bottom: 15px;
 }
 
+button#clear {
+    margin-left: auto;
+}
+
 input#search-input {
     width: 100%;
     margin: 0px;
     outline: none;
     border: none;
-    border-bottom: 1px solid var(--label-color);
+    /* border-bottom: 1px solid var(--label-color); */
     /* border-radius: 20px; */
     text-align: center;
     padding: 5px;
-    margin: 10px;
-    margin-right: 20px;
+    /* margin: 10px; */
+    margin-right: 10px;
 }
 
 

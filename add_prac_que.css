@@ -9,13 +9,23 @@ div.add_prac_que {
     min-height: 250px;
     overflow: scroll;
     background-color: var(--center-bc);
-    padding: 10px;
+    padding: 10px 20px;
 }
 
 
-
-
-
+.new-cat {
+    display: flex;
+}
+#add textarea.add-category, .answer textarea.add-category {
+    width: 200px;
+    margin: 0px;
+    margin-top:7px;
+    height: 30px !important;
+}
+#add .bottom {
+    padding-top: 20px;
+    margin-top: 25px;
+}
 
 
 #add .bottom button {
@@ -80,7 +90,7 @@ span.question, div.no-que {
     padding-bottom: 0px;
 }
 
-.add-sec button {
+.add-sec button, button.add {
 
     margin-left: auto;
     margin-right: 20px;

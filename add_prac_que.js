@@ -42,10 +42,10 @@ function loadAddPracticeQuestionsUI(){
               openPracticeSection();
               
             });
-            document.querySelector('.add-sec button.add').addEventListener('click', function(){
+            document.querySelector(' button.add').addEventListener('click', function(){
                 qq.fil_array = qq.today_que;    
             });
-            document.querySelector('.add-sec button.add').addEventListener('click', function(){
+            document.querySelector('button.add').addEventListener('click', function(){
               openAddQuestionSection();
               if(first_time){
                 textareaAutoHeightSetting();
@@ -450,8 +450,8 @@ function showCategoriesInAnswer() {
 
 function addCategory(name, loc){ 
     if(name == '') {
-        name = document.querySelector(`.${loc} .category-section input`).value.toLowerCase().trim();
-        document.querySelector(`.${loc} .category-section input`).value = '';
+        name = document.querySelector(`.${loc} .category-section textarea.add-category`).value.toLowerCase().trim();
+        document.querySelector(`.${loc} .category-section textarea.add-category`).value = '';
     }
     name = name.trim();
     var cat_div = document.querySelector(`.${loc} .category-section .categories`);
@@ -553,7 +553,7 @@ function show(itemSelector) {
 
 
 function checkAnswer(){
-debugger;
+
   googleIt();
   hide('.center .question');
   hide('button#answer');
@@ -652,6 +652,7 @@ function clearInputFields(){
   document.querySelectorAll('#add textarea').forEach( input => {
     input.value = '';
   });
+  document.querySelector('.add .categories').innerHTML = '';
   document.querySelector('.que-add-message').classList.add('hide');
   
 }
