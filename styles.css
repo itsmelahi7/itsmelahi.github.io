@@ -163,7 +163,7 @@ div.categories {
     margin: 3px; 
     border-radius: 14px;
     cursor: pointer;
-    font-size: calc( var(--font-size) - 3px );
+    font-size: var(--font-size);
     background-color: #e2e2e2b8;
     color: var(--category-color);
     transition: background-color 0.3s, color 0.3s;
@@ -172,7 +172,7 @@ div.categories {
 div.categories .clear-icon-cat{
     margin-left: 10px;
     border-radius: 23px;
-    font-size: calc( var(--font-size) - 3px );
+    font-size:  var(--font-size);
 }
 
 
@@ -371,7 +371,7 @@ color: #c03131;
     align-items: center;
     cursor: pointer;
 }
-
+ 
 .view-icon::before {
     content: '\f06e'; /* Unicode for the eye icon (Font Awesome's fas fa-eye) */
     font-family: 'Font Awesome 5 Free';
@@ -586,7 +586,7 @@ cursor: pointer;
 
 .fa-pencil-alt:before, .fa-pencil:before {
     content: "\f303";
-    font-size: calc(var(--font-size) - 9px);
+    font-size: calc(var(--font-size) - 6px);
     margin-left: 10px;
 }
 
