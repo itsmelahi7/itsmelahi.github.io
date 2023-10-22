@@ -10,8 +10,13 @@ var qq = {
     que_no:'',
     que_id:'',
     is_today: false,
+    setting: {
+        hide_que_categories: false,
+        theme: 'light',
+    }
 };
-
+var is_edit_category = true;
+var old_cat = '';
 var first_time = true;
 loadAddPracticeQuestionsUI();
 
@@ -51,6 +56,9 @@ function loadAddPracticeQuestionsUI(){
                 addCategory('', 'add');
             });
             document.querySelector('.answer button.add-category').addEventListener('click', function(){
+                addCategory('', 'answer');
+            });
+            document.querySelector('.answer button.update-category').addEventListener('click', function(){
                 addCategory('', 'answer');
             });
             document.querySelectorAll('.search-level .level').forEach( level => {
@@ -320,15 +328,26 @@ function showCategoriesInAnswer() {
     var category_section = document.querySelector('.answer .category-section .categories');
     var categories = qq.fil_array[qq.que_no].categories;
     category_section.innerHTML = '';
+    qq.fil_array[qq.que_no].categories = removeDuplicates(categories);
+
     categories.forEach((category, index) => {
         var datePattern = /\d{2}-\d{2}-\d{4}/;
         if ( !datePattern.test(category)) {
             var div = document.createElement('div');
             div.className = 'category';
-            div.innerHTML = `<span>${category}</span> <div class="clear-icon-cat" id="clear-icon"> x </div>`;
+            div.innerHTML = `<span>${category}</span> <i class="fas fa-pencil-alt"></i>  <div class="clear-icon-cat" id="clear-icon"> x </div>`;
+            var edit_icon = document.createElement("div");
+        
             category_section.append(div);
-
             div.children[1].addEventListener('click', function () {
+                document.querySelector('.answer .category-section input').value = category;
+                document.querySelector('.answer .category-section .add-category').classList.add('hide');
+               document.querySelector('.answer .category-section .update-category').classList.remove('hide');
+            
+            is_edit_category = true;
+            old_cat = category;
+            });
+            div.children[2].addEventListener('click', function () {
                 div.remove();
                 categories.splice(index, 1);
                 saveAddPracQueData();
@@ -340,7 +359,7 @@ function showCategoriesInAnswer() {
 
 function addCategory(name, loc){ debugger;
     if(name == '') {
-        name = document.querySelector(`.${loc} .category-section input`).value.trim();
+        name = document.querySelector(`.${loc} .category-section input`).value.toLowerCase().trim();
         document.querySelector(`.${loc} .category-section input`).value = '';
     }
     var cat_div = document.querySelector(`.${loc} .category-section .categories`);
@@ -351,21 +370,47 @@ function addCategory(name, loc){ debugger;
     });
     if( is_duplicate) return;
     
+
     var div = document.createElement('div');
     div.className = 'category';
-    div.innerHTML = `<span>${name}</span> <div class="clear-icon-cat" id="clear-icon"> x </div>`;
     
-    
-    cat_div.append(div);
     if( loc == 'add'){
+        div.innerHTML = `<span>${name}</span> <div class="clear-icon-cat" id="clear-icon"> x </div>`;
+        cat_div.append(div);
         div.children[1].addEventListener('click', function () {
             div.remove();
         });
         updateCategories('add');
     } else if ( loc == 'answer'){
+
+        
+
+        
+        if( is_edit_category && old_cat != '' ){
+            document.querySelector('.answer .category-section .add-category').classList.remove('hide');
+            document.querySelector('.answer .category-section .update-category').classList.add('hide');
+            editCategory(name, old_cat);
+            
+            return;
+        }
         qq.fil_array[ qq.que_no].categories.push(name);
+        div.innerHTML = `<span>${name}</span> <i class="fas fa-pencil-alt"></i>  <div class="clear-icon-cat" id="clear-icon"> x </div>`;
+        cat_div.append(div);
+        is_edit_category = false;
         saveAddPracQueData();
+        var edit_icon = document.createElement("div");
+        edit_icon.className = "fas fa-pencil-alt";
+        div.append(edit_icon);
         div.children[1].addEventListener('click', function () {
+            document.querySelector('.answer .category-section input').value = category;
+            document.querySelector('.answer .category-section .add-category').classList.add('hide');
+            document.querySelector('.answer .category-section .update-category').classList.remove('hide');
+            
+            is_edit_category = true;
+            old_cat = name;
+        });
+
+        div.children[2].addEventListener('click', function () {
             div.remove();
             qq.fil_array[qq.que_no].categories.forEach((category, index) => {
                 if (name === category) {
@@ -374,11 +419,27 @@ function addCategory(name, loc){ debugger;
             });
             saveAddPracQueData();
         });
+
+        
         updateCategories('answer');
     }
     
 }
 
+
+function editCategory(new_cat, old_cat){
+    qq.que_array.forEach(item => {
+        item.categories.forEach((cat, index) => {
+            if (cat == old_cat) {
+                item.categories[index] = new_cat;
+            }
+        });
+    });
+    
+    saveAddPracQueData();
+    updateCategories();
+    showCategoriesInAnswer();
+}
 
 function checkAnswer(){
   document.querySelector('.center .question').classList.toggle('hide');

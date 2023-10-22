@@ -361,6 +361,58 @@ color: #c03131;
 
 
 
+.view-icon {
+    width: 24px;
+    height: 24px;
+    background-color: green;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.view-icon::before {
+    content: '\f06e'; /* Unicode for the eye icon (Font Awesome's fas fa-eye) */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: white;
+}
+
+edit-icon {
+    width: 24px;
+    height: 24px;
+    background-color: blue;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.edit-icon i {
+    color: rgb(188, 86, 86);
+}
+/* Styles for the unview icon (hidden) */
+.unview-icon {
+    width: 24px;
+    height: 24px;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.unview-icon::before {
+    content: '\f070'; /* Unicode for the eye-slash icon (Font Awesome's fas fa-eye-slash) */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: white;
+}
+
+
 
 
 @media screen and (max-width: 700px) { 
@@ -532,7 +584,11 @@ cursor: pointer;
     display: inline-block;
 }
 
-
+.fa-pencil-alt:before, .fa-pencil:before {
+    content: "\f303";
+    font-size: calc(var(--font-size) - 9px);
+    margin-left: 10px;
+}
 
 .clear-icon {
     position: absolute;

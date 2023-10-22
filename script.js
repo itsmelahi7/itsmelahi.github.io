@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+function removeDuplicates(arr) {
+    return arr.filter((value, index, self) => {
+        return self.indexOf(value) === index;
+    });
+}
+
 function loadPages(pageName) {
     
     fetch(`${pageName}.html`)
