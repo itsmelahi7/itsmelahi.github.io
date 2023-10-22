@@ -123,6 +123,7 @@ function loadAddPracticeQuestionsUI(){
             document.querySelector('button#answer').addEventListener('click', checkAnswer);
             
             document.querySelector("button#delete").addEventListener("click", function() {
+                scrollToTop();
               document.querySelector(".delete-confirmation.overlay").classList.remove('hide');
               
           });
@@ -157,6 +158,8 @@ function loadAddPracticeQuestionsUI(){
             var exp_ta = document.querySelector('.answer textarea.explanation');
             exp_ta.addEventListener('input', function(){
                 qq.fil_array[qq.que_no].explanation = exp_ta.value;
+                document.querySelector('.answer span.explanation').innerHTML = replaceTextWithMarkup(exp_ta.value);
+                
                 saveAddPracQueData();
             });
 
@@ -168,7 +171,16 @@ function loadAddPracticeQuestionsUI(){
 
 
 
+               
+// Add click event listeners to the spans
+document.querySelector('.answer span.explanation').addEventListener('click', toggleElements);
 
+// Add focus and blur event listeners to the textarea
+const textareaElement = document.querySelector('.answer textarea.explanation');
+//textareaElement.addEventListener('focus', toggleElements);
+textareaElement.addEventListener('blur', toggleElements);
+
+ 
 
             
             if( qq.que_array.length == 0 ){
@@ -223,6 +235,29 @@ function googleIt(){
     
     //a.click();
 }
+
+
+
+
+
+function replaceTextWithMarkup(text) { 
+    debugger;
+    text = text.replace(/\*\*(.*?)\*\*/g, '<span class="bold">$1</span>');
+    text = text.replace(/\^\^(.*?)\^\^/g, '<span class="highlight">$1</span>');
+    return text;
+}
+
+function toggleElements() { debugger;
+    
+    document.querySelector('.answer span.explanation').classList.toggle('hide');
+    document.querySelector('.answer textarea.explanation').classList.toggle('hide');;
+
+}
+
+
+
+
+
 
 function loadTodayQuestion(){ 
     qq.today_que =[];
@@ -339,6 +374,7 @@ function showQuestion(){
   
   document.querySelector('.answer textarea.question').value = qq.fil_array[qq.que_no].question;
   document.querySelector('.answer textarea.explanation').value = qq.fil_array[qq.que_no].explanation;
+  document.querySelector('.answer span.explanation').innerHTML = replaceTextWithMarkup(qq.fil_array[qq.que_no].explanation);
   
   showCategoriesInAnswer();
 }

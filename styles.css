@@ -9,6 +9,7 @@
     --btn-color: #2f6cab;
     --label-color:  #c4c4c4;
     --category-color: #2f6cab;
+    --category-bc: #e3e3e3b8;
     --hard:#cb4040;
     --medium: #acb933;
     --easy:#59b148;
@@ -159,6 +160,16 @@ input#search-input {
     border-left: 0px solid #dedede;
 }
 
+.answer span {
+    line-height: 1.5em;
+}
+
+.bold {
+    font-weight: 700;
+}
+.highlight {
+    background-color:  yellow;
+}
 
 div.categories {
     display:flex;
@@ -171,7 +182,7 @@ div.categories {
     border-radius: 14px;
     cursor: pointer;
     font-size: var(--font-size);
-    background-color: #e2e2e2b8;
+    background-color: var(--category-bc);
     color: var(--category-color);
     transition: background-color 0.3s, color 0.3s;
 }
@@ -334,6 +345,16 @@ textarea {
     border-radius: 6px;
     margin: 5px 0px;
     margin-bottom: 10px;
+    min-height: 50px;
+}
+textarea.add-category {
+    min-height: 30px;
+    width: 200px;
+    margin: 0px;
+    margin-top: 7px;
+    height: 30px !important;
+    overflow: hidden;
+    padding-top: 0px;
 }
 
 
