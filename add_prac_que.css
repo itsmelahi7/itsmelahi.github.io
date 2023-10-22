@@ -15,6 +15,9 @@ div.add_prac_que {
 
 
 
+
+
+
 #add .bottom button {
     height: 30px;
     background-color: inherit;
@@ -51,13 +54,22 @@ div.add_prac_que {
 }
 
 
+.bottom  button {
+    background-color: transparent;
+    border-radius: 0px;
+    padding: 10px;
+}
+.bottom button#next {
+    border-right: 1px solid var(--label-color);
+}
+
 
 
 
 span.question, div.no-que {
     /*font-weight: 700;*/
     color: var(--font-color);
-    font-size: 25px;
+    font-size: calc(var(--font-size) + 7px);
     margin-top: 30px;
 }
 .add-sec {
@@ -68,6 +80,7 @@ span.question, div.no-que {
     background-color: inherit;
     padding-bottom: 0px;
 }
+
 .add-sec button {
 
     margin-left: auto;
@@ -75,7 +88,7 @@ span.question, div.no-que {
     padding: 0px;
     border-radius: 30px;
     background-color: inherit;
-    font-size: 20px;
+    
     
 }
 

@@ -10,10 +10,10 @@
             </div> 
             <div class="autocomplete">
                 <select id="difficultySelect" class="que-level">
-                    <option value="all">all</option>
-                    <option value="easy">easy</option>
-                    <option value="medium">medium</option>
-                    <option value="hard">hard</option>
+                    <option value="all" class="level all" >all</option>
+                    <option value="easy" class="level easy">easy</option>
+                    <option value="medium" class="level medium">medium</option>
+                    <option value="hard" class="level hard">hard</option>
                 </select>
             </div>
             <div class="search-categories cat">
@@ -51,12 +51,23 @@
                 <textarea class="explanation" rows="1"></textarea>
                 <br>
                 <label>Categories:</label>
-                <textarea class="categories" rows="1"> biology, chemistry, polity </textarea>
+                <div class="category-section">
+                    <div class="new-cat">
+                        <input type="text"></textarea>
+                        <button>+</button>
+                    </div>
+                    <div class="categories">
+                    </div>
+
+                </div>
+                
                 <br>
                             
                 <div class='que-level'>
                    <label>Level:</label>
-                   <div class="level" value="hard">hard</div> <div class="level" value="medium">medium</div><div class="level" value="easy">easy</div>
+                   <div class="level hard" >hard</div> 
+                   <div class="level medium" >medium</div>
+                   <div class="level easy" >easy</div>
                 </div>
                 <button id="delete">delete</button>    
                 <div class="delete-confirmation overlay hide">
@@ -87,7 +98,7 @@
         
         
     <div class="all-categories-section sidebar hide">
-        <label>Categories</label>
+        <label>Categories:</label>
         <input type="text" id="search-input" class="hide" placeholder="search">
         <div class="all-categories"> </div>
     </div>

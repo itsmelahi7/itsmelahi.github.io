@@ -3,8 +3,13 @@ var is_mobile = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     loadPages('add_prac_que');
-
     FilePond.create(document.getElementById("filepondInput"));
+
+    if ( window.innerWidth < 700 ) {
+        is_mobile = true;
+        
+    }
+
 });
 
 
@@ -182,7 +187,7 @@ function setAllCategories(cat_array){
         all_cat_div = document.querySelector('.all-categories-section.sidebar .all-categories');
         document.querySelector('.all-categories-section.sidebar').classList.remove('hide');
     }
-
+    all_cat_div.innerHTML ='';
     cat_array.forEach(cat => {
         var div = document.createElement('div');
         div.className = 'category';
@@ -458,9 +463,7 @@ function scrollToTop() {
 
 
 
-document.getElementById("backup").addEventListener("click", function() {
-    backupData();
-});
+
 
 /*
 document.getElementById("import").addEventListener("click", function() {
@@ -471,9 +474,9 @@ document.getElementById("jsonFileInput").addEventListener("change", function(eve
     importData(event.target.files[0]);
 }); */
 
-function backupData() {
+function backupData(data) {
     // Convert the que_array to JSON
-    const jsonData = JSON.stringify(que_array, null, 2);
+    const jsonData = JSON.stringify(data, null, 2);
 
     // Create a Blob containing the JSON data
     const blob = new Blob([jsonData], { type: "application/json" });

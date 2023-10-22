@@ -82,6 +82,9 @@ function loadAddPracticeQuestionsUI(){
                 console.log(`search level = "${qq.search_level}"`);
                 if(qq.search_level == 'all') {
                     qq.search_level = '';
+                    select.style.removeProperty('color');
+                } else {
+                    select.style.color = `var(--${qq.search_level})`;
                 }
                 filter();
             });
@@ -225,17 +228,22 @@ function loadTodayQuestion(){
         
     } else {
         today_que_ele.classList.add('hide');
-        noQuestion('Congratulations, you have finished all the today practice questions.');
+        
+        refresh();
     }
 
 
 }
 
+document.getElementById("backup").addEventListener("click", function() {
+    backupData(qq);
+});
+
 
 function refresh(){
     qq.search_level = '';
     qq.search_cat = '';
-    loadTodayQuestion();
+    //loadTodayQuestion();
     qq.cat_array = loadCategories(qq.que_array);
     
     setAutoCompelete(qq.cat_array, 'prac');
@@ -304,10 +312,32 @@ function showQuestion(){
   
   document.querySelector('.answer textarea.question').value = qq.fil_array[qq.que_no].question;
   document.querySelector('.answer textarea.explanation').value = qq.fil_array[qq.que_no].explanation;
-  document.querySelector('.answer textarea.categories').value = qq.fil_array[qq.que_no].categories;
-
-
+  showCategoriesInAnswer();
 }
+
+
+function showCategoriesInAnswer() {
+    var category_section = document.querySelector('.answer .category-section .categories');
+    var categories = qq.fil_array[qq.que_no].categories;
+    category_section.innerHTML = '';
+    categories.forEach((category, index) => {
+        var datePattern = /\d{2}-\d{2}-\d{4}/;
+        if ( !datePattern.test(category)) {
+            var div = document.createElement('div');
+            div.className = 'category';
+            div.innerHTML = `<span>${category}</span> <div class="clear-icon-cat" id="clear-icon"> x </div>`;
+            category_section.append(div);
+
+            div.children[1].addEventListener('click', function () {
+                div.remove();
+                categories.splice(index, 1);
+                saveAddPracQueData();
+            });
+        }
+    });
+}
+
+
 
 function checkAnswer(){
   document.querySelector('.center .question').classList.toggle('hide');

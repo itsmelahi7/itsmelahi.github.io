@@ -1,27 +1,33 @@
 
 :root {
-    --font-color: #393E46;
+    --body-bc: #eaeaea;
+    --page-bc: white;
     --center-bc:  #f5f5f5;
     --label-color: #b2b2b2;
-    --font-size: 17px;
-    --mb-font-size: 17px;
-    --btn-color: #2A80FF;
+    --font-color: #393E46;
+    --font-size: 20px;
+    --btn-color: #2f6cab;
+    --label-color:  #c4c4c4;
+    --category-color: #2f6cab;
+    --hard:#cb4040;
+    --medium: #acb933;
+    --easy:#59b148;
 
 }
 
 
 body {
-    background-color: #eaeaea;
+    background-color: var(--body-bc);
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0px;
     font-family: system-ui, ui-serif;
-    font-size: 17px;
+    font-size: var(--font-size)
 }
 
 body > .content {
-    background-color: white;
+    background-color: var(--page-bc);
     min-height: 90vh;
     width: 65%;
 }
@@ -30,28 +36,29 @@ body > .content > header{
     display: flex;
     flex-wrap: wrap;
     align-content: center;
-    color: #393E46;
-    border-bottom: 3px solid #393E4A;
+    color: var(--font-color);
+    border-bottom: 3px solid var(--font-color);
     padding: 5px 10px;
     background-color: inherit;
 }
+
 body .content > header > h1 {
     margin: 10px 5px 0px 33px;
-    font-size: 50px;
+    font-size: calc( var(--font-size) + 30px);
  }
  h2 {
-    font-size: 25px !important;
+    font-size: calc( var(--font-size) + 7px);
  }
 #add h1 {
     text-align: center;
     color: var(--font-color);
-    font-size: 20px;
+    font-size: calc( var(--font-size) + 7px);
 } 
+
 body .content > header .tabs button{
     background-color: inherit;
     border: none;
     color: #393E46;
-    font-size: 17px !important;
     font-weight: 700;
     height: 40px;
     margin-top: 25px;
@@ -81,7 +88,6 @@ input#search-input {
     border-radius: 0px;
     text-align: center;
     padding: 5px;
-    font-size: 18px;
 }
 
 
@@ -101,11 +107,31 @@ input#search-input {
 .search-level .level, .answer .level {
     margin: 2px 8px;
     color: #2A80FF;
-    font-size: 17px;
     cursor: pointer;
     padding-bottom: 3px;
     border-bottom: 2px solid transparent;
 }
+
+.answer .level.hard {
+    color: var(--hard);
+}
+.answer .level.hard.active {
+    border-bottom: 2px solid var(--hard);
+}
+.answer .level.medium {
+    color: var(--medium);
+}
+.answer .level.medium.active {
+    border-bottom: 2px solid var(--medium);
+}
+.answer .level.easy {
+    color: var(--easy);
+}
+.answer .level.easy.active {
+    border-bottom: 2px solid var(--easy);
+}
+
+
 
 .search-level .level.active, .answer .level.active {
     border-bottom: 2px solid #2A80FF;
@@ -117,7 +143,6 @@ input#search-input {
 
 .search-categories {
     display: flex;
-    /* margin-top: 6px; */
     flex-wrap: wrap;
     width: 60%;
     align-items: center;
@@ -126,22 +151,27 @@ input#search-input {
 .search-categories.cat {
     border-left: 1px solid #dedede;
 }
+
+
+div.categories {
+    display:flex;
+    flex-wrap: wrap;
+}
 .category {
     display: flex;
     padding: 6px 14px;
     margin: 3px; 
     border-radius: 14px;
     cursor: pointer;
-    font-size: var(--font-size);
     background-color: #e2e2e2b8;
-    color: #3D3D3D;
+    color: var(--category-color);
     transition: background-color 0.3s, color 0.3s;
-    
 }
-.search-categories .category .clear-icon-cat{
+
+div.categories .clear-icon-cat{
     margin-left: 10px;
     border-radius: 23px;
-    font-size: 13px;
+    font-size: var(--font-size);
 }
 
 
@@ -155,11 +185,11 @@ input#search-input {
 }
 .all-categories-section.bottom {
     margin-top: 10px;
-    display: grid !important;
+    display: grid;
 }
 
 .all-categories-section label {
-    font-size: 25px !important;
+    font-size: calc(var(--font-size) + 5px);
     font-weight: 600;
     color: #393E46;
 }
@@ -173,8 +203,8 @@ input#search-input {
 }
 
 input::placeholder, textarea::placeholder {
-    color: #c4c4c4;
-    font-style: italic;
+    color: var(--label-color);
+    font-size: var(--font-size);
 }
 
 
@@ -202,7 +232,7 @@ input::placeholder, textarea::placeholder {
 
 
 #practice .tags-section > label {
-    font-size: 20px;
+    font-size: calc(var(--font-size) + 7px);
     color: var(--font-color);
     font-weight: 700;
 }
@@ -286,7 +316,7 @@ textarea:focus, select {
 textarea {
     font-family: inherit;
     border: 1px solid #dcdcdc;
-    font-size: 15px;
+    font-size: calc(var(--font-size) + 3px);
     resize: none;
     width: 90%;
     padding: 10px;
@@ -297,28 +327,32 @@ textarea {
 }
 
 
+
 .bottom {
     display: flex;
 }
 
 button {
-    background-color: #EFF4FF;
-    color: #2A80FF;
+    background-color: var(--center-bc);
+    color: var(--btn-color);
+    font-size: var(--font-size);
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
     cursor: pointer;
     margin: 0 5px;
-    font-size: var(--font-size);
 }
 
 
+button#delete {
+color: #c03131;
+}
 
 .google-it {
     margin-left: 10px;
-    color: #2A80FF;
-    font-size: var(--mb-font-size) !important;
+    color: var(--btn-color);
     text-decoration: none;
+    cursor: pointer;
 }
 
 
@@ -399,9 +433,7 @@ header nav {
     display: none;
 }
 
-.toggle-icon {
-    font-size: 20px;
-}
+
 .tab{
     display:flex;
 }
@@ -423,8 +455,7 @@ margin-right: 10px;
 margin-top: 15px
 }
 .refresh-icon::before {
-    color: #2A80FF;
-    font-size: 19px;
+    color: var(--btn-color);
     margin-left: auto;
 
 }
@@ -457,10 +488,6 @@ margin-top: 15px
 }
 #add textarea#categories {
     border-left: 2px solid #f2c643;
-}
-#add textarea::placeholder{
-    font-size: 12px;
-    color: rgb(196, 196, 196);
 }
 
 #add .que-add-message{
@@ -506,7 +533,7 @@ margin-top: 15px
     right: 31px;
     transform: translateY(-50%);
     cursor: pointer;
-    font-size: 11px;
+    font-size: calc(var(--font-size) - 7px);
     color: #653232;
     margin-top: 5px;
 }
@@ -595,7 +622,7 @@ margin-top: 15px
 
 
 #refresh-icon {
-    font-size: 20px;
+    
     color: #ebe7e7;
     cursor: pointer;
     transition: color 0.3s;
@@ -617,16 +644,6 @@ header h1 {
 header nav {
     margin-top: 19px;
 }
-
-
-
-#practice header label {
-    display: none;
-}
-#practice select#type-select {
-    margin-right: 0px;
-}
-
 
 
 
@@ -774,7 +791,7 @@ header nav {
 }
 
 body > .content > header .menu-button {
-    font-size: 30px;
+    font-size: calc(var(--font-size) + 12px);
     background: none;
     border: none;
     color: black;
@@ -801,7 +818,7 @@ body > .content > header .menu-button {
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 24px;
+    font-size: calc(var(--font-size) + 10px);
     background: none;
     border: none;
     color: black;
@@ -828,12 +845,10 @@ body > .content > header .menu-button {
 
 
 @media screen and (max-width: 700px) { 
-
-    body {
-        margin: 0px;
-        width:100%;
-        box-shadow: none;
-    }
+    :root {
+        --font-size: 16px;
+      }
+    
     body > .content {
         width: 100%;
     }
@@ -843,23 +858,4 @@ body > .content > header .menu-button {
         margin-bottom: 10px;
         margin-left: 0px;
     }
-    
-    input::placeholder, textarea::placeholder {
-        font-size: 13px;;
-    }
-    /*.search-level .level, .answer .level,
-    .add-sec button, .que-num, .search-container select,
-    button#answer, input#search-input,
-    input::placeholder, textarea::placeholder, button*/ 
-    * :not(
-        .menu-button, 
-        span.question, 
-        h1, h2, #closeMenu){
-        font-size: var(--mb-font-size) !important;
-    }
-
-
-
-
-
 }
