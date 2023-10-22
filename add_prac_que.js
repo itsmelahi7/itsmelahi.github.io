@@ -216,7 +216,10 @@ function googleIt(){
         a.textContent = 'Look word meaning in chatGPT';
     }
     
-    a.href = 'https://www.bing.com/search?q=' + search_string;
+    var encodedQuestion = encodeURIComponent(search_string);
+    //window.open('https://www.bing.com/search?question=' + encodedQuestion, "_blank");
+    //window.open('https://www.bing.com/chat?question=' + encodedQuestion, "_blank");
+    a.href = 'https://www.bing.com/chat?question=' + encodedQuestion;
     
     //a.click();
 }
