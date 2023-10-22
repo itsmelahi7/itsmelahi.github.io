@@ -219,7 +219,7 @@ function setAllCategories(cat_array, que_array){
 }
 
 
-function setAutoCompelete(cat_array, loc) { debugger;
+function setAutoCompelete(cat_array, loc) { 
     var input = document.querySelector('input#search-input');
     var ci = 0;
     var input_before = ''
@@ -262,7 +262,7 @@ function setAutoCompelete(cat_array, loc) { debugger;
             item.addEventListener('click', function() {
                 input.value = '';//input.value = name;
                 autocompleteList.classList.remove('active');
-                debugger;
+                
                 if(loc == 'add'){ 
                     addCategory(name, loc);
                 } else if(loc == 'answer'){
@@ -595,3 +595,61 @@ function importData(file) {
 
     reader.readAsText(file);
 }*/
+
+
+
+
+        const { remote } = require('electron');
+        const fs = require('fs');
+        const path = require('path');
+
+        let selectedFolder = null;
+        const imageList = document.getElementById('imageList');
+        const selectFolderButton = document.getElementById('selectFolderButton');
+        const addImagesButton = document.getElementById('addImagesButton');
+        const imageInput = document.getElementById('imageInput');
+
+        // Event listener for selecting a folder
+        selectFolderButton.addEventListener('click', () => {
+            remote.dialog.showOpenDialog({
+                properties: ['openDirectory'],
+                title: 'Select a Folder',
+            }).then(result => {
+                if (!result.canceled) {
+                    selectedFolder = result.filePaths[0];
+                }
+            });
+        });
+
+        // Event listener for adding images
+        addImagesButton.addEventListener('click', () => {
+            if (selectedFolder) {
+                imageInput.click();
+            } else {
+                alert('Please select a folder first.');
+            }
+        });
+
+        // Event listener for image selection
+        imageInput.addEventListener('change', () => {
+            const files = imageInput.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const imageFilePath = path.join(selectedFolder, 'images', file.name);
+
+                // Ensure the 'images' subfolder exists
+                fs.mkdirSync(path.dirname(imageFilePath), { recursive: true });
+
+                // Copy the selected image to the chosen folder
+                fs.copyFile(file.path, imageFilePath, (err) => {
+                    if (err) {
+                        console.error('Error copying image:', err);
+                    } else {
+                        // Display the image on the page
+                        const imgElement = document.createElement('img');
+                        imgElement.src = imageFilePath;
+                        imageList.appendChild(imgElement);
+                    }
+                });
+            }
+        });

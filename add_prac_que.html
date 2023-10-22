@@ -1,6 +1,8 @@
 <div class="add_prac_que">
     
     <div id="practice" class=" practice-question-section ">
+        
+        
         <div class="search-container ">
             
             <div class="search-level hide">
@@ -41,7 +43,7 @@
                 </div>
                 <div class="view-icon hide"></div>
                 <div class="unview-icon hide"></div>
-                <button id="answer">Check answer</button>
+                
             </div>
             
             <div class="answer hide">
@@ -56,7 +58,7 @@
                 <label>Categories:</label>
                 <div class="category-section">
                     <div class="new-cat">
-                        <input type="text" placeholder="add category"></input>
+                        <input type="text" placeholder="add-category"></input>
                         <button  id="add-category" class="add-category"> add </button>
                         <button  id="update-category" class="update-category hide"> update </button>
                     </div>
@@ -75,7 +77,7 @@
                 </div>
                 <br>
                 <br>
-                <button id="delete">delete</button>
+                
                 <div class="delete-confirmation overlay hide">
                     <p> Are you sure to delete the question?</p>
                     <div class="btn-sec">
@@ -88,9 +90,12 @@
             </div>
         </div>
 
-        <div class='bottom'>
+        <div class='bottom button-section'>
             <button id="prev" class=''> << </button>
             <button id="next"> >> </button>
+            <button id="answer" class="">Check answer</button>
+            <button id="delete" class="hide">delete</button>
+
             
             
         </div>
@@ -114,15 +119,15 @@
     <div id="add" class=" add-question-section add hide">
         <h1>Add Question</h1>
         <label>Question:</label>
-        <textarea id="question" name="question" placeholder=" Add question ... " rows="1"></textarea>
+        <textarea id="question" class="question" name="question" placeholder="question... " rows="1"></textarea>
         
         <label>Answer:</label>
-        <textarea id="explanation" name="explanation" placeholder=" Add explaination ... " rows="1"></textarea>
+        <textarea id="explanation" name="explanation" placeholder="answer... " rows="1"></textarea>
         
         <label>Categories:</label>
         <div class="category-section">
             <div class="new-cat">
-                <input type="text" placeholder="add category"></input>
+                <input type="text" placeholder="add-category"/>
                 <button id="add-category" class="add-category"> add </button>
             </div>
             <div class="categories">

@@ -9,6 +9,7 @@ var qq = {
     search_cat:'',
     que_no:'',
     que_id:'',
+    native_language:'urdu',
     is_today: false,
     setting: {
         hide_que_categories: false,
@@ -169,7 +170,7 @@ function loadAddPracticeQuestionsUI(){
 
 
 
-            debugger;
+            
             if( qq.que_array.length == 0 ){
               var message = 'No questions data found. Open "add question" section by clicking the "add" button.';
               noQuestion(message);
@@ -207,13 +208,17 @@ function filter(category){
 }
 
 function googleIt(){
+    var a = document.querySelector('a.google-it');
+    a.textContent = 'Look question in chatGPT';
     var search_string = qq.fil_array[ qq.que_no].question;
     if( qq.search_cat == 'vocab'){
-        search_string = search_string + ' define';
+        search_string = `${search_string} define? also give its meaning in ${qq.native_language}`;
+        a.textContent = 'Look word meaning in chatGPT';
     }
-    var a = document.querySelector('a.google-it');
+    
     a.href = 'https://www.bing.com/search?q=' + search_string;
-    a.click();
+    
+    //a.click();
 }
 
 function loadTodayQuestion(){ 
@@ -248,7 +253,12 @@ function refresh(){
     getAddPracQueData();
     updateCategories();
     qq.search_level = '';
+    document.querySelector(`.search-container input`).classList.remove('hide');
+    document.querySelector(`.search-container .category`).classList.add('hide');
+
     qq.search_cat = '';
+    document.querySelector(`.search-container select`).value = 'all';
+    document.querySelector(`.search-container select`).style.removeProperty('color');
     //loadTodayQuestion();
     
     
@@ -285,6 +295,8 @@ function noQuestion(message){
   document.querySelector('.que-num ').classList.add('hide');
   document.querySelector('.center .question').classList.add('hide');
   document.querySelector('.center .answer').classList.add('hide');
+  document.querySelector('.bottom.button-section').classList.add('hide');
+
 
 }
 function openPracticeSection(){
@@ -307,9 +319,13 @@ function showQuestion(){
   console.log('showQuestion is called');
   document.querySelector('.center .question').classList.remove('hide');
   document.querySelector('.que-num ').classList.remove('hide');
+  document.querySelector('.bottom.button-section').classList.remove('hide');
 
   document.querySelector('.center .answer').classList.add('hide');
   document.querySelector('.center .no-que').classList.add('hide');
+
+  hide('button#delete');
+  show('button#answer');
 
   
   loadQuestionCategories(qq.fil_array[qq.que_no].categories);
@@ -320,7 +336,82 @@ function showQuestion(){
   
   document.querySelector('.answer textarea.question').value = qq.fil_array[qq.que_no].question;
   document.querySelector('.answer textarea.explanation').value = qq.fil_array[qq.que_no].explanation;
+  
   showCategoriesInAnswer();
+}
+
+
+
+
+var old_clipboard_text = '';
+function checkClipboardAndExtract() {
+    
+    navigator.clipboard.readText().then(function(clipboardText) {
+        if (clipboardText.trim() !== "") {
+            old_clipboard_text = clipboardText.trim();
+            var index = getAIResponseIndex(old_clipboard_text);
+            if(index != null){
+                var text = old_clipboard_text.substring(0, index);
+                text = text.replace(/\*\*/g, '');
+
+    // Remove reference numbers (e.g., ¹ ² ³)
+    text = text.replace(/¹|²|³/g, '');
+    navigator.clipboard.writeText(text).then(function() {
+        console.log("Text set to clipboard successfully.");
+    }).catch(function(error) {
+        console.error("Error setting text to clipboard:", error);
+    });  
+     //console.log("Extracted text:", old_clipboard_text.substring(0, index));
+            }
+            return;
+            
+        }
+    }).catch(function(error) {
+        //console.error("Error reading clipboard:", error);
+    });
+}
+
+
+function getAIResponseIndex(clipboardText) {
+    
+    var a = clipboardText.indexOf('I hope that helps');
+    var b = clipboardText.indexOf('Source: Conversation with Bing');
+    if( a !== -1 && b !== -1 ){
+        return a;
+        
+    }
+    
+    if( b !== -1 ){
+        return b;
+    }
+    return null;
+}
+var intervalIdd = setInterval(checkClipboardAndExtract, 1000);
+
+
+// Call checkClipboardAndExtract every 1000 ms (1 second)
+const intervalId = setInterval(checkClipboardAndExtract, 1000);
+
+
+
+function extractText(inputText) {
+    // Check if the text contains 'Source: Conversation with Bing'
+    const sourceIndex = inputText.indexOf('Source: Conversation with Bing');
+    
+    if (sourceIndex !== -1) {
+        // Get the text from the beginning to the 'Source' part
+        let extractedText = inputText.substring(0, sourceIndex);
+
+        // Remove small numbers and asterisks
+        extractedText = extractedText.replace(/[\*\d]/g, '');
+
+        // Trim any leading or trailing whitespace
+        extractedText = extractedText.trim();
+
+        return extractedText;
+    }
+
+    return inputText; // If 'Source' is not found, return the original text
 }
 
 
@@ -357,11 +448,12 @@ function showCategoriesInAnswer() {
 }
 
 
-function addCategory(name, loc){ debugger;
+function addCategory(name, loc){ 
     if(name == '') {
         name = document.querySelector(`.${loc} .category-section input`).value.toLowerCase().trim();
         document.querySelector(`.${loc} .category-section input`).value = '';
     }
+    name = name.trim();
     var cat_div = document.querySelector(`.${loc} .category-section .categories`);
     var is_duplicate = false;
     document.querySelectorAll(`.${loc} .category-section .categories .category`).forEach( cat => {
@@ -369,6 +461,7 @@ function addCategory(name, loc){ debugger;
             is_duplicate = true;
     });
     if( is_duplicate) return;
+    if(loc == 'add' && name == '') return;
     
 
     var div = document.createElement('div');
@@ -398,9 +491,7 @@ function addCategory(name, loc){ debugger;
         cat_div.append(div);
         is_edit_category = false;
         saveAddPracQueData();
-        var edit_icon = document.createElement("div");
-        edit_icon.className = "fas fa-pencil-alt";
-        div.append(edit_icon);
+        
         div.children[1].addEventListener('click', function () {
             document.querySelector('.answer .category-section input').value = category;
             document.querySelector('.answer .category-section .add-category').classList.add('hide');
@@ -441,9 +532,36 @@ function editCategory(new_cat, old_cat){
     showCategoriesInAnswer();
 }
 
+
+
+// Function to hide an element
+function hide(itemSelector) {
+    const element = document.querySelector(itemSelector);
+    if (element) {
+        element.classList.add('hide'); // Add a class to hide the element
+    }
+}
+
+// Function to show an element
+function show(itemSelector) {
+    const element = document.querySelector(itemSelector);
+    if (element) {
+        element.classList.remove('hide'); // Remove the class to show the element
+    }
+}
+
+
+
 function checkAnswer(){
-  document.querySelector('.center .question').classList.toggle('hide');
-  document.querySelector('.center .answer').classList.toggle('hide');
+debugger;
+  googleIt();
+  hide('.center .question');
+  hide('button#answer');
+  show('.center .answer');
+  show('button#delete');
+  
+
+
   setAutoCompelete(qq.cat_array, 'answer');
   document.querySelectorAll('.answer .level').forEach( level => {
     level.classList.remove('active');
@@ -459,6 +577,7 @@ function checkAnswer(){
         saveAddPracQueData();
     }) 
   });
+  
   textareaAutoHeightSetting();
 }
 
@@ -523,7 +642,8 @@ function saveAddPracQueData(){
 function getAddPracQueData(){ 
   var data = getDataFromLocale('add_prac_que_data');
   if(data){
-      qq = data;
+    qq = Object.assign({}, qq, data);
+    
   }
 }
 

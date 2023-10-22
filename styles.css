@@ -12,6 +12,7 @@
     --hard:#cb4040;
     --medium: #acb933;
     --easy:#59b148;
+    --que-color: #2c2cc8;
 
 }
 
@@ -84,10 +85,12 @@ input#search-input {
     margin: 0px;
     outline: none;
     border: none;
-    border-bottom: 0px solid #a4a4a4;
-    border-radius: 0px;
+    border-bottom: 1px solid var(--label-color);
+    /* border-radius: 20px; */
     text-align: center;
     padding: 5px;
+    margin: 10px;
+    margin-right: 20px;
 }
 
 
@@ -149,7 +152,7 @@ input#search-input {
     justify-content: center;
 }
 .search-categories.cat {
-    border-left: 1px solid #dedede;
+    border-left: 0px solid #dedede;
 }
 
 
@@ -185,8 +188,11 @@ div.categories .clear-icon-cat{
     margin-left: 10px;
 }
 .all-categories-section.bottom {
+    
     margin-top: 10px;
     display: grid;
+    background-color: inherit;
+    border: none;
 }
 
 .all-categories-section label {
@@ -211,7 +217,9 @@ input::placeholder, textarea::placeholder {
 
 
 
-
+textarea.question {
+    color: var(--que-color);
+}
 
 
 
@@ -301,12 +309,6 @@ label {
 }
 
 
-.answer textarea {
-    border: none;
-    margin: 5px 0px;
-    color: #3e2e2e;
-    line-height: 1.2em;
-}
 .answer .categories {
     margin: 0px;
 }
@@ -315,15 +317,18 @@ textarea:focus, select {
 }
 
 textarea {
+    border: none;
+    color: #3e2e2e;
+    line-height: 1.4em;
     font-family: inherit;
-    border: 1px solid #dcdcdc;
-    font-size: calc(var(--font-size) + 3px);
+    /*border: 1px solid #dcdcdc;*/
+    font-size: var(--font-size);
     resize: none;
     width: 90%;
+    background-color: white;
     padding: 10px;
-    background-color: inherit;
-    padding-bottom: 2px;
     border-radius: 6px;
+    margin: 5px 0px;
     margin-bottom: 10px;
 }
 
@@ -331,6 +336,9 @@ textarea {
 
 .bottom {
     display: flex;
+    background-color: var(--center-bc);
+    border-top: 1px solid var(--label-color);
+    min-height: 50px;
 }
 
 button {
@@ -350,7 +358,7 @@ color: #c03131;
 }
 
 .google-it {
-    margin-left: 10px;
+    
     color: var(--btn-color);
     text-decoration: none;
     cursor: pointer;
@@ -535,18 +543,19 @@ cursor: pointer;
 
 #add textarea {
     border: none;
-    padding: 3px;
+    padding: 5px;
     border-radius: 0px;
     margin-bottom: 35px;
+    
 }
 #add textarea#question {
-    border-left: 2px solid #7bb2ff;
+    /*border-left: 0px solid #7bb2ff;*/
 }
 #add textarea#explanation {
-    border-left: 2px solid #81fa65;
+   /* border-left: px solid #81fa65;*/
 }
 #add textarea#categories {
-    border-left: 2px solid #f2c643;
+  /*  border-left: 2px solid #f2c643;*/
 }
 
 #add .que-add-message{
@@ -921,4 +930,20 @@ body > .content > header .menu-button {
         margin-bottom: 10px;
         margin-left: 0px;
     }
+
+
+    /* Test */
+    .page-content {
+        padding:0px;
+    }
+    .search-container {
+        margin: 10px 15px;
+    }
+    .center {
+        margin: 0px;
+        padding: 10px 15px;
+    }
+    
+
+
 }

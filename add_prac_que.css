@@ -37,7 +37,7 @@ div.add_prac_que {
  .search-container .autocomplete {
     text-align: center;
     margin: 0px;
-    width: 30%;
+    width: auto;
 }
 
 .search-container select {
@@ -51,6 +51,7 @@ div.add_prac_que {
     -webkit-appearance: none;
     -moz-appearance: none;
     background-color: inherit;
+    padding-right: 0px;
 }
 
 
@@ -59,9 +60,7 @@ div.add_prac_que {
     border-radius: 0px;
     padding: 10px;
 }
-.bottom button#next {
-    border-right: 1px solid var(--label-color);
-}
+
 
 
 
@@ -84,7 +83,7 @@ span.question, div.no-que {
 .add-sec button {
 
     margin-left: auto;
-    margin-right: 10px;
+    margin-right: 20px;
     padding: 0px;
     border-radius: 30px;
     background-color: inherit;
@@ -117,9 +116,6 @@ button#clear-btn, button#back-btn,button#answer, button#delete {
     border-radius: 5px;
     margin-left: auto;
     background-color: inherit;;
-}
-button#answer {
-    margin-top: 20px;
 }
 
 
