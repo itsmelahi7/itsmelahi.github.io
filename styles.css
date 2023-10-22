@@ -96,6 +96,9 @@ input#search-input {
     padding: 5px;
     /* margin: 10px; */
     margin-right: 10px;
+    height: 37px;
+    border-right: 1px solid var(--label-color);
+    padding-right: 31px;
 }
 
 
@@ -286,7 +289,7 @@ textarea.question {
 
 .que-num {
     color: var(--label-color);
-    margin-left: 25px;
+    margin-right: 25px;
 }
 
 

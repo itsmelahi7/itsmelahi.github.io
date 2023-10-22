@@ -51,17 +51,18 @@ div.add_prac_que {
 }
 
 .search-container select {
-    font-size: var(--font-size);
+        font-size: var(--font-size);
     padding: 10px;
     border: 1px solid #ccc;
     color: var(--label-color);
-    border-radius: 5px;
+    /* border-radius: 5px; */
     border: 0px;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     background-color: inherit;
     padding-right: 0px;
+    border-left: 1px solid #b1b0b0;
 }
 
 
