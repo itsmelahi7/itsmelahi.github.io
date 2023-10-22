@@ -145,7 +145,7 @@ function getDataFromLocale(key) {
 
 
 function loadCategories(fromArray){
-    var cat_array =[];
+    var cat_array =['vocab'];
     fromArray.forEach( array => {
         
         cat_array = cat_array.concat(array.categories)
@@ -176,7 +176,7 @@ function loadQuestionCategories(categories){
     });
 }
 
-function setAllCategories(cat_array){
+function setAllCategories(cat_array, que_array){
     
     var all_cat_div;
     
@@ -191,24 +191,36 @@ function setAllCategories(cat_array){
     cat_array.forEach(cat => {
         var div = document.createElement('div');
         div.className = 'category';
-        div.textContent = cat;
+        
         div.addEventListener('click', function(){
             addSearchCat(cat);
             filter(cat);
             scrollToTop();
         });
+        var i = 0;
+        que_array.forEach(item => {
+            if (item.categories.length != 0) {
+                item.categories.forEach( category => {
+                    if( category == cat )
+                        i++;
+                });
+            }
+        });
+        div.textContent = cat + ' ' + i;
         all_cat_div.append(div);
         
     });
 }
 
 
-function setAutoCompelete(cat_array, loc) { 
+function setAutoCompelete(cat_array, loc) { debugger;
     var input = document.querySelector('input#search-input');
     var ci = 0;
     var input_before = ''
     if(loc == 'add'){
-        input = document.querySelector('#add textarea#categories');
+        input = document.querySelector('#add .category-section input');
+    } else if (loc == 'answer'){
+        input = document.querySelector('.answer .category-section input');
     }
     var autocompleteList = document.createElement('div');
     autocompleteList.className = 'autocomplete-list';
@@ -242,24 +254,23 @@ function setAutoCompelete(cat_array, loc) {
             item.textContent = name;
   
             item.addEventListener('click', function() {
-                if(loc == 'add'){ 
-                    if( ci > 0 ){
-                        input.value = input_before +', '+ name;
-                    } else {
-                        input.value = input_before + name;
-                    }
-                    input.selectionStart = input.selectionEnd = input.value.length;
-                    
-                    
-                } else {
-
                 input.value = '';//input.value = name;
                 autocompleteList.classList.remove('active');
+                debugger;
+                if(loc == 'add'){ 
+                    addCategory(name, loc);
+                } else if(loc == 'answer'){
+                    addCategory(name, loc);
+                } else {
                 search_cat = name;
                 search_text = '';
                 addSearchCat(name);
                 filter(name);
                 }
+
+        
+                
+                
                 
                 
             });
@@ -283,6 +294,8 @@ function setAutoCompelete(cat_array, loc) {
         }
     });
   }
+
+
 
 
 function filterQuestion(que_array, search_level, search_cat){

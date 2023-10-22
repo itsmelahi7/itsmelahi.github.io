@@ -16,19 +16,13 @@ var first_time = true;
 loadAddPracticeQuestionsUI();
 
 
-
-
-
-
 function loadAddPracticeQuestionsUI(){
     const interval_apq = setInterval(() => {
         if ( document.querySelector('.add-sec button')  ) { 
             clearInterval(interval_apq); // This stops the interval
-            getAddPracQueData(); 
-            
+            getAddPracQueData();
 
-            loadTodayQuestion();
-            document.querySelector('.today-que').addEventListener('click', function(){
+            document.querySelector('.today-que').addEventListener('click',  function(){
                 qq.search_level = '';
                 qq.search_cat = '';
                 qq.fil_array = qq.today_que;
@@ -51,6 +45,13 @@ function loadAddPracticeQuestionsUI(){
                 textareaAutoHeightSetting();
                 first_time = false;
               }
+            });
+
+            document.querySelector('.add button.add-category').addEventListener('click', function(){
+                addCategory('', 'add');
+            });
+            document.querySelector('.answer button.add-category').addEventListener('click', function(){
+                addCategory('', 'answer');
             });
             document.querySelectorAll('.search-level .level').forEach( level => {
               level.addEventListener('click', function(event){
@@ -150,11 +151,6 @@ function loadAddPracticeQuestionsUI(){
                 saveAddPracQueData();
             });
 
-            var cat_ta = document.querySelector('.answer textarea.categories');
-            cat_ta.addEventListener('input', function(){
-                qq.fil_array[qq.que_no].categories = cat_ta.value;
-                saveAddPracQueData();
-            });
             
         document.querySelector('.google-it').addEventListener('click', googleIt);
             
@@ -167,7 +163,7 @@ function loadAddPracticeQuestionsUI(){
 
             debugger;
             if( qq.que_array.length == 0 ){
-              var message = 'No questions data found. Add question but clicking on the "add" button';
+              var message = 'No questions data found. Open "add question" section by clicking the "add" button.';
               noQuestion(message);
               return;
             } else {
@@ -241,14 +237,21 @@ document.getElementById("backup").addEventListener("click", function() {
 
 
 function refresh(){
+    getAddPracQueData();
+    updateCategories();
     qq.search_level = '';
     qq.search_cat = '';
     //loadTodayQuestion();
-    qq.cat_array = loadCategories(qq.que_array);
     
-    setAutoCompelete(qq.cat_array, 'prac');
-    setAllCategories(qq.cat_array);
+    
+    
+    
     filter();
+}
+function updateCategories( loc ){
+    qq.cat_array = loadCategories(qq.que_array);
+    setAutoCompelete(qq.cat_array, loc);
+    setAllCategories(qq.cat_array, qq.que_array);
 }
 
 function handleSelectChange() {
@@ -282,10 +285,7 @@ function openPracticeSection(){
     
 
     document.querySelector('.add_prac_que > #add').classList.add('hide');
-    loadCats();
-    
-
-    //loadCategories();  
+    refresh(); 
 }
 function openAddQuestionSection(){ 
     console.log('add question section opened');
@@ -338,10 +338,52 @@ function showCategoriesInAnswer() {
 }
 
 
+function addCategory(name, loc){ debugger;
+    if(name == '') {
+        name = document.querySelector(`.${loc} .category-section input`).value.trim();
+        document.querySelector(`.${loc} .category-section input`).value = '';
+    }
+    var cat_div = document.querySelector(`.${loc} .category-section .categories`);
+    var is_duplicate = false;
+    document.querySelectorAll(`.${loc} .category-section .categories .category`).forEach( cat => {
+        if (cat.children[0].textContent == name )
+            is_duplicate = true;
+    });
+    if( is_duplicate) return;
+    
+    var div = document.createElement('div');
+    div.className = 'category';
+    div.innerHTML = `<span>${name}</span> <div class="clear-icon-cat" id="clear-icon"> x </div>`;
+    
+    
+    cat_div.append(div);
+    if( loc == 'add'){
+        div.children[1].addEventListener('click', function () {
+            div.remove();
+        });
+        updateCategories('add');
+    } else if ( loc == 'answer'){
+        qq.fil_array[ qq.que_no].categories.push(name);
+        saveAddPracQueData();
+        div.children[1].addEventListener('click', function () {
+            div.remove();
+            qq.fil_array[qq.que_no].categories.forEach((category, index) => {
+                if (name === category) {
+                    qq.fil_array[qq.que_no].categories.splice(index, 1);
+                }
+            });
+            saveAddPracQueData();
+        });
+        updateCategories('answer');
+    }
+    
+}
+
 
 function checkAnswer(){
   document.querySelector('.center .question').classList.toggle('hide');
   document.querySelector('.center .answer').classList.toggle('hide');
+  setAutoCompelete(qq.cat_array, 'answer');
   document.querySelectorAll('.answer .level').forEach( level => {
     level.classList.remove('active');
     level.addEventListener('click', function(){
@@ -385,13 +427,18 @@ function deleteQuestion(id) {
   filter();
 }
 function addQuestion(){
+     
+    var categories = Array.from(document.querySelectorAll('.add .categories .category'))
+    .map(cat => cat.children[0].textContent);
+    categories.push( getTodayDate());
+
 
      var que_obj = {
         id: generateID(),
         type: 'normal',
         question: document.querySelector("#add textarea#question").value.trim(),
         explanation: document.querySelector(" #add textarea#explanation").value.trim(),
-        categories: (document.querySelector("#add textarea#categories").value.toLowerCase() + ', ' + getTodayDate()).split(',').map(item => item.trim()).filter(item => item !== ''),
+        categories: categories,
         level: 'hard',
         wronged: false,
         create_date: getTodayDate(),
@@ -405,7 +452,9 @@ function addQuestion(){
     
       console.log('New question is added successfully' + que_obj);
       saveAddPracQueData();
+      updateCategories('add');
 }
+
 
 function saveAddPracQueData(){ 
   saveDataInLocale('add_prac_que_data', qq);

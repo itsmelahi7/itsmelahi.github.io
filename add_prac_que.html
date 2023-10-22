@@ -16,13 +16,14 @@
                     <option value="hard" class="level hard">hard</option>
                 </select>
             </div>
-            <div class="search-categories cat">
+            <div class="search-categories categories cat">
                 <input type="text" id="search-input" placeholder="search category">
                 <div class="category hide">
                     <span>biology</span> 
                     <div class="clear-icon-cat " id="clear-icon"> x </div>
                 </div>
             </div>
+            <i class="fas fa-sync-alt refresh-icon"></i>
         </div>
         
         
@@ -53,8 +54,8 @@
                 <label>Categories:</label>
                 <div class="category-section">
                     <div class="new-cat">
-                        <input type="text"></textarea>
-                        <button>+</button>
+                        <input type="text" placeholder="add category"></input>
+                        <button  id="add-category" class="add-category"> add </button>
                     </div>
                     <div class="categories">
                     </div>
@@ -69,7 +70,9 @@
                    <div class="level medium" >medium</div>
                    <div class="level easy" >easy</div>
                 </div>
-                <button id="delete">delete</button>    
+                <br>
+                <br>
+                <button id="delete">delete</button>
                 <div class="delete-confirmation overlay hide">
                     <p> Are you sure to delete the question?</p>
                     <div class="btn-sec">
@@ -85,7 +88,8 @@
         <div class='bottom'>
             <button id="prev" class=''> << </button>
             <button id="next"> >> </button>
-            <i class="fas fa-sync-alt refresh-icon"></i>
+            
+            
         </div>
         <br>
         <br>
@@ -104,7 +108,7 @@
     </div>
 
 
-    <div id="add" class=" add-question-section hide">
+    <div id="add" class=" add-question-section add hide">
         <h1>Add Question</h1>
         <label>Question:</label>
         <textarea id="question" name="question" placeholder=" Add question ... " rows="1"></textarea>
@@ -113,7 +117,15 @@
         <textarea id="explanation" name="explanation" placeholder=" Add explaination ... " rows="1"></textarea>
         
         <label>Categories:</label>
-        <textarea id="categories" name="categories" placeholder="Add categories e.g abc, def, ghi " rows="1"></textarea>
+        <div class="category-section">
+            <div class="new-cat">
+                <input type="text" placeholder="add category"></input>
+                <button id="add-category" class="add-category"> add </button>
+            </div>
+            <div class="categories">
+            </div>
+
+        </div>
         
         <div class="que-add-message success"></div>
 

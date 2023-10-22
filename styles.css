@@ -159,10 +159,11 @@ div.categories {
 }
 .category {
     display: flex;
-    padding: 6px 14px;
+    padding: 3px 9px;
     margin: 3px; 
     border-radius: 14px;
     cursor: pointer;
+    font-size: calc( var(--font-size) - 3px );
     background-color: #e2e2e2b8;
     color: var(--category-color);
     transition: background-color 0.3s, color 0.3s;
@@ -171,7 +172,7 @@ div.categories {
 div.categories .clear-icon-cat{
     margin-left: 10px;
     border-radius: 23px;
-    font-size: var(--font-size);
+    font-size: calc( var(--font-size) - 3px );
 }
 
 
@@ -452,7 +453,7 @@ body .hide {
 .refresh-icon {
 margin-left: auto;
 margin-right: 10px;
-margin-top: 15px
+cursor: pointer;
 }
 .refresh-icon::before {
     color: var(--btn-color);
@@ -460,7 +461,13 @@ margin-top: 15px
 
 }
 
-
+.category-section input {
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    padding-right: 0px;
+    margin-bottom: 8px;
+}
 
 
 #add .container {
