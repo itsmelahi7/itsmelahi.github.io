@@ -1,10 +1,8 @@
 :root {
     --body-bc: #100707;
-    --header-bc: #091a33;
-    /*#064199;*/
+    --header-bc: #064199;
     --body-bc: #EEF4F7;
-    --header-color: #5370a3;
-    /*#b3c7e9;*/
+    --header-color: #b3c7e9;
     --page-bc: #EEF4F7;
     --center-bc: #D6DFE7;
     --label-color: #94B1DC;
@@ -26,4 +24,7 @@
     }
 }
 
-/* https: //css-tricks.com/dark-modes-with-css/ */
+/* https: //css-tricks.com/dark-modes-with-css/
+https: //m2.material.io/design/color/dark-theme.html#behavior
+
+*/
