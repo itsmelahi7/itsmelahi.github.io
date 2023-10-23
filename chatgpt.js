@@ -11,7 +11,7 @@ exec("npm install axios --save", (error, stdout, stderr) => {
 });
 const axios = require("axios");
 
-const apiKey = "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"; // Replace with your OpenAI API key
+const apiKey = ""; // Replace with your OpenAI API key
 const prompt = "Who is PM of India?"; // Replace with your prompt text
 
 const endpoint = "https://api.openai.com/v1/engines/text-davinci-003/completions";
