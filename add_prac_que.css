@@ -1,10 +1,12 @@
 div.add_prac_que {
     display: flex;
 }
+
 #practice {
     flex: 0 0 60%;
- }
- div#add {
+}
+
+div#add {
     display: grid;
     border-radius: 6px;
     min-height: 250px;
@@ -19,12 +21,15 @@ div.add_prac_que {
 .new-cat {
     display: flex;
 }
-#add textarea.add-category, .answer textarea.add-category {
+
+#add textarea.add-category,
+.answer textarea.add-category {
     width: 200px;
     margin: 0px;
-    margin-top:7px;
+    margin-top: 7px;
     height: 30px !important;
 }
+
 #add .bottom {
     padding-top: 20px;
     margin-top: 25px;
@@ -37,6 +42,7 @@ div.add_prac_que {
     text-align: center;
     padding-top: 5px;
 }
+
 #add .bottom button#add {
     border: 1px solid var(--btn-color);
 }
@@ -47,17 +53,17 @@ div.add_prac_que {
 
 
 
- .search-container .autocomplete {
+.search-container .autocomplete {
     text-align: center;
     margin: 0px;
     width: auto;
 }
 
 .search-container select {
-        font-size: var(--font-size);
+    font-size: var(--font-size);
     padding: 10px;
     border: 1px solid #ccc;
-    color: var(--label-color);
+    color: var(--btn-color);
     /* border-radius: 5px; */
     border: 0px;
     appearance: none;
@@ -65,11 +71,11 @@ div.add_prac_que {
     -moz-appearance: none;
     background-color: inherit;
     padding-right: 0px;
-    
+
 }
 
 
-.bottom  button {
+.bottom button {
     background-color: transparent;
     border-radius: 0px;
     padding: 10px;
@@ -82,9 +88,10 @@ span.question.vocab {
     font-size: calc(var(--font-size) + 15px);
 }
 
-div.no-que{
-    font-size: calc(var(--font-size) + 4px);    
+div.no-que {
+    font-size: calc(var(--font-size) + 4px);
 }
+
 .add-sec {
     display: flex;
 }
@@ -94,20 +101,22 @@ div.no-que{
     padding-bottom: 0px;
 }
 
-.add-sec button, button.add {
+.add-sec button,
+button.add {
 
     margin-left: auto;
     margin-right: 20px;
     padding: 0px;
     border-radius: 30px;
     background-color: inherit;
-    
-    
+
+
 }
 
 #add .bottom {
     margin-top: 30px;
 }
+
 button#add-btn {
     background-color: inherit;
     color: #2A80FF;
@@ -116,20 +125,25 @@ button#add-btn {
     padding: 5px;
     cursor: pointer;
     float: right;
-    
+
 }
 
 button#update {
     height: 30px;
     width: 100px;
     padding: 5px 10px;
-    margin-left:auto;
+    margin-left: auto;
 }
-button#clear-btn, button#back-btn,button#answer, button#delete {
+
+button#clear-btn,
+button#back-btn,
+button#answer,
+button#delete {
     border: none;
     border-radius: 5px;
     margin-left: auto;
-    background-color: inherit;;
+    background-color: inherit;
+    ;
 }
 
 
@@ -141,7 +155,8 @@ button#clear-btn, button#back-btn,button#answer, button#delete {
     margin-right: 10px;
     height: 20px;
 }
-button#hard {    
+
+button#hard {
     color: #e74c3c;
     border: 1px solid #e74c3c;
 }
@@ -158,17 +173,17 @@ button#easy {
 
 
 
-button#add{
+button#add {
     width: 150px;
 }
 
 
 
-@media screen and (max-width: 700px) { 
- #practice {
-    flex: 0 0 100%;
- }
+@media screen and (max-width: 700px) {
+    #practice {
+        flex: 0 0 100%;
+    }
 
- 
+
 
 }

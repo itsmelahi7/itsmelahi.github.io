@@ -9,19 +9,23 @@ body {
 }
 
 body>.content {
-    background-color: var(--page-bc);
+
     min-height: 90vh;
     width: 65%;
+}
+
+#page-content {
+    background-color: var(--page-bc);
 }
 
 body>.content>header {
     display: flex;
     flex-wrap: wrap;
     align-content: center;
-    color: var(--font-color);
-    border-bottom: 3px solid var(--font-color);
+    color: var(--header-color);
+    /*border-bottom: 3px solid var(--font-color);*/
     padding: 5px 10px;
-    background-color: inherit;
+    background-color: var(--header-bc);
 }
 
 body .content>header>h1 {
@@ -194,9 +198,6 @@ span.category-name {
     padding: 0px !important;
 }
 
-span.category-name {
-    background-color: var(--category-bc);
-}
 
 
 
@@ -241,7 +242,7 @@ button#next {
 
 .all-categories-section.bottom {
 
-    margin-top: 10px;
+    margin: 25px 10px;
     display: grid;
     background-color: inherit;
     border: none;
@@ -282,12 +283,6 @@ span.question::before__ {
     color: var(--label-color);
 }
 
-
-
-
-textarea.question {
-    min-height: 30px;
-}
 
 
 
@@ -977,7 +972,7 @@ body>.content>header .menu-button {
     font-size: calc(var(--font-size) + 12px);
     background: none;
     border: none;
-    color: black;
+    color: var(--header-color);
     cursor: pointer;
     margin-left: auto;
 }
