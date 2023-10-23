@@ -5,11 +5,14 @@ div.add_prac_que {
     flex: 0 0 60%;
  }
  div#add {
-    border-radius: 3px;
+    display: grid;
+    border-radius: 6px;
     min-height: 250px;
     overflow: scroll;
     background-color: var(--center-bc);
     padding: 10px 20px;
+    width: 100%;
+    margin: 10px;
 }
 
 
@@ -62,7 +65,7 @@ div.add_prac_que {
     -moz-appearance: none;
     background-color: inherit;
     padding-right: 0px;
-    border-left: 1px solid #b1b0b0;
+    
 }
 
 
@@ -74,13 +77,13 @@ div.add_prac_que {
 
 
 
+span.question.vocab {
+    text-align: center;
+    font-size: calc(var(--font-size) + 15px);
+}
 
-
-span.question, div.no-que {
-    /*font-weight: 700;*/
-    color: var(--font-color);
-    font-size: calc(var(--font-size) + 7px);
-    margin-top: 30px;
+div.no-que{
+    font-size: calc(var(--font-size) + 4px);    
 }
 .add-sec {
     display: flex;

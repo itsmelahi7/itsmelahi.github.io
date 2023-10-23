@@ -11,7 +11,7 @@
                 <div class="level" value="easy">easy</div>
             </div> 
             <div class="autocomplete">
-                <select id="difficultySelect" class="que-level">
+                <select id="difficultySelect" class="question-level">
                     <option value="all" class="level all" >all</option>
                     <option value="easy" class="level easy">easy</option>
                     <option value="medium" class="level medium">medium</option>
@@ -21,11 +21,11 @@
             <div class="search-categories categories cat">
                 <input type="text" id="search-input" placeholder="search category">
                 <div class="category hide">
-                    <span>biology</span> 
+                    <span class="category-name">biology</span> 
                     <div class="clear-icon-cat " id="clear-icon"> x </div>
                 </div>
             </div>
-            <i class="fas fa-sync-alt refresh-icon"></i>
+            
             <button class="add"> add </button> 
         </div>
         
@@ -36,50 +36,62 @@
         </div>   
          
         <button class="today-que hide"></button> 
+
         <div class="center hide">
+
             <div class="no-que hide"> No Question found</div> 
-            <div class="question">
+
+            <div class="question question-section">
                 <span class="question" rows="1"></span>
-                <div class="categories">
-                </div>
+                <div class="categories"></div>
+
                 <div class="view-icon hide"></div>
                 <div class="unview-icon hide"></div>
+                <div class="question-level-section">
+                    <label>Select question level to check answer:</label>
+                    <div class='question-level'>
+                        <div class="level hard" >hard</div> 
+                        <div class="level medium" >medium</div>
+                        <div class="level easy" >easy</div>
+                    </div>
+                </div>
                 
             </div>
             
-            <div class="answer hide">
+
+            <div class="answer answer-section">
                 <label class="">Question:</label>
-                <textarea class="question " rows="1"></textarea>
+                <textarea class="question hide" rows="1" placeholder="add question"></textarea>
+                <span class="question"></span>
                 
-
-                <a href = 'https://www.bing.com/chat?question=hello+world' target="_blank"> chat GPT</a>
-
-                <a class="google-it"  target= "Google search";>Search in google</a>   
+                <div class="search-online">
+                    <div>Search in </div>
+                    <div class="google link">google</div>
+                    <div> or </div>
+                    <div class="chatgpt link">chatGPT</div>
+                </div>
+                
                 <br>
-                <label>Answer:</label>
-                <textarea class="explanation hide" rows="1"></textarea>
+                <label class="">Answer:</label>
+                <textarea class="explanation hide" rows="1" placeholder="add answer"></textarea>
                 <span class="explanation"></span>
                 <br>
-                <label>Categories:</label>
+                
                 <div class="category-section">
+                    <label class="">Categories:</label>
+                    <div class="categories"> </div>
                     <div class="new-cat">
                         <textarea type="text" class="add-category" placeholder="add-category"></textarea>
                         <button  id="add-category" class="add-category"> add </button>
                         <button  id="update-category" class="update-category hide"> update </button>
                     </div>
-                    <div class="categories">
-                    </div>
+                    
 
                 </div>
                 
                 <br>
                             
-                <div class='que-level'>
-                   <label>Level:</label>
-                   <div class="level hard" >hard</div> 
-                   <div class="level medium" >medium</div>
-                   <div class="level easy" >easy</div>
-                </div>
+                
                 <br>
                 <br>
                 
@@ -96,9 +108,15 @@
         </div>
 
         <div class='bottom button-section'>
-            <button id="prev" class=''> << </button>
-            <button id="next"> >> </button>
-            <button id="answer" class="">Check answer</button>
+            <button id="prev" class='prev filter hide'> << </button>
+            <button id="next" class="next filter hide"> >> </button>
+            <button id="refresh" class=" refresh filter hide">
+                <i class="fas fa-sync-alt refresh-icon"></i>
+            </button>
+            <button id="random" class="random filter">
+                <i class="fas fa-random"></i>
+            </button>
+            <button id="answer" class=" hide ">Check answer</button>
             <button id="delete" class="hide">delete</button>
 
             
@@ -123,29 +141,31 @@
 
     <div id="add" class=" add-question-section add hide">
         <h1>Add Question</h1>
-        <label>Question:</label>
-        <textarea id="question" class="question" name="question" placeholder="question... " rows="1"></textarea>
+        <label class="">Question:</label>
+        <textarea id="question" class="question" name="question" placeholder="question text... " rows="1"></textarea>
+        <span class="question hide"></span>
         
-        <label>Answer:</label>
-        <textarea id="explanation" name="explanation" placeholder="answer... " rows="1"></textarea>
-        
-        <label>Categories:</label>
+        <label class="">Answer:</label>
+        <textarea id="explanation" class="explanation" name="explanation" placeholder="explanation text... " rows="1"></textarea>
+        <span class="explanation hide"></span>
+
+        <label class="hide">Categories:</label>
         <div class="category-section">
+            <div class="categories"></div>
             <div class="new-cat">
-                <textarea type="text" class="add-category" placeholder="add-category"></textarea>
+                <textarea type="text" class="add-category" placeholder="type category here"></textarea>
                 <button id="add-category" class="add-category"> add </button>
             </div>
-            <div class="categories">
-            </div>
+            
 
         </div>
         
         <div class="que-add-message success"></div>
 
         <div class="bottom">
-            <button id="add">Add</button>
-            <button id="clear">clear</button>
-            <button id="close">close</button>
+            <button id="add" class="hide">Add</button>
+            <button id="clear" class="">clear</button>
+            <button id="close" class="">back</button>
         </div>
     </div>
 

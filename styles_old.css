@@ -1,0 +1,1059 @@
+body {
+    background-color: var(--body-bc);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    font-family: system-ui, ui-serif;
+    font-size: var(--font-size)
+}
+
+body>.content {
+    background-color: var(--page-bc);
+    min-height: 90vh;
+    width: 65%;
+}
+
+body>.content>header {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    color: var(--font-color);
+    border-bottom: 3px solid var(--font-color);
+    padding: 5px 10px;
+    background-color: inherit;
+}
+
+body .content>header>h1 {
+    margin: 10px 5px 0px 33px;
+    font-size: calc(var(--font-size) + 30px);
+}
+
+h2 {
+    font-size: calc(var(--font-size) + 7px);
+}
+
+#add h1 {
+    text-align: center;
+    color: var(--font-color);
+    font-size: calc(var(--font-size) + 7px);
+}
+
+body .content>header .tabs button {
+    background-color: inherit;
+    border: none;
+    color: #393E46;
+    font-weight: 700;
+    height: 40px;
+    margin-top: 25px;
+    border-radius: 0px;
+    padding-bottom: 0px;
+}
+
+body .content>header .tabs button.active {
+    border-bottom: 3px solid #393E46;
+}
+
+
+
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* center vertically*/
+    margin-bottom: 15px;
+}
+
+button#clear {
+    margin-left: auto;
+}
+
+
+
+
+.autocomplete-list {
+    background-color: #ffffff;
+}
+
+.autocomplete-list>div {
+    padding: 6px 20px;
+    border: 1px solid rgb(228, 228, 228);
+    border-top: none;
+    cursor: pointer;
+}
+
+.autocomplete-list>div:hover {
+    background-color: #c4c4f2;
+}
+
+.search-level .level,
+.answer .level {
+    margin: 2px 8px;
+    color: #2A80FF;
+    cursor: pointer;
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+}
+
+
+
+/* Add Practise question app*/
+
+
+
+
+
+
+
+.question-section .question-level {
+    display: flex;
+}
+
+.question-section .level.hard {
+    color: var(--hard);
+    border: 1px solid var(--hard);
+}
+
+.question-section .level.hard.active {
+    border-bottom: 2px solid var(--hard);
+}
+
+.question-section .level.medium {
+    color: var(--medium);
+    border: 1px solid var(--medium);
+}
+
+.question-section .level.medium.active {
+    border-bottom: 2px solid var(--medium);
+}
+
+.question-section .level.easy {
+    color: var(--easy);
+    border: 1px solid var(--easy);
+}
+
+.question-section .level.easy.active {
+    border-bottom: 2px solid var(--easy);
+}
+
+
+.answer .level.hard {
+    color: var(--hard);
+}
+
+.answer .level.hard.active {
+    border-bottom: 2px solid var(--hard);
+}
+
+.answer .level.medium {
+    color: var(--medium);
+}
+
+.answer .level.medium.active {
+    border-bottom: 2px solid var(--medium);
+}
+
+.answer .level.easy {
+    color: var(--easy);
+}
+
+.answer .level.easy.active {
+    border-bottom: 2px solid var(--easy);
+}
+
+
+
+.search-level .level.active,
+.answer .level.active {
+    border-bottom: 2px solid #2A80FF;
+    padding-bottom: 2px;
+}
+
+.search-level .level.cat {
+    margin-top: 13px;
+}
+
+.search-categories {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-categories.cat {
+    border-left: 0px solid #dedede;
+}
+
+
+
+
+span.category-name {
+    padding: 0px !important;
+}
+
+span.category-name {
+    background-color: var(--category-bc);
+}
+
+
+
+div.categories {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.category {
+    display: flex;
+    padding: 3px 9px;
+    margin: 3px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    background-color: var(--category-bc);
+    color: var(--category-color);
+    transition: background-color 0.3s, color 0.3s;
+    height: 27px;
+    justify-content: center;
+    align-items: center;
+}
+
+div.categories .clear-icon-cat {
+    margin-left: 10px;
+    border-radius: 23px;
+    font-size: var(--font-size);
+}
+
+
+button#next {
+    border-right: 1px solid var(--label-color);
+    margin: 9px 0px;
+}
+
+
+/* All category section*/
+.all-categories-section {
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+.all-categories-section.bottom {
+
+    margin-top: 10px;
+    display: grid;
+    background-color: inherit;
+    border: none;
+}
+
+.all-categories-section label {
+    font-size: calc(var(--font-size) + 5px);
+    font-weight: 600;
+    color: #393E46;
+}
+
+.all-categories-section .all-categories {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    max-height: 40vh;
+    overflow: scroll;
+}
+
+input::placeholder,
+textarea::placeholder,
+span::placeholder {
+    color: var(--label-color);
+    font-size: var(--font-size);
+}
+
+
+
+
+
+span.explanation::before__ {
+    content: "add explanation text ...";
+    color: var(--label-color);
+}
+
+span.question::before__ {
+    content: "add question text ...";
+    color: var(--label-color);
+}
+
+
+
+
+textarea.question {
+    min-height: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#practice .tags-section>label {
+    font-size: calc(var(--font-size) + 7px);
+    color: var(--font-color);
+    font-weight: 700;
+}
+
+.tags-section .all-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 10px;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.all-categories .category- {
+    background-color: white;
+    border: 0.5px solid #2095f7;
+
+
+    padding: 2px 16px;
+    margin: 5px 12px
+}
+
+.all-categories .category:hover {
+    background-color: #e3f2ff;
+}
+
+
+
+
+
+.que-num {
+    color: var(--label-color);
+    margin-right: 25px;
+}
+
+
+
+label {
+    color: var(--label-color);
+    margin-bottom: 5px;
+}
+
+
+.page-content header .que-num {
+    margin-top: 10px;
+    color: var(--font-color);
+}
+
+
+
+
+
+.answer {
+    display: grid;
+}
+
+
+.answer {
+    margin: 0px 10px;
+}
+
+
+textarea:focus,
+select {
+    outline: none;
+}
+
+textarea___ {
+    border: none;
+    color: #3e2e2e;
+    line-height: 1.4em;
+    font-family: inherit;
+    /*border: 1px solid #dcdcdc;*/
+    font-size: var(--font-size);
+
+    width: 90%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 5px 0px;
+    margin-bottom: 10px;
+    min-height: 50px;
+}
+
+textarea.add-category {
+    min-height: 30px;
+    width: 200px;
+    margin: 0px;
+    margin-top: 7px;
+    height: 30px !important;
+    overflow: hidden;
+    padding-top: 0px;
+}
+
+
+
+.bottom {
+    display: flex;
+    background-color: var(--center-bc);
+    border-top: 1px solid var(--label-color);
+    min-height: 50px;
+}
+
+button {
+    background-color: var(--center-bc);
+    color: var(--btn-color);
+    font-size: var(--font-size);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+
+button#delete {
+    color: #c03131;
+}
+
+.google-it {
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: auto;
+    font-size: calc(var(--font-size) - 2px);
+    color: #7f7fca;
+    margin-top: 6px;
+}
+
+
+
+
+
+
+.view-icon {
+    width: 24px;
+    height: 24px;
+    background-color: green;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.view-icon::before {
+    content: '\f06e';
+    /* Unicode for the eye icon (Font Awesome's fas fa-eye) */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: white;
+}
+
+edit-icon {
+    width: 24px;
+    height: 24px;
+    background-color: blue;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.edit-icon i {
+    color: rgb(188, 86, 86);
+}
+
+/* Styles for the unview icon (hidden) */
+.unview-icon {
+    width: 24px;
+    height: 24px;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.unview-icon::before {
+    content: '\f070';
+    /* Unicode for the eye-slash icon (Font Awesome's fas fa-eye-slash) */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: white;
+}
+
+
+
+
+@media screen and (max-width: 700px) {
+    header img {
+        width: 100px;
+        ;
+    }
+}
+
+
+
+.home .action-buttons {
+    display: grid;
+    place-items: center;
+}
+
+.home button {
+    background-color: #EFF4FF;
+    color: #2A80FF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 0 5px;
+    margin-bottom: 20px;
+    width: 250px;
+}
+
+
+header nav {
+    display: flex;
+    margin-left: auto !important;
+    /*width: 100%; /* Make the nav span the full width */
+
+}
+
+.social-media a {
+    text-decoration: none !important;
+}
+
+.page-content {
+    padding: 10px;
+}
+
+.main-content {
+    background-color: white;
+    background-color: white;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+
+.section {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+.section-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.section-content {
+    display: none;
+}
+
+
+.tab {
+    display: flex;
+}
+
+a {
+    color: blue;
+}
+
+.fail {
+    color: red;
+}
+
+
+body .hide {
+    display: none !important;
+}
+
+.refresh-icon {
+    margin-left: auto;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.refresh-icon::before {
+    color: var(--btn-color);
+    margin-left: auto;
+
+}
+
+.category-section input {
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    padding-right: 0px;
+    margin-bottom: 8px;
+}
+
+
+#add .container {
+    max-width: 600px;
+    margin: 0px;
+    padding: 20px;
+}
+
+#add h1 {
+    text-align: center;
+}
+
+
+#add textarea,
+#add span :not(span.category-name) {
+    border: none;
+    padding: 5px;
+    border-radius: 0px;
+    margin-bottom: 35px;
+
+}
+
+#add textarea#question {
+    /*border-left: 0px solid #7bb2ff;*/
+}
+
+#add textarea#explanation {
+    /* border-left: px solid #81fa65;*/
+}
+
+#add textarea#categories {
+    /*  border-left: 2px solid #f2c643;*/
+}
+
+#add .que-add-message {
+    margin: 5px 0px;
+}
+
+
+
+
+
+
+.success {
+    color: green;
+}
+
+.faile {
+    color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.input-container {
+    position: relative;
+    display: inline-block;
+}
+
+.fa-pencil-alt:before,
+.fa-pencil:before {
+    content: "\f303";
+    font-size: calc(var(--font-size) - 6px);
+    margin-left: 10px;
+}
+
+.clear-icon {
+    position: absolute;
+    top: 11%;
+    right: 31px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: calc(var(--font-size) - 7px);
+    color: #653232;
+    margin-top: 5px;
+}
+
+
+
+/* Style the answer text */
+
+
+
+/* Style the buttons */
+
+
+#practice #hard-button {
+    background-color: inherit;
+    color: #e74c3c;
+    padding: 2px 10px;
+    border: 1px solid #e74c3c;
+    cursor: pointer;
+    margin-right: 10px;
+    height: 20px;
+}
+
+#practice #medium-button {
+    background-color: inherit;
+    color: #3498db;
+    padding: 2px 10px;
+    border: 1px solid #3498db;
+    cursor: pointer;
+    margin-right: 10px;
+    height: 20px;
+}
+
+#practice #easy-button {
+    background-color: inherit;
+    color: #27ae60;
+    padding: 2px 10px;
+    border: 1px solid #27ae60;
+    cursor: pointer;
+    margin-right: 10px;
+    height: 20px;
+}
+
+/* Hover and Active Styles */
+#practice #hard-button:hover {
+    background-color: #c0392b;
+    /* Darker Red on Hover */
+    color: white;
+}
+
+#practice #medium-button:hover {
+    background-color: #2980b9;
+    /* Darker Blue on Hover */
+    color: white;
+}
+
+#practice #easy-button:hover {
+    background-color: #219450;
+    /* Darker Green on Hover */
+    color: white;
+}
+
+#practice #hard-button:active {
+    background-color: #a3271d;
+    /* Darkest Red on Active */
+    color: white;
+}
+
+#practice #medium-button:active {
+    background-color: #1c6ba3;
+    /* Darkest Blue on Active */
+    color: white;
+}
+
+#practice #easy-button:active {
+    background-color: #19713f;
+    /* Darkest Green on Active */
+    color: white;
+}
+
+
+
+
+
+
+
+#refresh-icon {
+
+    color: #ebe7e7;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+
+
+
+@media screen and (max-width: 700px) {
+    body {
+        margin: 0px;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    header h1 {
+        margin-bottom: 10px;
+    }
+
+    header nav {
+        margin-top: 19px;
+    }
+
+
+
+
+}
+
+
+
+
+
+
+
+/* ICon CSS*/
+:root {
+    --facebook: #3b5998;
+    --instagram: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    --youtube: #FF0000;
+    --x: #333;
+    --linkedin: #0072b1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.connect-me {
+    background-color: black;
+    height: 110px;
+}
+
+
+.search-online a {
+    color: blue;
+    margin: 0px 4px;
+}
+
+
+.connect-me p {
+    margin: 0px;
+    color: white;
+    padding: 10px 0px 0px 10px;
+
+}
+
+.icons {
+    transform: scale(0.6);
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+
+}
+
+
+
+textarea.add-category {
+    background-color: white;
+}
+
+.search-level,
+.answer .question-level,
+.question .question-level {
+    display: flex;
+}
+
+
+.question .question-level label {
+    margin-left: 0px;
+}
+
+.icons .icon {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*border: 2px solid white;*/
+    border-radius: 50%;
+    transition: background-color 300ms, border-width 300ms;
+}
+
+.icons .icon svg {
+    transition: transform 300ms;
+}
+
+.icons .facebook {
+    --color: var(--facebook);
+}
+
+.icons .instagram {
+    --color: var(--instagram);
+}
+
+.icons .youtube {
+    --color: var(--youtube);
+}
+
+.icons .x {
+    --color: var(--x);
+}
+
+.icons .linkedin {
+    --color: var(--linkedin);
+}
+
+.icons .icon:hover {
+    background: var(--color);
+    border-width: 1px;
+}
+
+@media screen and (max-width: 700px) {
+    .icons .icon:hover {
+        background: none;
+
+    }
+}
+
+
+.icons .icon:hover svg {
+    transform: scale(1.4);
+}
+
+
+
+/* Initially, hide the delete confirmation overlay */
+.delete-confirmation.overlay {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background overlay */
+    z-index: 999;
+    /* Ensure it's above other content */
+    text-align: center;
+    padding-top: 40%;
+}
+
+/* Style the confirmation dialog box */
+.delete-confirmation p {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: inline-block;
+}
+
+/* Style the Yes and No buttons */
+.delete-confirmation #yes,
+.delete-confirmation #no {
+    padding: 10px 20px;
+    margin: 10px;
+}
+
+
+
+
+
+/* Style for the header and menu button */
+.mobile-tab header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+body>.content>header .menu-button {
+    font-size: calc(var(--font-size) + 12px);
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+/* Style for the overlay */
+.mobile-tab.overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 80vw;
+    height: 100%;
+    background-color: #c1c1c1;
+    z-index: 1000;
+    overflow-y: auto;
+    transition: right 0.9s ease-in-out;
+
+}
+
+.mobile-tab .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: calc(var(--font-size) + 10px);
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+}
+
+.mobile-tab .tab-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 65px;
+}
+
+.mobile-tab button {
+    padding: 10px;
+    margin: 5px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+@media screen and (max-width: 700px) {
+    :root {
+        --font-size: 16px;
+    }
+
+    body>.content {
+        width: 100%;
+    }
+
+    body>.content>header>h1 {
+        font-size: 35px;
+        margin-bottom: 10px;
+        margin-left: 0px;
+    }
+
+
+    /* Test */
+    .page-content {
+        padding: 0px;
+    }
+
+    .search-container {
+        margin: 10px 15px;
+    }
+
+
+
+
+
+}
