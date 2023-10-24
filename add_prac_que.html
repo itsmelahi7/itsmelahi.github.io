@@ -43,6 +43,7 @@
 
             <div class="question question-section">
                 <span class="question" rows="1"></span>
+                <div class="mcq-check-options hide"></div>
                 <div class="categories"></div>
 
                 <div class="view-icon hide"></div>
@@ -141,25 +142,49 @@
 
     <div id="add" class=" add-question-section add hide">
         <h1>Add Question</h1>
+        <div class="question-type">
+            <div class="normal question-type-tab active">normal</div>
+            <div class="mcq question-type-tab">MCQ</div>
+        </div>
+        <div class="set-default-mcq-template hide">Set default mcq template</div>
         <label class="">Question:</label>
         <textarea id="question" class="question" name="question" placeholder="question text... " rows="1"></textarea>
         <span class="question hide"></span>
         
+        <div class="mcq-answer-option hide">
+            <label>Correct option:</label>
+            <select>
+                <option></option>
+                <option>Option a</option>
+                <option>Option b</option>
+                <option>Option c</option>
+                <option>Option d</option>
+            </select>
+        </div>      
+        
         <label class="">Answer:</label>
         <textarea id="explanation" class="explanation" name="explanation" placeholder="explanation text... " rows="1"></textarea>
         <span class="explanation hide"></span>
-
+          
         <label class="hide">Categories:</label>
         <div class="category-section">
             <div class="categories"></div>
             <div class="new-cat">
-                <textarea type="text" class="add-category" placeholder="type category here"></textarea>
+                <textarea type="text" class="add-category" placeholder="add category"></textarea>
                 <button id="add-category" class="add-category"> add </button>
             </div>
             
 
         </div>
-        
+        <div class="question-visibility">
+            <label>
+                <input type="checkbox" name="personal" id="personal" checked> Personal
+            </label>
+            <br>
+            <label>
+                <input type="checkbox" name="public" id="public" checked> Public
+            </label>
+        </div>
         <div class="que-add-message success"></div>
 
         <div class="bottom">

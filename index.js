@@ -617,6 +617,51 @@ imageInput.addEventListener("change", () => {
 });
 */
 
+function getDataFromCloud(id, filename) {
+    const apiUrl = `https://api.github.com/gists/${id}`;
+    return fetch(apiUrl)
+        .then((response) => response.json())
+        .then((gistData) => {
+            if (gistData.files && gistData.files[filename]) {
+                const fileContent = gistData.files[filename].content;
+                const parsedData = JSON.parse(fileContent);
+                console.log(`Data from "${filename}" retrieved successfully`);
+                return parsedData;
+            } else {
+                console.error("File not found in the Gist.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error getting data from the Gist:", error);
+        });
+}
+
+function saveDataInCloud(id, filename, data) {
+    const newContent = JSON.stringify(data, null, 2); // Convert data to JSON string with formatting
+    const apiUrl = `https://api.github.com/gists/${id}`;
+    var token = "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";
+    fetch(apiUrl, {
+        method: "PATCH",
+        headers: {
+            Authorization: `token ${token}`,
+        },
+        body: JSON.stringify({
+            files: {
+                [filename]: {
+                    content: newContent,
+                },
+            },
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(`Data in the "${filename}"  file updated successfully.`);
+        })
+        .catch((error) => {
+            console.error(`Data in the file "${filename}"`, error);
+        });
+}
+
 // Shortcut functions
 
 function qs(selector) {

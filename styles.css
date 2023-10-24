@@ -72,6 +72,11 @@ textarea.question {
 }
 
 
+.mcq-check-options {
+    margin-top: 10px;
+    color: var(--font-color);
+}
+
 .answer-section .category-section {
     /*
     padding-top: 30px;
@@ -102,20 +107,21 @@ textarea.question {
 }
 
 .question-section span.question {
-    font-size: calc(var(--font-size) + 7px);
+    font-size: calc(var(--font-size) + 5px);
+    color: var(--header-bc);
 }
 
 .answer-section span.question,
 .answer-section textarea.question,
 .add span.question,
 .add textarea.question {
-    font-size: calc(var(--font-size) + 4px);
+    color: var(--header-bc);
 }
 
 span.explanation,
 textarea.explanation {
     color: var(--font-color);
-    font-size: calc(var(--font-size) + 1px);
+    font-size: calc(var(--font-size) + 0px);
 }
 
 
@@ -147,7 +153,7 @@ textarea.explanation {
 span,
 textarea {
     border: none;
-    padding: 12px;
+    padding: 5px;
     font-family: inherit;
     line-height: 1.3em;
     resize: none;
@@ -174,4 +180,35 @@ textarea {
     color: #2c2cc8;
     margin: 0px 5px;
     cursor: pointer;
+}
+
+
+.add-question-section .question-type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    color: var(--label-color)
+}
+
+.add-question-section .question-type div {
+    flex: 0 0 50%;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.add-question-section .question-type .question-type-tab.active {
+    color: var(--header-bc);
+}
+
+.set-default-mcq-template {
+    font-size: calc(var(--font-size) - 3px);
+    margin-left: auto;
+    color: var(--font-color);
+    cursor: pointer;
+}
+
+.question-visibility {
+    margin-top: 20px;
 }

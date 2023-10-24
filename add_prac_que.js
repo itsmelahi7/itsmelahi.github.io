@@ -1,6 +1,6 @@
 var qq = {
     username: "",
-    exam: "",
+    exam: "neet",
     que_array: [],
     fil_array: [],
     cat_array: [],
@@ -21,6 +21,7 @@ var is_edit_category = true;
 var old_cat = "";
 var first_time = true;
 var google_search_tab, chatgpt_search_tab;
+var normal_que_text, mcq_que_text;
 loadAddPracticeQuestionsUI();
 
 function loadAddPracticeQuestionsUI() {
@@ -147,13 +148,25 @@ function loadAddPracticeQuestionsUI() {
             document.querySelector("button#refresh").addEventListener("click", refresh);
             document.querySelector("button#random").addEventListener("click", getRandomQuestion);
 
+            addQuestionSectionTriggerEventListners();
+
             document.querySelector("button#add").addEventListener("click", addQuestion);
             const interval_add_button = setInterval(function () {
                 var que = document.querySelector(".add textarea.question").value;
                 var exp = document.querySelector(".add textarea.explanation").value;
                 var cat = document.querySelector(".add .categories").innerHTML;
+                var option = document.querySelector(".add-question-section select").value;
+
                 if (que !== "" && exp !== "" && cat != "") {
-                    document.querySelector("button#add").classList.remove("hide");
+                    var que_type = document.querySelector(".question-type-tab.active").className.toLowerCase();
+
+                    if (que_type.indexOf("mcq") != -1 && option != "") {
+                        document.querySelector("button#add").classList.remove("hide");
+                    } else if (que_type.indexOf("mcq") != -1 && option == "") {
+                        document.querySelector("button#add").classList.add("hide");
+                    } else {
+                        document.querySelector("button#add").classList.remove("hide");
+                    }
                 } else {
                     document.querySelector("button#add").classList.add("hide");
                 }
@@ -172,6 +185,51 @@ function loadAddPracticeQuestionsUI() {
             }
         }
     }, 1000);
+}
+
+function addQuestionSectionTriggerEventListners() {
+    console.log(arguments.callee.name + " called");
+
+    document.querySelectorAll(".question-type-tab").forEach((tab) => {
+        debugger;
+
+        tab.addEventListener("click", function (event) {
+            debugger;
+            textareaAutoHeightSetting();
+            if (!event.target.classList.contains("active")) {
+                document.querySelectorAll(".question-type-tab").forEach((tab) => {
+                    tab.classList.toggle("active");
+                });
+            }
+            if (event.target.classList.contains("mcq")) {
+                show(".mcq-answer-option");
+                show(".set-default-mcq-template");
+                document.querySelector(".add-question-section select").value = "";
+                setMCQQuestionTemplate();
+            } else {
+                hide(".mcq-answer-option");
+                hide(".set-default-mcq-template");
+                setMCQQuestionTemplate("normal");
+            }
+        });
+    });
+
+    document.querySelector(".set-default-mcq-template").addEventListener("click", setMCQQuestionTemplate);
+}
+
+function setMCQQuestionTemplate(type) {
+    console.log(arguments.callee.name + " called");
+    debugger;
+    var question_textarea = document.querySelector(".add-question-section textarea.question");
+    if (qq.exam.toLowerCase() == "upsc") {
+        question_textarea.value = upsc_mcq_template;
+    } else {
+        question_textarea.value = other_mcq_template;
+    }
+    if (type == "normal") {
+        question_textarea.value = "";
+    }
+    textareaAutoHeightSetting();
 }
 
 function actionOnQuestionLevel() {
@@ -595,6 +653,13 @@ function showQuestion() {
     document.querySelector(".que-num").textContent = qq.que_no + 1 + "/" + qq.fil_array.length;
 
     document.querySelector(".question-section span.question").innerHTML = replaceTextWithMarkup(qq.fil_array[qq.que_no].question);
+    debugger;
+    var is_mcq = true;
+    if (is_mcq) {
+        addAnswerOptionCheckButtons();
+    } else {
+    }
+
     loadQuestionCategories(qq.fil_array[qq.que_no].categories);
 
     document.querySelector(".answer-section textarea.question").value = qq.fil_array[qq.que_no].question;
@@ -610,6 +675,36 @@ function showQuestion() {
     document.querySelector(".answer-section span.explanation").classList.remove("hide");
 
     showCategoriesInAnswer();
+}
+
+function isMcq(array, index) {
+    if (array[index].type == "mcq") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function addAnswerOptionCheckButtons() {
+    debugger;
+    var answer_option_div = document.querySelector(".mcq-check-options");
+    answer_option_div.classList.remove("hide");
+    answer_option_div.innerHTML = `\n<span>Select the correct option:</span><div class="ans-opt-list">
+                        <input type="radio" value="a" class="a" name="option"><span> (a) </span>
+                        <input type="radio" value="b" class="b" name="option"><span> (b) </span>
+                        <input type="radio" value="c" class="c" name="option"><span> (c) </span>
+                        <input type="radio" value="d" class="d" name="option"><span> (d) </span>
+                        </div>
+                        `;
+    var inputs = answer_option_div.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("click", function (event) {
+            checkMcqAnswerOption(event);
+        });
+    });
+}
+
+function checkMcqAnswerOption(event) {
+    debugger;
 }
 
 var old_clipboard_text = "";
@@ -868,20 +963,32 @@ function getRandomQuestion() {
 
 function addQuestion() {
     console.log(arguments.callee.name + " called");
-    var categories = Array.from(document.querySelectorAll(".add .categories .category")).map((cat) => cat.children[0].textContent);
-    categories.push(getTodayDate());
+    var type = "";
+    var correct_option = "";
+    if (document.querySelector(".mcq.active")) {
+        type = "mcq";
+        correct_option = document.querySelector(".add-question-section select").value;
+    } else {
+        type = "normal";
+    }
+    var visibility = getQuestionVisibility();
+
+    var categories = getNewQuestionCategories();
 
     var que_obj = {
         id: generateID(),
-        type: "normal",
+        type: type,
         question: document.querySelector(".add-question-section textarea.question").value.trim(),
         explanation: document.querySelector(".add-question-section textarea.explanation").value.trim(),
         categories: categories,
         level: "hard",
+        correct_option: correct_option,
         wronged: false,
         create_date: getTodayDate(),
         revision_date: revisionDate(1),
-        username: "",
+        username: qq.username,
+        exam: qq.exam,
+        visibility: visibility,
     };
 
     qq.que_array.push(que_obj);
@@ -894,6 +1001,38 @@ function addQuestion() {
     console.log("New question has been added successfully");
     saveAddPracQueData();
     updateCategories("add");
+
+    if (visibility.indexOf("public") != -1) {
+        addQuestionInPublicList(que_obj);
+    }
+}
+
+function getNewQuestionCategories() {
+    return Array.from(document.querySelectorAll(".add .categories .category")).map((cat) => cat.children[0].textContent);
+    categories.push(getTodayDate());
+}
+
+function getQuestionVisibility() {
+    var visibility;
+    var personal = document.querySelector("input#personal");
+    var public = document.querySelector("input#personal");
+    personal = personal.checked ? "personal " : "";
+    public = public.checked ? "public " : "";
+    visibility = personal + public;
+    if (visibility == "") {
+        visibility = "personal";
+    }
+    return visibility;
+}
+
+async function addQuestionInPublicList(que_obj) {
+    debugger;
+    var id = "75c566d35f68942b6f88faf0fbdddaa4";
+    var filename = `neet_unreviewed_question.json`;
+
+    var array = await getDataFromCloud(id, filename);
+    array.push(que_obj);
+    saveDataInCloud(id, filename, array);
 }
 
 function saveAddPracQueData() {
@@ -924,3 +1063,21 @@ function clearInputFields() {
     document.querySelector(".add .categories").innerHTML = "";
     document.querySelector(".que-add-message").classList.add("hide");
 }
+
+var other_mcq_template = `Question...
+(a) 
+(b) 
+(c) 
+(d) `;
+
+var upsc_mcq_template = `Consider the following statements ..
+1. 
+2. 
+3. 
+4. 
+
+Which of the above statements are correct
+(a) Only one
+(b) Only two
+(c) Only three
+(d) All the four`;

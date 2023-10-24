@@ -59,19 +59,33 @@ div#add {
     width: auto;
 }
 
-.search-container select {
+.search-container select,
+.mcq-answer-option select {
     font-size: var(--font-size);
     padding: 10px;
     border: 1px solid #ccc;
     color: var(--btn-color);
     /* border-radius: 5px; */
     border: 0px;
+    padding-right: 0px;
+
+}
+
+.search-container select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     background-color: inherit;
-    padding-right: 0px;
 
+}
+
+.mcq-answer-option {
+    margin-bottom: 15px;
+}
+
+.mcq-answer-option select {
+    background: var(--page-bc);
+    padding: 4px;
 }
 
 
