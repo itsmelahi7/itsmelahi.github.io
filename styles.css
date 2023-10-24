@@ -61,7 +61,7 @@ input#search-input {
     padding: 10px;
     background-color: var(--center-bc);
     border-radius: 3px;
-    min-height: 250px;
+    min-height: 150px;
     overflow: scroll;
 }
 
@@ -107,7 +107,7 @@ textarea.question {
 }
 
 .question-section span.question {
-    font-size: calc(var(--font-size) + 5px);
+    font-size: calc(var(--font-size) + 2px);
     color: var(--header-bc);
 }
 
@@ -133,19 +133,42 @@ textarea.explanation {
     margin: 25px 0px;
 }
 
+
+.question-level-section {
+    display: flex;
+    margin-top: 25px;
+}
+
+.question-level-section label {
+    margin-top: 6px;
+    font-size: calc(var(--font-size) + 2px);
+}
+
 .question-section .question-level {
     display: flex;
-    margin-top: 10px;
+    margin-bottom: 14px;
     justify-content: center;
     align-items: center;
     cursor: pointer;
 }
 
 .question .question-level .level {
-    font-size: calc(var(--font-size) + 2px);
-    margin: 5px 15px;
+    font-size: var(--font-size);
+    margin: 5px;
     border-radius: 5px;
     padding: 3px 7px;
+}
+
+.question-section .level.hard {
+    color: var(--hard);
+}
+
+.question-section .level.medium {
+    color: var(--medium);
+}
+
+.question-section .level.easy {
+    color: var(--easy);
 }
 
 
@@ -155,7 +178,7 @@ textarea {
     border: none;
     padding: 5px;
     font-family: inherit;
-    line-height: 1.3em;
+    line-height: 1.5em;
     resize: none;
     font-size: var(--font-size);
     border-radius: 5px;
@@ -211,4 +234,81 @@ textarea {
 
 .question-visibility {
     margin-top: 20px;
+}
+
+
+
+
+
+/* About me page css*/
+.about-me h1 {
+    margin: 15px;
+    color: var(--header-bc);
+    text-align: center;
+}
+
+
+.about-me div.image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Optional: set a fixed width and height for the div if needed */
+
+    height: 150px;
+    border-radius: 85px;
+}
+
+.about-me div.image img {
+    /* Optional: set a max-width to prevent the image from overflowing */
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 100px;
+}
+
+.about-me .text {
+    background-color: var(--center-bc);
+    margin: 15px;
+    padding: 15px;
+    line-height: 1.5em;
+    font-size: var(--font-size);
+}
+
+
+
+/* End about me page css*/
+
+
+/* Setting page css*/
+.page.setting {
+    margin: 15px;
+    background-color: var(--center-bc);
+    border-radius: 7px;
+}
+
+
+
+.setting .item {
+    display: flex;
+    padding: 12px;
+
+}
+
+.setting .item h1 {
+    color: var(--header-bc);
+}
+
+.setting .item label {
+    color: var(--header-bc);
+}
+
+.setting .item input,
+.setting .item select {
+    border: none;
+    padding: 7px;
+    margin: 0px 10px;
+    border-radius: 5px;
+}
+
+.setting button#save {
+    border: 1px solid var(--header-bc);
 }

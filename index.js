@@ -2,6 +2,7 @@ var is_mobile = false;
 
 document.addEventListener("DOMContentLoaded", function () {
     loadPages("add_prac_que");
+
     //FilePond.create(document.getElementById("filepondInput"));
     // Listen for changes in the FilePond input
 
@@ -46,13 +47,16 @@ function loadPages(pageName) {
     script.onload = () => console.log(`${script.src} script loaded`);
     script.onerror = (error) => console.error("Error loading script:", script.src, error);
     document.head.appendChild(script);
+    closeTabOverlay();
 }
 
 function loadPage(pageName) {
+    //debugger_;
     const mainContent = document.getElementById("page-content");
     mainContent.innerHTML = "";
+    var page_address = `${pageName}.html`;
 
-    fetch(`${pageName}.html`)
+    fetch(page_address)
         .then((response) => response.text())
         .then((content) => {
             mainContent.innerHTML = content;
@@ -60,6 +64,7 @@ function loadPage(pageName) {
         .catch((error) => {
             console.error(`Error loading content: ${error}`);
         });
+    closeTabOverlay();
 }
 
 document.querySelector("#home").addEventListener("click", function () {
@@ -67,6 +72,12 @@ document.querySelector("#home").addEventListener("click", function () {
 });
 document.querySelector("#about-me").addEventListener("click", function () {
     loadPage("about_me");
+    setTimeout(function () {
+        //aboutMePageImageAnimation();
+    }, 1000);
+});
+document.querySelector("button#setting").addEventListener("click", function () {
+    loadPage("setting");
 });
 
 if (window.innerWidth < 700) {
@@ -297,7 +308,7 @@ function toggleBottomButtons(search_level, search_cat) {
 }
 
 function filterQuestion(que_array, search_level, search_cat) {
-    debugger;
+    //debugger_;
     console.log(`Filter question with search_level: "${search_level}" and search_cat: "${search_cat}"`);
     var fil_que_array = [];
     toggleBottomButtons(search_level, search_cat);
@@ -684,4 +695,24 @@ function show(itemSelector) {
     if (element) {
         element.classList.remove("hide"); // Remove the class to show the element
     }
+}
+
+function aboutMePageImageAnimation() {
+    const imageCards = document.querySelectorAll(".image-card");
+    const indicators = document.querySelectorAll(".indicator .dot");
+
+    function eventHandler(index) {
+        imageCards.forEach((card, i) => {
+            card.classList.remove("active");
+            indicators[i].classList.remove("active");
+        });
+
+        imageCards[index].classList.add("active");
+        indicators[index].classList.add("active");
+    }
+
+    imageCards.forEach((card, i) => {
+        card.addEventListener("click", () => eventHandler(i));
+        indicators[i].addEventListener("click", () => eventHandler(i));
+    });
 }

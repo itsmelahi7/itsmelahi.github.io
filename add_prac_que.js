@@ -151,12 +151,14 @@ function loadAddPracticeQuestionsUI() {
             addQuestionSectionTriggerEventListners();
 
             document.querySelector("button#add").addEventListener("click", addQuestion);
+
+            /*
             const interval_add_button = setInterval(function () {
                 var que = document.querySelector(".add textarea.question").value;
                 var exp = document.querySelector(".add textarea.explanation").value;
                 var cat = document.querySelector(".add .categories").innerHTML;
                 var option = document.querySelector(".add-question-section select").value;
-
+            
                 if (que !== "" && exp !== "" && cat != "") {
                     var que_type = document.querySelector(".question-type-tab.active").className.toLowerCase();
 
@@ -171,6 +173,7 @@ function loadAddPracticeQuestionsUI() {
                     document.querySelector("button#add").classList.add("hide");
                 }
             }, 1000);
+            */
 
             document.querySelector("button#clear").addEventListener("click", clearInputFields);
 
@@ -191,10 +194,10 @@ function addQuestionSectionTriggerEventListners() {
     console.log(arguments.callee.name + " called");
 
     document.querySelectorAll(".question-type-tab").forEach((tab) => {
-        debugger;
+        //debugger_;;
 
         tab.addEventListener("click", function (event) {
-            debugger;
+            //debugger_;;
             textareaAutoHeightSetting();
             if (!event.target.classList.contains("active")) {
                 document.querySelectorAll(".question-type-tab").forEach((tab) => {
@@ -219,7 +222,7 @@ function addQuestionSectionTriggerEventListners() {
 
 function setMCQQuestionTemplate(type) {
     console.log(arguments.callee.name + " called");
-    debugger;
+    //debugger_;;
     var question_textarea = document.querySelector(".add-question-section textarea.question");
     if (qq.exam.toLowerCase() == "upsc") {
         question_textarea.value = upsc_mcq_template;
@@ -271,7 +274,7 @@ function setSpanTextarea() {
     });
     question_textarea.addEventListener("input", function () {
         qq.fil_array[qq.que_no].question = question_textarea.value;
-        debugger;
+        //debugger_;;
         question_span.innerHTML = replaceTextWithMarkup(question_textarea.value);
         saveAddPracQueData();
     });
@@ -359,7 +362,7 @@ function setSpanTextarea() {
         document.querySelector(".add span.explanation").innerHTML = replaceTextWithMarkup(explanation.value);
     });
     explanation.addEventListener("blur", function () {
-        debugger;
+        //debugger_;;
         var span = document.querySelector(".add span.explanation");
         if (span.textContent.trim() != "") {
             toggleSpanTextarea(".add .explanation");
@@ -399,7 +402,7 @@ function toggleSpanTextarea(class_name) {
         span = `span${class_name}`;
         textarea = `textarea${class_name}`;
     }
-    debugger;
+    //debugger_;;
     document.querySelector(span).classList.toggle("hide");
     document.querySelector(textarea).classList.toggle("hide");
     console.log(`toggled ${span} and ${textarea} `);
@@ -432,7 +435,7 @@ function filter(category) {
 
 function searchQuestionOnline(link, event) {
     console.log(arguments.callee.name + " called");
-    debugger;
+    //debugger_;;
     var question_text = qq.fil_array[qq.que_no].question;
     if (qq.search_cat == "vocab") {
         question_text = `${question_text} define? and also give its meaning in ${qq.native_language}`;
@@ -481,7 +484,7 @@ function openLinkInExistingTab(link, type) {
 // In the chatgpt_search_tab (newly opened tab)
 window.addEventListener("message", function (event) {
     console.log(arguments.callee.name + " called");
-    debugger;
+    //debugger_;;
     if (event.data && event.data.clipboardValue) {
         // Set the clipboard value to the textarea
         const textarea = document.querySelector("#prompt-textarea");
@@ -633,7 +636,7 @@ function openAddQuestionSection() {
 }
 
 function showQuestion() {
-    debugger;
+    //debugger_;;
     console.log(arguments.callee.name + " called");
     console.log("showQuestion is called");
     document.querySelector(".center .question").classList.remove("hide");
@@ -653,8 +656,8 @@ function showQuestion() {
     document.querySelector(".que-num").textContent = qq.que_no + 1 + "/" + qq.fil_array.length;
 
     document.querySelector(".question-section span.question").innerHTML = replaceTextWithMarkup(qq.fil_array[qq.que_no].question);
-    debugger;
-    var is_mcq = true;
+    //debugger_;;
+    var is_mcq = false;
     if (is_mcq) {
         addAnswerOptionCheckButtons();
     } else {
@@ -686,7 +689,7 @@ function isMcq(array, index) {
 }
 
 function addAnswerOptionCheckButtons() {
-    debugger;
+    //debugger_;;
     var answer_option_div = document.querySelector(".mcq-check-options");
     answer_option_div.classList.remove("hide");
     answer_option_div.innerHTML = `\n<span>Select the correct option:</span><div class="ans-opt-list">
@@ -704,7 +707,8 @@ function addAnswerOptionCheckButtons() {
 }
 
 function checkMcqAnswerOption(event) {
-    debugger;
+    var selected_option = event.target.value;
+    var correct_option = qq.fil_array[qq.que_no].correct_option;
 }
 
 var old_clipboard_text = "";
@@ -796,7 +800,7 @@ function showCategoriesInAnswer() {
 
             category_section.append(div);
             div.children[1].addEventListener("click", function () {
-                debugger;
+                //debugger_;;
                 document.querySelector(".category-section textarea.add-category").value = category;
                 document.querySelector(".category-section button.add-category").classList.add("hide");
                 document.querySelector(".category-section button.update-category").classList.remove("hide");
@@ -804,7 +808,7 @@ function showCategoriesInAnswer() {
                 old_cat = category;
             });
             div.children[2].addEventListener("click", function (event) {
-                debugger;
+                //debugger_;;
                 var category_name = event.target.parentNode.children[0].textContent;
                 qq.fil_array[qq.que_no].categories = qq.fil_array[qq.que_no].categories.filter((category) => category !== category_name);
                 div.remove();
@@ -1026,7 +1030,7 @@ function getQuestionVisibility() {
 }
 
 async function addQuestionInPublicList(que_obj) {
-    debugger;
+    //debugger_;;
     var id = "75c566d35f68942b6f88faf0fbdddaa4";
     var filename = `neet_unreviewed_question.json`;
 

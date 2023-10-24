@@ -111,61 +111,6 @@ button#clear {
 
 
 
-.question-section .question-level {
-    display: flex;
-}
-
-.question-section .level.hard {
-    color: var(--hard);
-    border: 1px solid var(--hard);
-}
-
-.question-section .level.hard.active {
-    border-bottom: 2px solid var(--hard);
-}
-
-.question-section .level.medium {
-    color: var(--medium);
-    border: 1px solid var(--medium);
-}
-
-.question-section .level.medium.active {
-    border-bottom: 2px solid var(--medium);
-}
-
-.question-section .level.easy {
-    color: var(--easy);
-    border: 1px solid var(--easy);
-}
-
-.question-section .level.easy.active {
-    border-bottom: 2px solid var(--easy);
-}
-
-
-.answer .level.hard {
-    color: var(--hard);
-}
-
-.answer .level.hard.active {
-    border-bottom: 2px solid var(--hard);
-}
-
-.answer .level.medium {
-    color: var(--medium);
-}
-
-.answer .level.medium.active {
-    border-bottom: 2px solid var(--medium);
-}
-
-.answer .level.easy {
-    color: var(--easy);
-}
-
-.answer .level.easy.active {
-    border-bottom: 2px solid var(--easy);
-}
 
 
 
@@ -1020,6 +965,8 @@ body>.content>header .menu-button {
     cursor: pointer;
     text-align: left;
 }
+
+
 
 
 

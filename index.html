@@ -1,59 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id" content="726717759305-jatgt6qa1maqhfm0o8ct5rumttm7530h.apps.googleusercontent.com">
-    <title> revise </title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="styles_old.css">
-    <link rel="stylesheet" href="dark_theme.css">
-    <link rel="stylesheet" href="" id="page-css">
-    
-</head>
-<body>
-  <div class="content">
-    <header class="header">
-        <h1>Revise</h1>
-        <button id="openMenu" class="menu-button">&#9776;</button>
-        
-        <nav class="tabs hide">
-            <button id="home active">Home</button>
-            <button id="about-me">About me</button>
-        </nav>
-    </header>
-    <input type="file" id="jsonFileInput" class="hide" accept=".json">
-    <input type="file" id="filepondInput" class="filepond hide">
-    <div class="mobile-tab overlay hide" id="tabOverlay">
-      <button id="closeMenu" class="close-button">&times;</button>
-      <div class="tab-container">
-          <button id="home" class="home">Home</button>
-          <button id="personal" class="personal">Your questions</button>
-          <button id="public-que" class="personal-que">Public questions</button>
-          <button id="comment" class="personal-que">Feedback</button>
-          <button class="tab-button hide">User Questions </button>
-          <button class="tab-button hide">Practice MCQs</button>
-          <button class="tab-button hide">Memes</button>
-          <button id="backup"  class="backup ">Backup data</button>
-          <button id="import" class="import ">Import data</button>
-          <button class="tab-button hide">Memes</button>
-          <button id='about-me' class="about-me">About me</button>
-          <button class="tab-button hide">My UPSC Notes</button>
-          <button class="tab-button hide">User info</button>
-          <button class="tab-button hide">Settings</button>
-      </div>
-  </div>
-  
-    <main id="page-content" class="page-content">
-        <!-- Content loaded dynamically will be inserted here -->
-    </main>
-    
-    
-    <script src="index.js"></script>
-    
-    
-  </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google-signin-client_id" content="726717759305-jatgt6qa1maqhfm0o8ct5rumttm7530h.apps.googleusercontent.com" />
+        <title>revise</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="styles_old.css" />
+        <link rel="stylesheet" href="dark_theme.css" />
+        <link rel="stylesheet" href="" id="page-css" />
+    </head>
+    <body>
+        <div class="content">
+            <header class="header">
+                <h1>Revise</h1>
+                <button id="openMenu" class="menu-button">&#9776;</button>
 
-</body>
+                <nav class="tabs hide">
+                    <button id="home active">Home</button>
+                    <button id="about-me">About me</button>
+                </nav>
+            </header>
+            <input type="file" id="jsonFileInput" class="hide" accept=".json" />
+            <input type="file" id="filepondInput" class="filepond hide" />
+            <div class="mobile-tab overlay hide" id="tabOverlay">
+                <button id="closeMenu" class="close-button">&times;</button>
+                <div class="tab-container">
+                    <button id="home" class="home">Home</button>
+                    <button id="personal" class="personal">Your questions</button>
+                    <button id="public-que" class="personal-que">Public questions</button>
+                    <button id="comment" class="personal-que">Feedback</button>
+                    <button class="tab-button hide">User Questions</button>
+                    <button class="tab-button hide">Practice MCQs</button>
+                    <button class="tab-button hide">Memes</button>
+                    <button id="backup" class="backup">Backup data</button>
+                    <button id="import" class="import">Import data</button>
+                    <button class="tab-button hide">Memes</button>
+                    <button id="about-me" class="about-me">About me</button>
+                    <button class="tab-button hide">My UPSC Notes</button>
+                    <button class="tab-button hide">User info</button>
+                    <button id="setting">Setting</button>
+                </div>
+            </div>
+
+            <main id="page-content" class="page-content">
+                <!-- Content loaded dynamically will be inserted here -->
+            </main>
+
+            <script src="index.js"></script>
+        </div>
+    </body>
 </html>
