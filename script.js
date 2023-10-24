@@ -213,6 +213,10 @@ function setAutoCompeleteForAllInputs(cat_array) {
     });
 }
 
+var autocompleteList = document.createElement("div");
+autocompleteList.className = "autocomplete-list";
+document.body.append(autocompleteList);
+autocompleteList.style.position = "absolute";
 function setAutoCompelete(cat_array, loc) {
     var ci = 0;
     var input_before = "";
@@ -223,10 +227,6 @@ function setAutoCompelete(cat_array, loc) {
     } else if (loc == "answer") {
         input = document.querySelector(".answer .category-section textarea.add-category");
     }
-    var autocompleteList = document.createElement("div");
-    autocompleteList.className = "autocomplete-list";
-    document.body.append(autocompleteList);
-    autocompleteList.style.position = "absolute";
 
     input.addEventListener("input", function () {
         var inputValue = input.value.toLowerCase();
