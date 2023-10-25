@@ -31,7 +31,7 @@ function loadAddPracticeQuestionsUI() {
         if (document.querySelector(".add-sec button")) {
             clearInterval(interval_apq); // This stops the interval
             getAddPracQueData();
-
+            setEventListnersOnTagSection();
             document.querySelector(".today-que").addEventListener("click", function () {
                 qq.search_level = "";
                 qq.search_cat = "";
@@ -196,6 +196,47 @@ function setActionOnQuestionLevel() {
     });
 }
 
+// Tags Section
+function setEventListnersOnTagSection() {
+    debugger;
+    qs(".add-tag-icon").addEventListener("click", function () {
+        hide(".add-tag-icon");
+        show(".tag-sec input");
+        qs(".tag-sec input").focus();
+    });
+    var input = qs(".tag-sec input");
+    input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            var tag = input.value.trim().toLowerCase();
+            addNewTag(tag, event);
+            input.value = "";
+            input.focus();
+        }
+    });
+    input.addEventListener("blur", function (event) {
+        show(".add-tag-icon");
+        hide(".tag-sec input");
+    });
+}
+function addNewTag(tag, event) {
+    debugger;
+    var div = createElement("div");
+    div.className = "tag";
+    div.innerHTML = `<div class="tag-name">${tag}</div>
+                     <div class="tag-delete-icon hide">x</div>`;
+    div.addEventListener("click", function () {
+        div.children[1].classList.toggle("hide");
+    });
+    div.children[1].addEventListener("click", function () {
+        div.remove();
+    });
+    event.target.parentElement.insertBefore(div, event.target);
+}
+
+function createElement(ele) {
+    console.log(arguments.callee.name + " called");
+    return document.createElement(ele);
+}
 function showAnswerSection() {
     hide(".question-section");
     show(".answer-section");
@@ -581,6 +622,7 @@ function replaceTextWithMarkup(text) {
     text = text.replace(/\*\*(.*?)\*\*/g, '<span class="bold">$1</span>');
     text = text.replace(/\^\^(.*?)\^\^/g, '<span class="highlight">$1</span>');
     text = convertHeadings(text);
+    text = text.replace(/(- )/gm, '<span class="bullet">•</span>');
     text = text.replace(/\n/g, "<br>");
     return text;
 }

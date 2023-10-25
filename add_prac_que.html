@@ -1,7 +1,7 @@
 <div class="add_prac_que">
     <div id="practice" class="practice-question-section">
         <div class="search-container">
-            <select id="difficultySelect" class="question-level">
+            <select id="difficultySelect" class="question-level que-level">
                 <option value="all" class="level all">all</option>
                 <option value="easy" class="level easy">easy</option>
                 <option value="medium" class="level medium">medium</option>
@@ -15,7 +15,11 @@
                     <div class="clear-icon-cat" id="clear-icon">x</div>
                 </div>
             </div>
-            <button class="add">add</button>
+            <select id="que-type" class="que-type">
+                <option value="all" class="level all">all</option>
+                <option value="easy" class="level easy">normal</option>
+                <option value="medium" class="level medium">MCQ</option>
+            </select>
         </div>
 
         <div class="add-sec hide">
@@ -32,6 +36,14 @@
             <div class="question-section">
                 <span class="question" rows="1"></span>
                 <div class="mcq-check-options hide"></div>
+
+                <div class="tag-sec">
+                    <label>Tags:</label>
+                    <div class="tags">
+                        <input type="text" class="hide" placeholder="add tag" />
+                        <div class="add-tag-icon">+</div>
+                    </div>
+                </div>
 
                 <div class="question-level-section">
                     <label class="hide">Select level:</label>
@@ -95,6 +107,12 @@
             <button id="answer" class="hide">Check answer</button>
         </div>
         <br />
+        <div class="question-visibility">
+            <label> <input type="checkbox" name="personal" id="personal" checked /> personal </label>
+            <br />
+            <label> <input type="checkbox" name="public" id="public" checked /> public </label>
+        </div>
+        <button class="add">Add a new question</button>
         <br />
         <div class="all-categories-section bottom hide">
             <label>Categories:</label>

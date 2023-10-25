@@ -44,7 +44,7 @@ input#search-input {
     margin: 0px 19px;
     outline: none;
     border: none;
-    border-bottom: 1px solid var(--label-color);
+
     /* border-radius: 20px; */
     text-align: center;
     padding: 5px;
@@ -265,6 +265,9 @@ button#random {
     border-radius: 85px;
 }
 
+
+
+
 .about-me div.image img {
     /* Optional: set a max-width to prevent the image from overflowing */
     max-width: 100%;
@@ -323,3 +326,73 @@ button#random {
 .setting button#save {
     border: 1px solid var(--header-bc);
 }
+
+
+
+
+
+
+/* Tags section */
+
+.tag-sec {
+    display: flex;
+    overflow-x: scroll;
+}
+
+.tag-sec label {
+    margin-top: 12px;
+    color: var(--header-bc);
+}
+
+.tags {
+    display: flex;
+    overflow-x: scroll;
+    flex-wrap: wrap;
+    margin: 10px 0px;
+    padding: 0px 5px;
+}
+
+.tag {
+    margin: 2px 5px;
+    padding: 2px 7px;
+    color: var(--header-bc);
+    border: 1px solid var(--header-bc);
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    cursor: pointer;
+}
+
+.tag-name {
+    padding: 1px 3px;
+}
+
+.tag-delete-icon {
+    margin-left: 10px;
+}
+
+.tag-sec input {
+    border: 0px;
+    padding: 3px;
+}
+
+.tag-sec input:focus {
+    outline: none;
+}
+
+
+.add-tag-icon {
+    width: 16px;
+    height: 18px;
+    /* border: 2px solid var(--label-color); */
+    border-radius: 48%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    padding-bottom: 3px;
+    margin-top: 5px;
+}
+
+/* end tags section*/

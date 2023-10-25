@@ -59,28 +59,42 @@ div#add {
     width: auto;
 }
 
-.search-container select {
-    width: 20%;
+.search-container .question-level {
+    margin-right: auto;
+}
+
+.search-container .question-level {
+    margin-left: auto;
 }
 
 .search-container .search-categories {
     width: 60%
 }
 
-.search-container button.add {
-    width: 20%
+
+.search-container select {
+    font-size: var(--font-size);
+    padding: 10px;
+    color: var(--btn-color);
+    border: 0px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: inherit;
+    padding: 0px;
 }
 
-.search-container select,
+
 .mcq-answer-option select {
     font-size: var(--font-size);
     padding: 10px;
-    border: 1px solid #ccc;
     color: var(--btn-color);
-    /* border-radius: 5px; */
     border: 0px;
-    padding-right: 0px;
-
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: inherit;
+    padding: 0px;
 }
 
 .search-container select {
@@ -88,6 +102,7 @@ div#add {
     -webkit-appearance: none;
     -moz-appearance: none;
     background-color: inherit;
+    padding: 0px;
 
 }
 
