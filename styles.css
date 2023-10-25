@@ -41,17 +41,17 @@ span.heading {
 
 input#search-input {
     width: 100%;
-    margin: 0px;
+    margin: 0px 19px;
     outline: none;
     border: none;
-    border: 1px solid var(--label-color);
-    border-radius: 20px;
+    border-bottom: 1px solid var(--label-color);
+    /* border-radius: 20px; */
     text-align: center;
     padding: 5px;
     /* margin: 10px; */
-    margin-right: 10px;
+    /* margin-right: 10px; */
     height: 37px;
-    padding-right: 31px;
+    /* padding-right: 31px; */
     background-color: var(--page-bc);
 }
 
@@ -66,9 +66,15 @@ input#search-input {
 }
 
 
+
+.answer-section {
+    display: grid;
+}
+
 span.question,
 textarea.question {
     color: var(--que-color);
+    font-size: var(--font-size);
 }
 
 
@@ -106,22 +112,12 @@ textarea.question {
     margin: 0px 10px;
 }
 
-.question-section span.question {
-    font-size: calc(var(--font-size) + 2px);
-    color: var(--header-bc);
-}
 
-.answer-section span.question,
-.answer-section textarea.question,
-.add span.question,
-.add textarea.question {
-    color: var(--header-bc);
-}
 
 span.explanation,
 textarea.explanation {
     color: var(--font-color);
-    font-size: calc(var(--font-size) + 0px);
+    font-size: var(--font-size);
 }
 
 
@@ -137,6 +133,8 @@ textarea.explanation {
 .question-level-section {
     display: flex;
     margin-top: 25px;
+    justify-content: center;
+    align-items: center;
 }
 
 .question-level-section label {
@@ -144,7 +142,7 @@ textarea.explanation {
     font-size: calc(var(--font-size) + 2px);
 }
 
-.question-section .question-level {
+.center .question-level {
     display: flex;
     margin-bottom: 14px;
     justify-content: center;
@@ -152,22 +150,22 @@ textarea.explanation {
     cursor: pointer;
 }
 
-.question .question-level .level {
+.question-level .level {
     font-size: var(--font-size);
     margin: 5px;
     border-radius: 5px;
     padding: 3px 7px;
 }
 
-.question-section .level.hard {
+.level.hard {
     color: var(--hard);
 }
 
-.question-section .level.medium {
+.level.medium {
     color: var(--medium);
 }
 
-.question-section .level.easy {
+.level.easy {
     color: var(--easy);
 }
 
@@ -176,7 +174,7 @@ textarea.explanation {
 span,
 textarea {
     border: none;
-    padding: 5px;
+    padding: 0px;
     font-family: inherit;
     line-height: 1.5em;
     resize: none;
@@ -239,6 +237,15 @@ textarea {
 
 
 
+/* Buttons*/
+
+button#random {
+    margin-left: auto;
+}
+
+/* End of buttons*/
+
+
 
 /* About me page css*/
 .about-me h1 {
@@ -263,6 +270,10 @@ textarea {
     max-width: 100%;
     max-height: 100%;
     border-radius: 100px;
+}
+
+.cat-visibility::before {
+    color: var(--label-color);
 }
 
 .about-me .text {

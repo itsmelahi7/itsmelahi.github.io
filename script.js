@@ -156,7 +156,7 @@ function loadCategories(fromArray) {
 function loadQuestionCategories(categories) {
     if (categories.length == 0) return;
 
-    var div = document.querySelector(".center .question .categories");
+    var div = document.querySelector(".center  .categories");
     div.innerHTML = "";
 
     categories.forEach((cat) => {
@@ -225,7 +225,7 @@ function setAutoCompelete(cat_array, loc) {
     if (loc == "add") {
         input = document.querySelector("#add .category-section textarea.add-category");
     } else if (loc == "answer") {
-        input = document.querySelector(".answer .category-section textarea.add-category");
+        input = document.querySelector(".center .category-section textarea.add-category");
     }
 
     input.addEventListener("input", function () {
@@ -311,7 +311,7 @@ function filterQuestion(que_array, search_level, search_cat) {
     //debugger_;
     console.log(`Filter question with search_level: "${search_level}" and search_cat: "${search_cat}"`);
     var fil_que_array = [];
-    toggleBottomButtons(search_level, search_cat);
+    //toggleBottomButtons(search_level, search_cat);
     if (search_level == "" && search_cat != "") {
         que_array.forEach((item) => {
             item.categories.forEach((category) => {
@@ -335,8 +335,7 @@ function filterQuestion(que_array, search_level, search_cat) {
             }
         });
     } else {
-        getRandomQuestion();
-        return "random";
+        fil_que_array = que_array;
     }
     return fil_que_array;
 }

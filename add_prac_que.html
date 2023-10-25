@@ -1,20 +1,13 @@
 <div class="add_prac_que">
     <div id="practice" class="practice-question-section">
         <div class="search-container">
-            <div class="que-num"></div>
-            <div class="search-level hide">
-                <div class="level" value="hard">hard</div>
-                <div class="level" value="medium">medium</div>
-                <div class="level" value="easy">easy</div>
-            </div>
-            <div class="autocomplete">
-                <select id="difficultySelect" class="question-level">
-                    <option value="all" class="level all">all</option>
-                    <option value="easy" class="level easy">easy</option>
-                    <option value="medium" class="level medium">medium</option>
-                    <option value="hard" class="level hard">hard</option>
-                </select>
-            </div>
+            <select id="difficultySelect" class="question-level">
+                <option value="all" class="level all">all</option>
+                <option value="easy" class="level easy">easy</option>
+                <option value="medium" class="level medium">medium</option>
+                <option value="hard" class="level hard">hard</option>
+            </select>
+
             <div class="search-categories categories cat">
                 <input type="text" id="search-input" placeholder="search category" />
                 <div class="category hide">
@@ -22,7 +15,6 @@
                     <div class="clear-icon-cat" id="clear-icon">x</div>
                 </div>
             </div>
-
             <button class="add">add</button>
         </div>
 
@@ -32,16 +24,17 @@
         </div>
 
         <button class="today-que hide"></button>
+        <button id="addImage" class="hide">Add Image</button>
 
-        <div class="center hide">
-            <div class="no-que hide">No Question found</div>
+        <div class="center">
+            <div class="no-question hide">No Question found</div>
 
-            <div class="question question-section">
+            <div class="question-section">
                 <span class="question" rows="1"></span>
                 <div class="mcq-check-options hide"></div>
-                <div class="categories hide"></div>
+
                 <div class="question-level-section">
-                    <label>Select level:</label>
+                    <label class="hide">Select level:</label>
                     <div class="question-level">
                         <div class="level hard">hard</div>
                         <div class="level medium">medium</div>
@@ -50,10 +43,9 @@
                 </div>
             </div>
 
-            <div class="answer answer-section">
-                <label class="">Question:</label>
+            <div class="answer answer-section hide">
+                <span class="question" rows="1"></span>
                 <textarea class="question hide" rows="1" placeholder="add question"></textarea>
-                <span class="question"></span>
 
                 <div class="search-online">
                     <div>Search in</div>
@@ -62,27 +54,25 @@
                     <div class="chatgpt link">chatGPT</div>
                 </div>
 
-                <br />
-                <label class="">Answer:</label>
                 <textarea class="explanation hide" rows="1" placeholder="add answer"></textarea>
                 <span class="explanation"></span>
-                <br />
 
                 <div class="category-section">
-                    <label class="">Categories:</label>
-                    <div class="categories"></div>
-                    <div class="new-cat">
-                        <textarea type="text" class="add-category" placeholder="add-category"></textarea>
-                        <button id="add-category" class="add-category">add</button>
-                        <button id="update-category" class="update-category hide">update</button>
+                    <div class="cat-label">
+                        <label class="">Categories:</label>
+                        <i class="fas cat-visibility fa-eye hide"></i>
+                        <i class="fas cat-visibility fa-eye-slash hide"></i>
+                    </div>
+                    <div class="cat-content">
+                        <div class="categories"></div>
+                        <div class="new-cat">
+                            <textarea type="text" class="add-category" placeholder="add-category"></textarea>
+                            <button id="add-category" class="add-category">add</button>
+                            <button id="update-category" class="update-category hide">update</button>
+                        </div>
                     </div>
                 </div>
-
-                <br />
-
-                <br />
-                <br />
-
+                <button id="delete" class=""><i class="fas fa-trash"></i></button>
                 <div class="delete-confirmation overlay hide">
                     <p>Are you sure to delete the question?</p>
                     <div class="btn-sec">
@@ -103,7 +93,6 @@
                 <i class="fas fa-random"></i>
             </button>
             <button id="answer" class="hide">Check answer</button>
-            <button id="delete" class="hide">delete</button>
         </div>
         <br />
         <br />
@@ -134,7 +123,6 @@
         <div class="mcq-answer-option hide">
             <label>Correct option:</label>
             <select>
-                <option></option>
                 <option>Option a</option>
                 <option>Option b</option>
                 <option>Option c</option>

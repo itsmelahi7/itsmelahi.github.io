@@ -37,7 +37,7 @@ function loadAddPracticeQuestionsUI() {
                 qq.search_cat = "";
                 qq.fil_array = qq.today_que;
                 is_today = true;
-                showQuestion();
+                showQuestionSection();
             });
             document.querySelector(".center").classList.remove("hide");
             textareaAutoHeightSetting();
@@ -59,17 +59,8 @@ function loadAddPracticeQuestionsUI() {
                 }
             });
 
-            actionOnQuestionLevel();
+            document.getElementById("addImage").addEventListener("click", AddImage);
 
-            document.querySelector(".add button.add-category").addEventListener("click", function () {
-                addCategory("", "add");
-            });
-            document.querySelector(".answer-section button.add-category").addEventListener("click", function () {
-                addCategory("", "answer");
-            });
-            document.querySelector(".answer-section button.update-category").addEventListener("click", function () {
-                addCategory("", "answer", "edit");
-            });
             document.querySelectorAll(".search-level .level").forEach((level) => {
                 level.addEventListener("click", function (event) {
                     document.querySelectorAll(".search-level .level").forEach((div) => {
@@ -87,12 +78,31 @@ function loadAddPracticeQuestionsUI() {
                 });
             });
 
-            document.querySelector(".google").addEventListener("click", function (event) {
-                searchQuestionOnline("google", event);
+            actionOnQuestionLevel();
+            debugger;
+            if (qq.is_cat_visible) {
+                show(".fa-eye");
+                show(".cat-content");
+                hide(".fa-eye-slash");
+            } else {
+                show(".fa-eye-slash");
+                hide(".fa-eye");
+                hide(".cat-content");
+            }
+            toggleCategoryVisibility();
+
+            document.querySelector(".add button.add-category").addEventListener("click", function () {
+                addCategory("", "add");
             });
-            document.querySelector(".chatgpt").addEventListener("click", function (event) {
-                searchQuestionOnline("chatgpt", event);
+            document.querySelector(".center button.add-category").addEventListener("click", function () {
+                addCategory("", "answer");
             });
+            document.querySelector(".center button.update-category").addEventListener("click", function () {
+                addCategory("", "answer", "edit");
+            });
+
+            setActionOnQuestionLevel();
+            sectActionOnOnlineSearch();
 
             document.querySelector(".search-container .question-level").addEventListener("change", function () {
                 var select = document.querySelector(".question-level");
@@ -107,20 +117,6 @@ function loadAddPracticeQuestionsUI() {
                     select.style.color = `var(--${qq.search_level})`;
                 }
                 filter();
-            });
-
-            document.querySelectorAll(".answer-section .level").forEach((level) => {
-                level.addEventListener("click", function (event) {
-                    document.querySelectorAll(".answer-section .level").forEach((div) => {
-                        if (div != level) div.classList.remove("active");
-                    });
-                    level.classList.add("active");
-                    if (level.className.indexOf("active") > 0) {
-                        qq.fil_array[qq.que_no].level = level.textContent;
-                        console.log(`curr_que_level: ${qq.fil_array[qq.que_no].level}`);
-                        saveAddPracQueData();
-                    }
-                });
             });
 
             document.querySelector(".clear-icon-cat").addEventListener("click", removeSearchCat);
@@ -143,10 +139,10 @@ function loadAddPracticeQuestionsUI() {
                 document.querySelector(".delete-confirmation.overlay").classList.add("hide");
             });
 
-            document.querySelector("button#next").addEventListener("click", nextQuestion);
-            document.querySelector("button#prev").addEventListener("click", prevQuestion);
-            document.querySelector("button#refresh").addEventListener("click", refresh);
-            document.querySelector("button#random").addEventListener("click", getRandomQuestion);
+            //document.querySelector("button#next").addEventListener("click", nextQuestion);
+            //document.querySelector("button#prev").addEventListener("click", prevQuestion);
+            //document.querySelector("button#refresh").addEventListener("click", refresh);
+            document.querySelector("button#random").addEventListener("click", getNextQuestion);
 
             addQuestionSectionTriggerEventListners();
 
@@ -190,6 +186,33 @@ function loadAddPracticeQuestionsUI() {
     }, 1000);
 }
 
+function setActionOnQuestionLevel() {
+    qsa(".center .level").forEach((level) => {
+        level.addEventListener("click", function (event) {
+            qq.fil_array[qq.que_no].level = level.textContent;
+            saveAddPracQueData();
+            showAnswerSection();
+        });
+    });
+}
+
+function showAnswerSection() {
+    hide(".question-section");
+    show(".answer-section");
+
+    var que_ta = document.querySelector(".answer-section textarea.question");
+    que_ta.value = qq.fil_array[qq.que_no].question;
+    var que_span = document.querySelector(".answer-section span.question");
+    que_span.innerHTML = replaceTextWithMarkup(que_ta.value);
+
+    var exp_ta = document.querySelector(".answer-section textarea.explanation");
+    exp_ta.value = qq.fil_array[qq.que_no].explanation;
+    var exp_span = document.querySelector(".answer-section span.explanation");
+    exp_span.innerHTML = replaceTextWithMarkup(exp_ta.value);
+
+    setCurrentQuestionCategories();
+}
+
 function addQuestionSectionTriggerEventListners() {
     console.log(arguments.callee.name + " called");
 
@@ -223,21 +246,21 @@ function addQuestionSectionTriggerEventListners() {
 function setMCQQuestionTemplate(type) {
     console.log(arguments.callee.name + " called");
     //debugger_;;
-    var question_textarea = document.querySelector(".add-question-section textarea.question");
+    var que_ta = document.querySelector(".add-question-section textarea.question");
     if (qq.exam.toLowerCase() == "upsc") {
-        question_textarea.value = upsc_mcq_template;
+        que_ta.value = upsc_mcq_template;
     } else {
-        question_textarea.value = other_mcq_template;
+        que_ta.value = other_mcq_template;
     }
     if (type == "normal") {
-        question_textarea.value = "";
+        que_ta.value = "";
     }
     textareaAutoHeightSetting();
 }
 
 function actionOnQuestionLevel() {
     console.log(arguments.callee.name + " called");
-    document.querySelectorAll(".question-section .level").forEach((level) => {
+    document.querySelectorAll(".center .level").forEach((level) => {
         //level.classList.remove("active");
         level.addEventListener("click", function () {
             qq.fil_array[qq.que_no].level = level.textContent;
@@ -255,86 +278,85 @@ function actionOnQuestionLevel() {
     });
 }
 
+function afterSelectingLevel() {
+    show(".answer");
+}
+
 function setSpanTextarea() {
     console.log(arguments.callee.name + " called");
 
     // question
-    var question_textarea = document.querySelector(".answer-section textarea.question");
-    var question_span = document.querySelector(".answer-section span.question");
-
-    question_textarea.addEventListener("blur", function () {
-        if (question_textarea.value.trim() != "") {
+    var que_ta = document.querySelector(".answer-section textarea.question");
+    var que_span = document.querySelector(".answer-section span.question");
+    que_span.addEventListener("click", function () {
+        toggleSpanTextarea(".answer-section .question");
+        que_ta.focus();
+        textareaAutoHeightSetting();
+    });
+    que_ta.addEventListener("blur", function () {
+        if (que_ta.value.trim() != "") {
             toggleSpanTextarea(".answer-section .question");
         }
     });
-    question_span.addEventListener("click", function () {
-        toggleSpanTextarea(".answer-section .question");
-        question_textarea.focus();
-        textareaAutoHeightSetting();
-    });
-    question_textarea.addEventListener("input", function () {
-        qq.fil_array[qq.que_no].question = question_textarea.value;
-        //debugger_;;
-        question_span.innerHTML = replaceTextWithMarkup(question_textarea.value);
+
+    que_ta.addEventListener("input", function () {
+        qq.fil_array[qq.que_no].question = que_ta.value;
+        que_span.innerHTML = replaceTextWithMarkup(que_ta.value);
         saveAddPracQueData();
     });
 
     //  explanation
-    var explanation_textarea = document.querySelector(".answer-section textarea.explanation");
-    var explanation_span = document.querySelector(".answer-section span.explanation");
-
-    if (explanation_textarea.value.trim() == "") {
+    var exp_ta = document.querySelector(".center textarea.explanation");
+    var exp_span = document.querySelector(".center span.explanation");
+    exp_span.addEventListener("click", function () {
         toggleSpanTextarea(".answer-section .explanation");
-    }
-    explanation_textarea.addEventListener("input", function () {
-        qq.fil_array[qq.que_no].explanation = explanation_textarea.value;
-        explanation_span.innerHTML = replaceTextWithMarkup(explanation_textarea.value);
+        exp_ta.focus();
+        textareaAutoHeightSetting();
+    });
+    exp_ta.addEventListener("input", function () {
+        qq.fil_array[qq.que_no].explanation = exp_ta.value;
+        exp_span.innerHTML = replaceTextWithMarkup(exp_ta.value);
         saveAddPracQueData();
     });
-    explanation_textarea.addEventListener("blur", function () {
-        if (explanation_textarea.value.trim() != "") {
+    exp_ta.addEventListener("blur", function () {
+        if (exp_ta.value.trim() != "") {
             toggleSpanTextarea(".answer-section .explanation");
         }
     });
-    explanation_span.addEventListener("click", function () {
-        toggleSpanTextarea(".answer-section .explanation");
-        explanation_textarea.focus();
-        textareaAutoHeightSetting();
-    });
 
     /* // Add section
-    question_textarea = document.querySelector(".add-question-section textarea.question");
-    question_span = document.querySelector(".add-question-section span.question");
-    question_textarea.addEventListener("input", function () {
-        question_span.innerHTML = replaceTextWithMarkup(question_textarea.value);
+    que_ta = document.querySelector(".add-question-section textarea.question");
+    que_span = document.querySelector(".add-question-section span.question");
+    que_ta.addEventListener("input", function () {
+        que_span.innerHTML = replaceTextWithMarkup(que_ta.value);
     });
-    question_textarea.addEventListener("blur", function () {
-        if (question_textarea.value.trim() != "") {
+    que_ta.addEventListener("blur", function () {
+        if (que_ta.value.trim() != "") {
             toggleSpanTextarea(".add-question-section .question");
         }
     });
-    question_span.addEventListener("click", function () {
+    que_span.addEventListener("click", function () {
         toggleSpanTextarea(".add-question-section .question");
-        question_textarea.focus();
+        que_ta.focus();
         textareaAutoHeightSetting();
     });
 
     //  explanation
-    explanation_textarea = document.querySelector(".add-question-section textarea.explanation");
-    explanation_span = document.querySelector(".add-question-section span.explanation");
+    exp_ta = document.querySelector(".add-question-section textarea.explanation");
+    exp_span = document.querySelector(".add-question-section span.explanation");
 
-    explanation_textarea.addEventListener("input", function () {
-        explanation_span.innerHTML = replaceTextWithMarkup(explanation_textarea.value);
+    exp_ta.addEventListener("input", function () {
+        exp_span.innerHTML = replaceTextWithMarkup(exp_ta.value);
     });
 
-    explanation_textarea.addEventListener("blur", function () {
-        if (explanation_textarea.value.trim() == "") return;
+    exp_ta.addEventListener("blur", function () {
+        if (exp_ta.value.trim() == "") return;
         toggleSpanTextarea(".add-question-section .explanation");
     });
 
-    explanation_span.addEventListener("click", function () {
+    exp_span.addEventListener("click", function () {
         toggleSpanTextarea(".add-question-section .explanation");
-        explanation_textarea.focus();
+        exp_ta.focus();
         textareaAutoHeightSetting();
     });
 
@@ -414,16 +436,12 @@ function filter(category) {
         qq.search_cat = category;
     }
 
-    //qq.que_array = sortArrayInRandomOrder(qq.que_array);
-    var temp = filterQuestion(qq.que_array, qq.search_level, qq.search_cat);
-    if (temp == "random") {
-        return;
-    }
-    qq.fil_array = temp;
+    qq.fil_array = filterQuestion(qq.que_array, qq.search_level, qq.search_cat);
+    debugger;
     if (qq.fil_array.length) {
         qq.fil_array = sortArrayInRandomOrder(qq.fil_array);
         qq.que_no = 0;
-        showQuestion();
+        showQuestionSection();
     } else {
         if (qq.search_level != "" && qq.search_cat == "") {
             noQuestion(`No question found for level '${qq.search_level}'`);
@@ -431,6 +449,15 @@ function filter(category) {
             noQuestion(`No question found for level '${qq.search_level}' AND category '${qq.search_cat}'`);
         }
     }
+}
+
+function sectActionOnOnlineSearch() {
+    document.querySelector(".google").addEventListener("click", function (event) {
+        searchQuestionOnline("google", event);
+    });
+    document.querySelector(".chatgpt").addEventListener("click", function (event) {
+        searchQuestionOnline("chatgpt", event);
+    });
 }
 
 function searchQuestionOnline(link, event) {
@@ -495,6 +522,47 @@ window.addEventListener("message", function (event) {
         button.click();
     }
 });
+let imageFolderPaths = [];
+let imageArray = [];
+
+function AddImage() {
+    // Add an event listener to the button
+
+    // Ask the user to select a folder (not possible in all browsers)
+    const folderPath = window.prompt("Select a folder to save images:", "C:/Users/User/Desktop/");
+    if (folderPath) {
+        imageFolderPaths.push(folderPath);
+
+        // Ask the user to select an image
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.addEventListener("change", (event) => {
+            const selectedFile = event.target.files[0];
+            if (selectedFile) {
+                // Copy the image to the folder (browser-dependent)
+                // Note: You may need to use a server or File System API for this step.
+                // Here's a basic example that won't work in most browsers due to security restrictions.
+                const imagePath = folderPath + selectedFile.name;
+
+                // Create an object with image path and text (you can customize this part)
+                const imageObject = {
+                    image_path: imagePath,
+                    image_text: "Some description",
+                };
+
+                // Push the image object to the array
+                imageArray.push(imageObject);
+
+                // Optionally, display the image path or perform other actions
+                alert("Image saved in folder:\n" + imagePath);
+            }
+        });
+
+        // Trigger the input element to open the file dialog
+        input.click();
+    }
+}
 
 function copyToClipboard(text) {
     console.log(arguments.callee.name + " called");
@@ -534,12 +602,12 @@ function toggleElements() {
     console.log(arguments.callee.name + " called");
 
     if ("answer-explanation") {
-        document.querySelector(".answer-section span.explanation").classList.toggle("hide");
-        document.querySelector(".answer-section textarea.explanation").classList.toggle("hide");
+        document.querySelector(".center span.explanation").classList.toggle("hide");
+        document.querySelector(".center textarea.explanation").classList.toggle("hide");
     }
     if ("answer-question") {
-        document.querySelector(".answer-section span.explanation").classList.toggle("hide");
-        document.querySelector(".answer-section textarea.explanation").classList.toggle("hide");
+        document.querySelector(".center span.explanation").classList.toggle("hide");
+        document.querySelector(".center textarea.explanation").classList.toggle("hide");
     }
 }
 
@@ -554,7 +622,7 @@ function loadTodayQuestion() {
         today_que_ele.addEventListener("click", function () {
             qq.fil_array = qq.today_que;
             qq.que_no = 0;
-            showQuestion();
+            showQuestionSection();
             today_que_ele.classList.add("hide");
         });
     } else {
@@ -607,15 +675,15 @@ function handleSelectChange() {
 function noQuestion(message) {
     console.log(arguments.callee.name + " called");
     if (message) {
-        document.querySelector(".center .no-que").textContent = message;
+        document.querySelector(".center .no-question").textContent = message;
     } else {
-        document.querySelector(".center .no-que").textContent = "No questions";
+        document.querySelector(".center .no-question").textContent = "No questions";
     }
-    document.querySelector(".center .no-que").classList.remove("hide");
+    document.querySelector(".center .no-question").classList.remove("hide");
 
     document.querySelector(".que-num ").classList.add("hide");
     document.querySelector(".center .question").classList.add("hide");
-    document.querySelector(".center .answer-section").classList.add("hide");
+    document.querySelector(".center .center").classList.add("hide");
     document.querySelector(".bottom.button-section").classList.add("hide");
 }
 function openPracticeSection() {
@@ -635,49 +703,12 @@ function openAddQuestionSection() {
     setAutoCompeleteForAllInputs(qq.cat_array);
 }
 
-function showQuestion() {
-    //debugger_;;
+function showQuestionSection() {
     console.log(arguments.callee.name + " called");
-    console.log("showQuestion is called");
-    document.querySelector(".center .question").classList.remove("hide");
-    document.querySelector("button#answer").classList.add("hide");
-    document.querySelectorAll(".question-section .level").forEach((level) => {
-        level.classList.remove("active");
-    });
-
-    document.querySelector(".bottom.button-section").classList.remove("hide");
-
-    document.querySelector(".center .answer-section").classList.add("hide");
-    document.querySelector(".center .no-que").classList.add("hide");
-
-    hide("button#delete");
-    hide("button#answer");
-
-    document.querySelector(".que-num").textContent = qq.que_no + 1 + "/" + qq.fil_array.length;
-
-    document.querySelector(".question-section span.question").innerHTML = replaceTextWithMarkup(qq.fil_array[qq.que_no].question);
-    //debugger_;;
-    var is_mcq = false;
-    if (is_mcq) {
-        addAnswerOptionCheckButtons();
-    } else {
-    }
-
-    loadQuestionCategories(qq.fil_array[qq.que_no].categories);
-
-    document.querySelector(".answer-section textarea.question").value = qq.fil_array[qq.que_no].question;
-    document.querySelector(".answer-section textarea.question").classList.add("hide");
-
-    document.querySelector(".answer-section span.question").innerHTML = replaceTextWithMarkup(qq.fil_array[qq.que_no].question);
-    document.querySelector(".answer-section span.question").classList.remove("hide");
-
-    document.querySelector(".answer-section textarea.explanation").value = qq.fil_array[qq.que_no].explanation;
-    document.querySelector(".answer-section textarea.explanation").classList.add("hide");
-
-    document.querySelector(".answer-section span.explanation").innerHTML = replaceTextWithMarkup(qq.fil_array[qq.que_no].explanation);
-    document.querySelector(".answer-section span.explanation").classList.remove("hide");
-
-    showCategoriesInAnswer();
+    hide(".no-question");
+    show(".question-section");
+    hide(".answer-section");
+    qs(".question-section span.question").innerHTML = replaceTextWithMarkup(qq.fil_array[qq.que_no].question);
 }
 
 function isMcq(array, index) {
@@ -783,22 +814,21 @@ function extractText(inputText) {
     return inputText; // If 'Source' is not found, return the original text
 }
 
-function showCategoriesInAnswer() {
+function setCurrentQuestionCategories() {
     console.log(arguments.callee.name + " called");
-    var category_section = document.querySelector(".answer-section .category-section .categories");
-    var categories = qq.fil_array[qq.que_no].categories;
-    category_section.innerHTML = "";
-    qq.fil_array[qq.que_no].categories = removeDuplicates(categories);
 
+    var cat_sec = document.querySelector(".answer-section .categories");
+    cat_sec.innerHTML = "";
+
+    var categories = removeDuplicates(qq.fil_array[qq.que_no].categories);
     categories.forEach((category, index) => {
         var datePattern = /\d{2}-\d{2}-\d{4}/;
         if (!datePattern.test(category)) {
             var div = document.createElement("div");
             div.className = "category";
             div.innerHTML = `<span class="category-name">${category}</span> <i class="fas fa-pencil-alt"></i>  <div class="clear-icon-cat" id="clear-icon"> x </div>`;
-            var edit_icon = document.createElement("div");
+            cat_sec.append(div);
 
-            category_section.append(div);
             div.children[1].addEventListener("click", function () {
                 //debugger_;;
                 document.querySelector(".category-section textarea.add-category").value = category;
@@ -807,6 +837,7 @@ function showCategoriesInAnswer() {
                 is_edit_category = true;
                 old_cat = category;
             });
+
             div.children[2].addEventListener("click", function (event) {
                 //debugger_;;
                 var category_name = event.target.parentNode.children[0].textContent;
@@ -816,6 +847,25 @@ function showCategoriesInAnswer() {
                 saveAddPracQueData();
             });
         }
+    });
+    //toggleCategoryVisibility();
+}
+
+function toggleCategoryVisibility() {
+    qsa(".cat-visibility").forEach((ele) => {
+        ele.addEventListener("click", function () {
+            qsa(".cat-visibility").forEach((ele) => {
+                ele.classList.toggle("hide");
+            });
+            qs(".cat-content").classList.toggle("hide");
+            debugger;
+            if (qq.is_cat_visible) {
+                qq.is_cat_visible = false;
+            } else {
+                qq.is_cat_visible = true;
+            }
+            saveAddPracQueData();
+        });
     });
 }
 
@@ -862,9 +912,9 @@ function addCategory(name, loc, type) {
         saveAddPracQueData();
 
         div.children[0].addEventListener("click", function () {
-            document.querySelector(".answer-section .category-section textarea.add-category").value = category;
-            document.querySelector(".answer-section .category-section .add-category").classList.add("hide");
-            document.querySelector(".answer-section .category-section .update-category").classList.remove("hide");
+            document.querySelector(".center .category-section textarea.add-category").value = category;
+            document.querySelector(".center .category-section .add-category").classList.add("hide");
+            document.querySelector(".center .category-section .update-category").classList.remove("hide");
 
             is_edit_category = true;
             old_cat = name;
@@ -898,21 +948,21 @@ function editCategory(new_cat, old_cat) {
     saveAddPracQueData();
     updateCategories("answer");
     updateCategories("");
-    showCategoriesInAnswer();
+    setCurrentQuestionCategories();
 }
 
 function checkAnswer() {
     console.log(arguments.callee.name + " called");
     //googleIt();
-    hide(".center .question-section");
-    show(".center .answer-section");
+    hide(".center .center");
+    show(".center .center");
 
     hide("button#answer");
     show("button#delete");
 
     setAutoCompeleteForAllInputs(qq.cat_array);
 
-    document.querySelectorAll(".answer-section .level").forEach((level) => {
+    document.querySelectorAll(".center .level").forEach((level) => {
         level.classList.remove("active");
         level.addEventListener("click", function () {
             qq.fil_array[qq.que_no].level = level.textContent;
@@ -935,7 +985,7 @@ function nextQuestion() {
     console.log(arguments.callee.name + " called");
     ++qq.que_no;
     if (qq.que_no < qq.fil_array.length) {
-        showQuestion();
+        showQuestionSection();
     } else {
         --qq.que_no;
     }
@@ -946,7 +996,7 @@ function prevQuestion() {
     if (qq.que_no < 0) {
         ++qq.que_no;
     } else {
-        showQuestion();
+        showQuestionSection();
     }
 }
 function deleteQuestion(id) {
@@ -956,13 +1006,14 @@ function deleteQuestion(id) {
     filter();
 }
 
-function getRandomQuestion() {
+function getNextQuestion() {
     console.log(arguments.callee.name + " called");
-    var random_index = Math.floor(Math.random() * qq.que_array.length);
-    qq.que_no = 0;
-    qq.fil_array = [];
-    qq.fil_array.push(qq.que_array[random_index]);
-    showQuestion();
+    qq.que_no = qq.que_no + 1;
+    if (qq.que_no == qq.fil_array.length) {
+        filter();
+        return;
+    }
+    showQuestionSection();
 }
 
 function addQuestion() {
@@ -1085,3 +1136,10 @@ Which of the above statements are correct
 (b) Only two
 (c) Only three
 (d) All the four`;
+
+function dq(abc) {
+    return document.querySelector(abc);
+}
+function dqa(abc) {
+    return document.querySelectorAll(abc);
+}

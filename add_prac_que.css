@@ -59,6 +59,18 @@ div#add {
     width: auto;
 }
 
+.search-container select {
+    width: 20%;
+}
+
+.search-container .search-categories {
+    width: 60%
+}
+
+.search-container button.add {
+    width: 20%
+}
+
 .search-container select,
 .mcq-answer-option select {
     font-size: var(--font-size);

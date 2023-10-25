@@ -93,9 +93,8 @@ button#clear {
 }
 
 .search-level .level,
-.answer .level {
+.center .level {
     margin: 2px 8px;
-    color: #2A80FF;
     cursor: pointer;
     padding-bottom: 3px;
     border-bottom: 2px solid transparent;
@@ -115,7 +114,7 @@ button#clear {
 
 
 .search-level .level.active,
-.answer .level.active {
+.center .level.active {
     border-bottom: 2px solid #2A80FF;
     padding-bottom: 2px;
 }
@@ -304,16 +303,6 @@ label {
 
 
 
-.answer {
-    display: grid;
-}
-
-
-.answer {
-    margin: 0px 10px;
-}
-
-
 textarea:focus,
 select {
     outline: none;
@@ -350,8 +339,8 @@ textarea.add-category {
 
 .bottom {
     display: flex;
-    background-color: var(--center-bc);
-    border-top: 1px solid var(--label-color);
+    /*background-color: var(--center-bc);
+    border-top: 1px solid var(--label-color);*/
     min-height: 50px;
 }
 
@@ -804,15 +793,11 @@ textarea.add-category {
 }
 
 .search-level,
-.answer .question-level,
-.question .question-level {
+.center .question-level {
     display: flex;
 }
 
 
-.question .question-level label {
-    margin-left: 0px;
-}
 
 .icons .icon {
     width: 90px;
@@ -928,7 +913,7 @@ body>.content>header .menu-button {
     position: fixed;
     top: 0;
     right: -300px;
-    width: 50vw;
+    width: 70vw;
     height: 100%;
     background-color: var(--menu-overlay-bc);
     z-index: 1000;
@@ -993,6 +978,7 @@ body>.content>header .menu-button {
 
     .search-container {
         margin: 10px 15px;
+        display: flex;
     }
 
 
