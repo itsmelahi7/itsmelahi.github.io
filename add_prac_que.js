@@ -58,7 +58,7 @@ function loadAddPracticeQuestionsUI() {
                     first_time = false;
                 }
             });
-
+            textareaAutoHeightSetting();
             document.getElementById("addImage").addEventListener("click", AddImage);
 
             document.querySelectorAll(".search-level .level").forEach((level) => {
@@ -185,7 +185,7 @@ function loadAddPracticeQuestionsUI() {
         }
     }, 1000);
 }
-
+//setInterval(textareaAutoHeightSetting, 300);
 function setActionOnQuestionLevel() {
     qsa(".center .level").forEach((level) => {
         level.addEventListener("click", function (event) {

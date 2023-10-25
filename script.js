@@ -377,6 +377,7 @@ function textareaAutoHeightSetting() {
         }
     }, 300);
 }
+
 //textareaAutoHeightSetting();
 
 function generateID() {
