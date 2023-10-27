@@ -335,8 +335,8 @@ button#random {
 /* Tags section */
 
 .tag-sec {
-    display: flex;
-    overflow-x: scroll;
+    display: grid;
+    margin: 15px;
 }
 
 .tag-sec label {
@@ -374,6 +374,7 @@ button#random {
 .tag-sec input {
     border: 0px;
     padding: 3px;
+    background-color: var(--center-bc);
 }
 
 .tag-sec input:focus {
